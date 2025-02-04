@@ -25,7 +25,7 @@ With this article, my goal is to provide exactly what I wish I had back then: a 
         <h3>The dependency and the effects of the dependency.</h3>
         <p>
             To add Spring Security to our application, all we need to do is add the <code>spring-boot-starter-security</code>
-            dependency to the application's dependencies. Since I'm using Maven in my project, this means adding this to the pom.xml file:
+            dependency to the application's dependencies. Since I'm using Maven in my project, this means adding the following code to the pom.xml file:
         </p>
         <pre>
             &lt;dependency&gt;
@@ -67,8 +67,13 @@ With this article, my goal is to provide exactly what I wish I had back then: a 
 
 <p>Therefore, the class that handles the security configuration is usually annotated with both <code>@Configuration</code> and <code>@EnableWebSecurity</code> (regardless of whether it's maybe a Spring Boot application and it doesn't actually really need to have the <code>@EnableWebSecurity</code> annotation).</p>
 
-<p>Now that we have annotated a class with <code>@Configuration</code> and <code>@EnableWebSecurity</code>, we are ready to start handling the security aspects ourselves.</p>
+<p>Now that we have annotated a class with <code>@Configuration</code> and <code>@EnableWebSecurity</code>, we are ready to start handling the security aspects ourselves. This is now our barebones configuration class. I named it ProjectConfig, but you can name it differently. All that matters are the annotations on the class.</p>
+<pre>@Configuration
+@EnableWebSecurity
+public class ProjectConfig {
 
+}
+</pre>
 <p>In Spring Security, <strong>authorization comes before authentication.</strong> This may seem counterintuitive at first, as we would expect to determine who the user is first and only then figure out what this user is allowed to do. However, this approach makes sense in the context of how Spring Security is designed.
 
 The default behavior of Spring Security is to protect all endpoints by requiring authentication. This means that, by default, a user cannot access any endpoints, including the login page, unless they are authenticated.
