@@ -142,7 +142,7 @@ public class ProjectConfig {
 <p>4) Any request matching the /user/** pattern (e.g., /user/profile, /user/settings) requires the USER role to access.</p>
 <p>5) This line allows unrestricted access to any request matching /public/**. This means that anyone, whether authenticated or not, can access endpoints that start with <code>/public</code></p>
 <p>6) This line ensures that any other request (not explicitly mentioned in the previous matchers) must be authenticated.</p>
-<p>7) The http.build() call finalizes the HttpSecurity configuration and returns a SecurityFilterChain object, which Spring Security uses to enforce the security rules in the application.</p>
+<p>7) The <code>http.build()</code> call finalizes the <code>HttpSecurity</code> configuration and returns a <code>SecurityFilterChain</code> object, which Spring Security uses to enforce the security rules in the application.</p>
 <p>The API for <code>HttpSecurity</code> can be found at: <a href="https://docs.spring.io/spring-security/reference/api/java/org/springframework/security/config/annotation/web/builders/HttpSecurity.html" target="_blank"><code>HttpSecurity API</code></a> along with examples of its use.</p>
 <p>Note that the matchers are considered in order. Therefore, the following code will not do what we want it to do.</p> 
 
