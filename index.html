@@ -116,66 +116,35 @@ public class ProjectConfig {
 
 <p>To handle authorization we use the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code>. This method takes a <code>Customizer&lt;AuthorizeHttpRequestsConfigurer&lt;HttpSecurity&gt;.AuthorizationManagerRequestMatcherRegistry&gt;</code> as its parameter. That is a very big word. It's even too big to fit on the page. But don't let this scare you. It's just a <code>Customizer</code>. And a <code>Customizer</code> is a functional interface that takes an object and returns nothing (<code>void</code>). Customizers are often used in Spring Security to configure security settings without needing to create full configuration classes.</p>
 
-<p>The <code>Customizer</code> here takes an <code>AuthorizationManagerRequestMatcherRegistry</code> object, which is nothing more than a configuration class in Spring Security that allows us to define authorization rules for different HTTP request patterns. Here are some of the methods of <code>AuthorizationManagerRequestMatcherRegistry</code> that we can use to handle authorization:</p>
-<table>
-    <tr>
-        <th>Method</th>
-        <th>Purpose</th>
-    </tr>
-    <tr>
-        <td><code>.requestMatchers("/path")</code></td>
-        <td>Matches specific URL patterns</td>
-    </tr>
-    <tr>
-        <td><code>.requestMatchers(HttpMethod.GET, "/api/**")</code></td>
-        <td>Matches requests by HTTP method</td>
-    </tr>
-    <tr>
-        <td><code>.anyRequest()</code></td>
-        <td>Matches all remaining requests</td>
-    </tr>
-    <tr>
-        <td><code>.hasRole("ADMIN")</code></td>
-        <td>Requires users to have a specific role</td>
-    </tr>
-    <tr>
-        <td><code>.authenticated()</code></td>
-        <td>Requires authentication but no specific role</td>
-    </tr>
-    <tr>
-        <td><code>.permitAll()</code></td>
-        <td>Allows all users (even unauthenticated ones)</td>
-    </tr>
-</table>
-<p>At this point you are probably confused. I talked about <code>SecurityFilterChain</code> taking a <code>HttpSecurity</code> object. And using this object's methods. And then some <code>Customizer</code> comes in and a <code>AuthorizationManagerRequestMatcherRegistry</code> as well. It may all seem very complicated, but the code examples will show you that it's very easy to use.</p>
+<p>The <code>Customizer</code> here takes an <code>AuthorizationManagerRequestMatcherRegistry</code> object, which is nothing more than a configuration class in Spring Security that allows us to define authorization rules for different HTTP request patterns.</p>
+
+<p>At this point you are probably confused. I talked about <code>SecurityFilterChain</code> taking a <code>HttpSecurity</code> object. And using this object's methods. And then some <code>Customizer</code> comes in and a <code>AuthorizationManagerRequestMatcherRegistry</code> as well. It may all seem very complicated, but the code examples will show you that it's actually very simple and easy to use.</p>
 
 <p>For instance, we use the <code>Customizer</code> and <code>AuthorizationManagerRequestMatcherRegistry</code> in our application while barely even realizing it.The <code>Customizer</code> is barely noticeable because it's simply a container that allows us to use a lambda, making our configuration more concise and readable.</p>
 
-<p>Similarly, the <code>AuthorizationManagerRequestMatcherRegistry</code> is not something we need to worry about. It's just the object we reference inside the lambda to define our security rules. We can name it anything we want, since it's simply the parameter being passed into the lambda function. <br>Its role is to provide methods that let us specify which endpoints require authentication and which do not. <p>If we analyze this code: <code>http.authorizeHttpRequests(auth -> auth)</code> then <code>http</code> = the HttpSecurity object. We call it's method <code>.authorizeHttpRequests()</code>. In this method we can use a lambda and the object that we use in this lamba is the <code>AuthorizationManagerRequestMatcherRegistry</code>, which we have named <code>auth</code> here.</p>
+<p>Similarly, the <code>AuthorizationManagerRequestMatcherRegistry</code> is not something we need to worry about. It's just the object we reference inside the lambda to define our security rules. We can name it anything we want, since it's simply the parameter being passed into the lambda function. <br>Its role is to provide us with the <code>requestMatchers(String pattern)</code> methods
+which we can use to specify which URL patterns the rule applies to.</p<p>If we analyze this code: <code>http.authorizeHttpRequests(auth -> auth)</code> then <code>http</code> is the HttpSecurity object. We call it's method <code>.authorizeHttpRequests()</code>. In this method we can use a lambda and the object that we use in this lamba is the <code>AuthorizationManagerRequestMatcherRegistry</code>, which we have named <code>auth</code> here.</p>
 <p>It's the methods of this <code>AuthorizationManagerRequestMatcherRegistry</code> that we will use to handle authorization.
 
 With these methods we define which requests should be permitted, authenticated, or restricted based on roles, authentication, or other conditions. A code example explains it better than words could do:</p>
 
 <pre>
-@Bean
-public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.authorizeHttpRequests(auth -> auth
-            
-            //Allow only users with "ADMIN" role to access /admin/**
-            .requestMatchers("/admin/**").hasRole("ADMIN")
-            
-            //Allow only users with "USER" role to access /user/**
-            .requestMatchers("/user/**").hasRole("USER")
-            
-            //Allow public access to /public/**
-            .requestMatchers("/public/**").permitAll()
-            
-            //All other requests require authentication
-            .anyRequest().authenticated());
-    
-    // Build and return the filter chain
-    return http.build();
+@Configuration
+@EnableWebSecurity
+public class ProjectConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(auth -> 				1)
+            auth.requestMatchers("/admin/**").hasRole("ADMIN")		2)
+                .requestMatchers("/user/**").hasRole("USER")		3)
+                .requestMatchers("/public/**").permitAll()		4)
+                .anyRequest().authenticated()				5)
+        );
+        return http.build();						6)
+    }
 }
+
 </pre>
 <p>The API for <code>HttpSecurity</code> can be found at: <a href="https://docs.spring.io/spring-security/reference/api/java/org/springframework/security/config/annotation/web/builders/HttpSecurity.html" target="_blank"><code>HttpSecurity API</code></a> along with examples of its use.</p>
 <p>Note that the matchers are considered in order. Therefore, the following code will not do what we want it to do.</p> 
