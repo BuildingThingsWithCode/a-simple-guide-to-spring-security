@@ -115,8 +115,10 @@ public class ProjectConfig {
 <code>HttpSecurity</code> is an object that allows us to configure web-based security for HTTP requests. And since any interaction between our users and our application will be done in the form of an HTTP request, it's an important part of our application.</p>
 
 <p>To handle authorization we use the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code>. With this method we configure authorization rules for incoming HTTP requests. HttpSecurity determines who is allowed to access which endpoints based on user roles, authentication status, or other conditions.</p>  
-<p>Inside the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code> we use a lambda function with an <code>AuthorizationManagerRequestMatcherRegistry</code> as it's parameter. We use this parameter inside the lambda because it has <code>requestMatchers(String pattern)</code> methods that we can use specifies which URL patterns the rules apply to.</p>
-We can name this lambda parameter anything we want, I called it <code>auth</code> in our example.A code example explains it better than words could do:</p>
+<p>Inside the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code> we use a lambda function with an <code>AuthorizationManagerRequestMatcherRegistry</code> as it's parameter. We use this parameter inside the lambda because it has <code>requestMatchers(String pattern)</code> methods that we can use to specify which URL patterns the rules apply to.
+We can name this lambda parameter anything we want, I called it <code>auth</code> in our example.</p>
+<p>Let's go over the code example line by line to demonstrate what's going on:</p>
+	    
 
 <pre>
 @Configuration
