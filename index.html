@@ -83,17 +83,34 @@ This creates a bit of a catch-22: you can’t access the login page unless you a
 
 <p>That's why authorization comes first: we need to authorize users that are not logged in to have access to the login page.</p>
 
-<p><strong>Note:</strong> It was a deliberate decision by the Spring developers to opt for this default behavior. They could have also done the opposite—namely, granting access to all endpoints by default and only securing those that explicitly need to be secured. However, this would be the less safe option. It's better to secure everything by default and then open up only what needs to be accessible, rather than the other way around.</p>
+<p><strong>Note:</strong> It was a deliberate decision by the Spring developers to opt for this default behavior. They could have also done the opposite and granted access to all endpoints by default, only securing those that explicitly needed to be secured. However, this would be the less safe option. It's better to secure everything by default and then open up only what needs to be accessible, rather than the other way around.</p>
 
-<p>Since Spring is highly customizable, as a developer, you could still take the opposite approach—opening everything up and closing only those endpoints you want to keep restricted. However, I would advise you to follow the philosophy of the framework you're working with. You'll have an easier time and a more enjoyable experience that way. And it's simply the safer option.</p>
+<p>Since Spring is highly customizable, as a developer, you could still take the opposite approach, opening everything up and closing only those endpoints you want to keep restricted. However, I would advise you to follow the philosophy of the framework you're working with. You'll have an easier time and a more enjoyable experience that way. And it's simply the safer option.</p>
 <h3>Authorization.</h3>
 <p>Since authorization comes first, we will also talk about that aspect of Spring Security first.
 
 The Object that is responsible for handling authorization in a Spring application is the <code>SecurityFilterChain</code>.
 
-So, if we want to handle authorization, we need to define a bean of the type <code>SecurityFilterChain</code>.</p>
+So, if we want to handle authorization, we need to define a bean of the type <code>SecurityFilterChain</code>. Here's a code example of a <code>SecurityFilterChain</code> placed in our configuration class.</p>
+<pre>
+@Configuration
+@EnableWebSecurity
+public class ProjectConfig {
 
-<p> This bean takes an <code>HttpSecurity</code> object as its parameter.
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(auth -> 
+            auth.requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/user/**").hasRole("USER")
+                .requestMatchers("/public/**").permitAll()
+                .anyRequest().authenticated()
+        );
+        return http.build();
+    }
+}
+
+</pre>
+<p> The <code>SecurityFilterChain</code> bean takes an <code>HttpSecurity</code> object as its parameter.
 
 <code>HttpSecurity</code> is an object that allows us to configure web-based security for HTTP requests. And any interaction between our users and our application will be done in the form of an HTTP request. In other words: <code>HttpSecurity</code> allows us to handle who is allowed to visit which of the endpoints in our application.</p>
 
