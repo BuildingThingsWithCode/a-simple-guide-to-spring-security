@@ -112,15 +112,7 @@ public class ProjectConfig {
 </pre>
 <p> The <code>SecurityFilterChain</code> bean takes an <code>HttpSecurity</code> object as its parameter.
 
-<code>HttpSecurity</code> is an object that allows us to configure web-based security for HTTP requests. And any interaction between our users and our application will be done in the form of an HTTP request. In other words: <code>HttpSecurity</code> allows us to handle who is allowed to visit which of the endpoints in our application.</p>
-
-<p>The code looks like this:</p>
-
-<pre>
-@Bean
-SecurityFilterChain configure(HttpSecurity http) {
-}
-</pre>
+<code>HttpSecurity</code> is an object that allows us to configure web-based security for HTTP requests. Any interaction between our users and our application will be done in the form of an HTTP request.</p>
 
 <p>To handle authorization we use the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code>. This method takes a <code>Customizer&lt;AuthorizeHttpRequestsConfigurer&lt;HttpSecurity&gt;.AuthorizationManagerRequestMatcherRegistry&gt;</code> as its parameter. That is a very big word. It's even too big to fit on the page. But don't let this scare you. It's just a <code>Customizer</code>. And a <code>Customizer</code> is a functional interface that takes an object and returns nothing (<code>void</code>). Customizers are often used in Spring Security to configure security settings without needing to create full configuration classes.</p>
 
