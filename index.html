@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Security Understanding The Fundamentals</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="article-container">
+		<h1>Spring Security Understanding The Fundamentals.</h1>
+		<div style="display: flex; align-items: center; margin-bottom: 20px;">
+    <img src="/img/BuildingThingWithCodelogoForLeetcode.jpg" alt="Your Image" width="44" height="44" style="margin-right: 10px;">
+    <div>
+        <p style="margin: 0; font-weight: bold;">Lars Martens</p>
+        <p style="margin: 0; font-size: 0.9em; color: gray;">February 4, 2025</p>
+    </div>
+</div>
+		<h3>Preface</h3>
+		<p>When I first started learning Spring Security, I found plenty of in-depth resources, but I struggled to follow along. The problem was that I lacked a clear overview—a mental picture of how everything fit together. Without that foundation, all the detailed information felt overwhelming and disconnected.
+
+I was "not seeing the forest for the trees."
+
+With this article, my goal is to provide exactly what I wish I had back then: a clear, high-level understanding of Spring Security’s essential building blocks and how they work together. Once you have that foundation, diving into the details becomes much easier.</p>
+        <h3>The dependency and the effects of the dependency.</h3>
+        <p>
+            To add Spring Security to our application, all we need to do is add the <code>spring-boot-starter-security</code>
+            dependency to the application's dependencies. Since I'm using Maven in my project, this means adding this to the pom.xml file:
+        </p>
+        <pre>
+            &lt;dependency&gt;
+                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+            &lt;/dependency&gt;
+        </pre>
+		<p>Adding the dependency does several things:</p>
+
+<p><strong>1) It enables Authentication.</strong> Once the security dependency is added, all endpoints in the application will require authentication. This means that endpoints, which were previously accessible without logging in, will now require valid credentials to be accessed. So, if you add the security dependency to a Spring Boot application and notice that things stop working as expected, don’t be alarmed—this is normal behavior. By adding security, you're restricting access to your endpoints, which were previously open to everyone.</p>
+
+<p><strong>2) Spring will create a default user and a random password for this user.</strong> The username of this default user is 'user' and the password will be logged in the console when we start up our application. Each time we start our application, Spring will generate a different password and display it in the console. We can therefore still use our application after authentication has been enabled, but we need to login with the username 'user' and the password that is provided by Spring.</p>
+<p><strong>Note:</strong> Spring stops giving you this default user when you start implementing your own custom security by creating a <code>SecurityFilterChain</code> bean or other custom security beans like <code>UserDetailsService</code>, <code>PasswordEncoder</code>, <code>AuthenticationManager</code>, etc. Don’t get distracted by the fact that I mention several security beans. What they do is not important right now. Just remember that if Spring no longer provides a default user, it’s because you’ve started implementing custom security yourself.</p>
+
+<p><strong>3) It enables CSRF Protection.</strong> CSRF stands for Cross-Site Request Forgery. This CSRF protection applies specifically to state-changing HTTP requests. This means that when a user tries to send a POST (creating new resources), PUT (updating existing resources), DELETE (removing resources) or PATCH (partially updating resources) request, Spring will not allow the request unless the correct CSRF token is also sent along with the request. This is to prevent malicious actors from impersonating others online, which is what Cross-Site Request Forgery attacks aim to do. Don't dwell too much on CSRF for now. Just know that it exists and that Spring Security by default protects against it.</p>
+
+<p><strong>4) It enables form login.</strong> When an unauthenticated user attempts to access a protected resource in the application, Spring Security will redirect them to a default login page that contains an HTML form where the user is prompted to enter their username and password. Upon successful login, Spring creates a session for the user, grants access to the requested resource, and redirects them back to the page they were trying to access before the login.
+<br>If the credentials are incorrect, Spring will display an error message (usually "Bad credentials") and present the login page again.
+<br>By default, the login page is served at the <code>/login</code> endpoint.</p>
+<p><strong>Note:</strong> Spring is highly customizable. For example, we can configure where Spring redirects the user after a successful login, or specify a different page to redirect to if the login fails. Additionally, we can change the default login page from <code>/login</code> to any custom URL. Essentially, Spring allows us to modify almost every aspect of the security flow to suit our needs.</p>
+
+<p><strong>5) It enables password encoding.</strong> Spring creates a default user with username "user" and a random password. Spring will first encode this password and it's only this encoded version of the password that will be shown in the console. It's good practice to never show passwords without encoding them. So Spring Security enables this by default. The default encryption method used by Spring is BCrypt encoding. Don't worry about BCrypt for now, just know that it's the default encryption method.</p>
+<h3>Configuring authentication and authorization.</h3>
+<p>Security comes down to authentication and authorization.</p>
+
+<p><strong>Authentication</strong> means answering the question: Is the user who he says he is? And is usually handled through the verification of a username/password combination.</p>
+
+<p><strong>Authorization</strong> means answering the question: now that we authenticated the user and know who he is, what is this user allowed to do or have access to in our application?</p>
+
+<p>To configure these security aspects in our Spring application, we need a class that is annotated with two annotations, namely <code>@Configuration</code> and <code>@EnableWebSecurity</code>.</p>
+
+<p>The <code>@Configuration</code> annotation tells Spring to treat the class as a source of bean definitions, indicating that the class will be used to configure things. This results in Spring processing the class during startup to configure and manage the beans defined within it.</p>
+
+<p>The <code>@EnableWebSecurity</code> annotation tells Spring that we are providing a custom security configuration and may want to override the default security behavior (like default form login, default user, password encoding, etc.).</p>
+
+<p><code>@EnableWebSecurity</code><strong> is not strictly required in a Spring Boot application.</strong> Spring Boot automatically enables Spring Security with its default settings when you add the <code>spring-boot-starter-security</code> dependency. If we want to customize the default settings, we can do so by defining the necessary configuration beans, such as <code>SecurityFilterChain</code> or <code>UserDetailsService</code>, and without using <code>@EnableWebSecurity</code>. <br> (Don't worry about <code>SecurityFilterChain</code> or <code>UserDetailsService</code> for now. They will be explained later.)</p>
+
+<p>On the other hand, if we are building a Spring application (so not a Spring Boot application but a Spring application), <code>@EnableWebSecurity</code> is necessary to activate Spring Security. This is because in a Spring application there is less "magic" that does things for us behind the scenes than in a Spring Boot application. And in that case, we need to explicitly tell our framework that it needs to enable Security. </p>
+
+<p>Therefore, the class that handles the security configuration is usually annotated with both <code>@Configuration</code> and <code>@EnableWebSecurity</code> (regardless of whether it's maybe a Spring Boot application and it doesn't actually really need to have the <code>@EnableWebSecurity</code> annotation).</p>
+
+<p>Now that we have annotated a class with <code>@Configuration</code> and <code>@EnableWebSecurity</code>, we are ready to start handling the security aspects ourselves.</p>
+
+<p>In Spring Security, <strong>authorization comes before authentication.</strong> This may seem counterintuitive at first, as we would expect to determine who the user is first and only then figure out what this user is allowed to do. However, this approach makes sense in the context of how Spring Security is designed.
+
+The default behavior of Spring Security is to protect all endpoints by requiring authentication. This means that, by default, a user cannot access any endpoints, including the login page, unless they are authenticated.
+
+This creates a bit of a catch-22: you can’t access the login page unless you're already logged in. But to be able to login, you need to access the login page.</p>
+
+<p>That's why authorization comes first: we need to authorize users that are not logged in to have access to the login page.</p>
+
+<p><strong>Note:</strong> It was a deliberate decision by the Spring developers to opt for this default behavior. They could have also done the opposite—namely, granting access to all endpoints by default and only securing those that explicitly need to be secured. However, this would be the less safe option. It's better to secure everything by default and then open up only what needs to be accessible, rather than the other way around.</p>
+
+<p>Since Spring is highly customizable, as a developer, you could still take the opposite approach—opening everything up and closing only those endpoints you want to keep restricted. However, I would advise you to follow the philosophy of the framework you're working with. You'll have an easier time and a more enjoyable experience that way.</p>
+<h3>Authorization.</h3>
+<p>Since authorization comes first, we will also talk about that aspect of Spring Security first.
+
+The Object that is responsible for handling authorization in a Spring application is the <code>SecurityFilterChain</code>.
+
+So, if we want to handle authorization, we need to define a bean of the type <code>SecurityFilterChain</code>.</p>
+
+<p> This bean takes an <code>HttpSecurity</code> object as its parameter.
+
+<code>HttpSecurity</code> is an object that allows us to configure web-based security for HTTP requests. And any interaction between our users and our application will be done in the form of an HTTP request. In other words: <code>HttpSecurity</code> allows us to handle who is allowed to visit which of the endpoints in our application.</p>
+
+<p>The code looks like this:</p>
+
+<pre>
+@Bean
+SecurityFilterChain configure(HttpSecurity http) {
+}
+</pre>
+
+<p>To handle authorization we use the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code>. This method takes a <code>Customizer&lt;AuthorizeHttpRequestsConfigurer&lt;HttpSecurity&gt;.AuthorizationManagerRequestMatcherRegistry&gt;</code> as its parameter. That is a very big word. But don't let this scare you. It's just a <code>Customizer</code>. And a <code>Customizer</code> is a functional interface that takes an object and returns nothing (<code>void</code>). Customizers are often used in Spring Security to configure security settings without needing to create full configuration classes.</p>
+
+<p>The <code>Customizer</code> here takes an <code>AuthorizationManagerRequestMatcherRegistry</code> object, which is nothing more than a configuration class in Spring Security that allows us to define authorization rules for different HTTP request patterns. Here are some of the methods of <code>AuthorizationManagerRequestMatcherRegistry</code> that we can use to handle authorization:</p>
+<table>
+    <tr>
+        <th>Method</th>
+        <th>Purpose</th>
+    </tr>
+    <tr>
+        <td><code>.requestMatchers("/path")</code></td>
+        <td>Matches specific URL patterns</td>
+    </tr>
+    <tr>
+        <td><code>.requestMatchers(HttpMethod.GET, "/api/**")</code></td>
+        <td>Matches requests by HTTP method</td>
+    </tr>
+    <tr>
+        <td><code>.anyRequest()</code></td>
+        <td>Matches all remaining requests</td>
+    </tr>
+    <tr>
+        <td><code>.hasRole("ADMIN")</code></td>
+        <td>Requires users to have a specific role</td>
+    </tr>
+    <tr>
+        <td><code>.authenticated()</code></td>
+        <td>Requires authentication but no specific role</td>
+    </tr>
+    <tr>
+        <td><code>.permitAll()</code></td>
+        <td>Allows all users (even unauthenticated ones)</td>
+    </tr>
+</table>
+<p>At this point you are probably confused. I talked about <code>SecurityFilterChain</code> taking a <code>HttpSecurity</code> object. And using this object's methods. And then some <code>Customizer</code> comes in and a <code>AuthorizationManagerRequestMatcherRegistry</code> as well. It may all seem very complicated, but the code examples will show you that it's very easy to use.</p>
+
+<p>For instance, we use the <code>Customizer</code> and <code>AuthorizationManagerRequestMatcherRegistry</code> in our application while barely even realizing it.The <code>Customizer</code> is barely noticeable because it's simply a container that allows us to use a lambda, making our configuration more concise and readable.</p>
+
+<p>Similarly, the <code>AuthorizationManagerRequestMatcherRegistry</code> is not something we need to worry about. It's just the object we reference inside the lambda to define our security rules. We can name it anything we want, since it's simply the parameter being passed into the lambda function. <br>Its role is to provide methods that let us specify which endpoints require authentication and which do not. <p>If we analyze this code: <code>http.authorizeHttpRequests(auth -> auth)</code> then <code>http</code> = the HttpSecurity object. We call it's method <code>.authorizeHttpRequests()</code>. In this method we can use a lambda and the object that we use in this lamba is the <code>AuthorizationManagerRequestMatcherRegistry</code>, which we have named <code>auth</code> here.</p>
+<p>It's the methods of this <code>AuthorizationManagerRequestMatcherRegistry</code> that we will use to handle authorization.
+
+With these methods we define which requests should be permitted, authenticated, or restricted based on roles, authentication, or other conditions. A code example explains it better than words could do:</p>
+
+<pre>
+@Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http.authorizeHttpRequests(auth -> auth
+            
+            //Allow only users with "ADMIN" role to access /admin/**
+            .requestMatchers("/admin/**").hasRole("ADMIN")
+            
+            //Allow only users with "USER" role to access /user/**
+            .requestMatchers("/user/**").hasRole("USER")
+            
+            //Allow public access to /public/**
+            .requestMatchers("/public/**").permitAll()
+            
+            //All other requests require authentication
+            .anyRequest().authenticated());
+    
+    // Build and return the filter chain
+    return http.build();
+}
+</pre>
+<p>The API for <code>HttpSecurity</code> can be found at: <a href="https://docs.spring.io/spring-security/reference/api/java/org/springframework/security/config/annotation/web/builders/HttpSecurity.html" target="_blank"><code>HttpSecurity API</code></a> along with examples of its use.</p>
+<p>Note that the matchers are considered in order. Therefore, the following code will not do what we want it to do.</p> 
+
+<pre>
+@Configuration
+@EnableWebSecurity
+public class AuthorizeUrlsSecurityConfig {
+        
+   @Bean
+   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+           http
+               .authorizeHttpRequests()
+                   .requestMatchers("/**").hasRole("USER")
+                   .requestMatchers("/admin/**").hasRole("ADMIN");
+           return http.build();
+   }
+</pre>
+<p>The first matcher matches every request and therefore will prevent the second matcher from doing its work. A normal user who does not have administrator credentials will still get access to our <code>/admin</code> endpoint based on the first matcher that gives access to all endpoints starting with "/" <code>.requestMatcher("/**").hasRole("USER")</code>. And therefore, the second matcher <code>.requestMatchers("/admin/**").hasRole("ADMIN")</code> that is supposed to prevent this access, will not be effective.</p>
+<p>Swapping the matchers, so the <code>.requestMatchers("/admin/**").hasRole("ADMIN")</code> comes first, solves the problem.</p>
+
+<p>When we define a <code>SecurityFilterChain</code>, we are overwriting the defaults. This has some consequences. For instance, Spring no longer presents the user with a login form when he is not authenticated and is trying to access an endpoint that requires authentication. Take for instance this <code>SecurityFilterChain</code>:</p>
+
+<pre>
+@Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/private").authenticated()
+            .anyRequest().permitAll()
+        );
+    return http.build();
+}
+</pre>
+
+<p>All requests are permitted (no need to be authenticated) except the <code>/private</code> endpoint which requires authentication. The default Spring Security behavior is to present users with a login page for those endpoints that require authentication. But since we have overwritten this default behavior by using our own <code>SecurityFilterChain</code>, a user that is not logged in will no longer be presented with a login form when they try to visit our <code>/private</code> endpoint. What they will see instead is a generic error page informing them of a Forbidden Error with error code 403.</p> 
+<p>If we want to present our user with a login form for endpoints that require authentication, we now need to explicitly tell Spring that we want to do so. Like in the following code example:</p>
+<pre>
+@Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/private").authenticated()
+            .anyRequest().permitAll()
+        )
+        .formLogin(Customizer.withDefaults());
+    return http.build();
+}
+</pre>
+
+<p>Ok, our user will now be presented with a default login page configured by Spring at <code>/login</code> (the default login page).</p>
+
+<p><strong>Note:</strong> we could overwrite this to present the user with a different login endpoint if we wanted. But for now, I will keep this as default.</p>
+<h3>Authentication</h3>
+<p>If we present the user with a login page, Spring will receive a username and password when the user fills out the form and submits it. It then needs to verify these credentials.
+
+To do this, Spring must know where to retrieve the necessary information to be able to handle this verification. Should it check a database, look in memory, or search the cache?
+Or does this information come from external authentication providers (OAuth2, LDAP), configuration files or environment variables (not recommended for production), API's or web services? </p>
+<p>Spring expects us to provide it with a <code>UserDetailsService</code> to help it find this information.</p>
+
+<p>A <code>UserDetailsService</code> is nothing more than an interface that has one method: <code>loadUserByUsername(String username)</code>. This method does nothing but go to the place where it can find the information regarding our users, fetch the information about the current user based on the provided username and return this in the form of a <code>UserDetails</code> object. </p>
+
+<p>A <code>UserDetails</code> object is an object that implements the <code>UserDetails</code> interface. Spring uses this interface to authenticate users. This object has to implement the following methods: <code>getAuthorities()</code>, <code>getPassword()</code>, <code>getUsername()</code>, <code>isAccountNonExpired()</code>, <code>isAccountNonLocked()</code>, <code>isCredentialsNonExpired()</code>, <code>isEnabled()</code>. Which are all methods that answer the question if a user exist in our system and if his account is still a valid account. </p>
+
+<p>This might seem complicated, but is actually quite straightforward. When a user tries to access our application, Spring needs to verify their identity. To do this, it expects to receive the user’s information in a standardized format—something it can easily understand and work with. That standardized format is the <code>UserDetails</code> object. Think of it as a well-organized report about the user, containing their username, password, and roles.</p>
+
+<p>By providing Spring with a <code>UserDetails</code> object, we're giving it the necessary information to authenticate the user. Spring can then compare the credentials provided during login with the stored details and decide whether to grant access.</p>
+
+<p>And to pass this information to Spring, we need a component that knows where to find user data and how to convert it into a <code>UserDetails</code> object. That’s exactly the role of the <code>UserDetailsService</code>.</p>
+
+<p>Note: Spring Security has a <code>User</code> class, which provides a convenient way to create a <code>UserDetails</code> object (because Spring's <code>User</code> class implements the <code>UserDetails</code> interface). In this class we only need to provide a username, a password and a collection of roles (can also be just one role). The other fields of the <code>User</code> class (remember it implements <code>UserDetails</code> interface, so it needs to implement the following methods: <code>getAuthorities()</code>, <code>getPassword()</code>, <code>getUsername()</code>, <code>isAccountNonExpired()</code>, <code>isAccountNonLocked()</code>, <code>isCredentialsNonExpired()</code>, <code>isEnabled()</code> and therefore also needs to have corresponding fields) are automatically set for us when we provide just a username, a password, and a collection of roles.</p>
+
+<p>Here is a bean that implements the <code>UserDetailsService</code> and makes use of this convenient <code>User</code> class. It has only one method that takes in a String and returns a <code>UserDetails</code> object:</p>
+
+<pre>
+@Bean
+public UserDetailsService userDetailsService() {
+    return username -> User.withUsername("user")
+                           .password("{noop}password")
+                           .roles("USER")
+                           .build();
+}
+</pre>
+
+<p>This current implementation serves only as an example. It will always return a <code>UserDetails</code> object that has "user" as its username. And inform Spring that the password is not encrypted (<code>{noop}</code> = no encryption) and is "password". If a user tries to login with the credentials <code>user/password</code>, then this implementation would allow them to be authenticated. In a real production environment, our <code>UserDetailsService</code> will return different usernames and actual encrypted passwords that are connected to those usernames.</p>
+
+<p>Here's another example that can be useful if you want to define custom endpoints in your <code>SecurityFilterChain</code> and experiment with different role-based access. Here we keep the user information in memory, rather than fetching it from a database or an external source like we would do in a production environment.</p>
+
+<pre>
+@Bean
+public UserDetailsService users() {
+    UserDetails user = User.builder() 
+        .username("user")
+        .password("{noop}user")
+        .roles("USER")
+        .build();
+    UserDetails admin = User.builder()
+        .username("admin")
+        .password("{noop}admin")
+        .roles("USER", "ADMIN")
+        .build();
+    return new InMemoryUserDetailsManager(user, admin);
+}
+</pre>
+
+<p>The above code would allow a user to login with the credentials user/user. And it would allow an administrator to login with the credentials admin/admin. By providing this bean, Spring has everything it needs to authenticate both this regular user and this administrator.</p>
+
+<p>Since all passwords should be encrypted, we need to tell Spring how we would like to handle this encryption in our application. To do this, we need to give Spring a bean of type <code>PasswordEncoder</code>. This is an interface that allows Spring to encrypt passwords and to compare a non-encrypted password provided by the user to its encrypted counterpart provided by <code>UserDetails</code>.</p>
+
+<p>Here's an example of such a bean that returns a <code>PasswordEncoder</code>, which is in this case a <code>BCryptPasswordEncoder</code>. We can use a lot of different encryption methods in Spring. <code>BCryptPasswordEncoder</code> is a method that is commonly used. If we would like to use a different method, we can just change the return value of our <code>PasswordEncoder</code> bean:</p>
+
+<pre>
+@Bean
+public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+}
+</pre>
+
+<p>Spring Security 5 introduced the <code>DelegatingPasswordEncoder</code> as its default encoder. It's a multifunctional encoder that automatically detects the correct encoding based on the stored password's prefix and can handle all those different encodings.</p>
+
+<pre>
+@Bean
+public PasswordEncoder passwordEncoder() {
+    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+}
+</pre>
+
+<p>Here are examples of passwords encoded with different algorithms and their respective prefixes using Spring Security's <code>PasswordEncoder</code>.</p>
+<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+  <div style="width: 20%; font-weight: bold;">Prefix</div>
+  <div style="width: 30%; font-weight: bold;">Hashing Algorithm</div>
+  <div style="width: 50%; font-weight: bold;">Example Encoded Password</div>
+</div>
+
+<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+  <div style="width: 20%;">{bcrypt}</div>
+  <div style="width: 30%;">BCrypt</div>
+  <div style="width: 50%;">{bcrypt}$2a$10$7EqJtq98hPqEX7fNZaFWoO...</div>
+</div>
+
+<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+  <div style="width: 20%;">{argon2}</div>
+  <div style="width: 30%;">Argon2</div>
+  <div style="width: 50%;">{argon2}$argon2i$v=19$m=1024,t=2,p=1$Y2F2...</div>
+</div>
+
+<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+  <div style="width: 20%;">{pbkdf2}</div>
+  <div style="width: 30%;">PBKDF2</div>
+  <div style="width: 50%;">{pbkdf2}sha256$100000$7d935e4f8b04...</div>
+</div>
+
+<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+  <div style="width: 20%;">{noop}</div>
+  <div style="width: 30%;">No Encoding</div>
+  <div style="width: 50%;">{noop}password123</div>
+</div>
+<p>The <code>DelegatingPasswordEncoder</code> will read the prefix, such as {pbkdf2}, and determine the appropriate password encoding to use based on the prefix.</p>
+<p>Spring Security authenticates a user by following these steps:</p>
+
+<p><strong>1. Retrieve user details.</strong> It fetches the username and encrypted password from the <code>UserDetails</code> object provided by the <code>UserDetailsService</code>.</p>
+
+<p><strong>2. Encrypt the input password.</strong> It takes the password entered by the user in the login form and encrypts it using the same password encoder that was used to store the original password.</p>
+
+<p><strong>3. Compare passwords.</strong> It checks if the encrypted version of the input password matches the stored password from the <code>UserDetails</code> object.</p>
+
+<p><strong>4. Grant or deny access.</strong> If the passwords match, the user is successfully authenticated; otherwise, authentication fails.</p>
+
+<p>So, to recapitulate: there are five requirements for Spring Security to work in our application:</p>
+
+<ul>
+    <li>The <code>spring-boot-starter-security</code> dependency.</li>
+    <li>A class annotated with <code>@Configuration</code> and <code>@EnableWebSecurity</code>.</li>
+    <li>A <code>SecurityFilterChain</code> bean.</li>
+    <li>A <code>UserDetailsService</code> bean.</li>
+    <li>A <code>PasswordEncoder</code> bean.</li>
+</ul>
+
+<p><strong>Note:</strong> There is actually only one requirement for Spring Security to work, not five—the <code>spring-boot-starter-security</code> dependency. With this dependency alone, Spring Security will be enabled with default settings. But these defaults are often impractical for real-world applications.</p>
+
+<p>To customize the security configuration, only a <code>SecurityFilterChain</code> bean is required. As long as this bean is defined in a component-scanned class, Spring Boot will handle the rest. Therefore, a class annotated with <code>@Configuration</code> and <code>@EnableWebSecurity</code> is not strictly necessary in a Spring Boot application.</p>
+
+<p>However, if we are using Spring (without Spring Boot), then <code>@EnableWebSecurity</code> is required to activate Spring Security. Additionally, while the <code>@Configuration</code> annotation is not mandatory, it is considered best practice when defining configuration classes.</p>
+
+<p>If we want to allow more users than just the default one generated by Spring Security, a <code>UserDetailsService</code> bean becomes necessary. This bean is responsible for verifying users by retrieving the user information we have stored. It constructs a <code>UserDetails</code> object based on the stored data and provides it to Spring Security for authentication.</p>
+
+<p>A <code>PasswordEncoder</code> is not strictly required for Spring Security to function. We could store passwords in plain text, though doing so would be highly insecure. If we are going to ignore password encryption, why bother using Spring Security at all?</p>
+
+<p>So, while the only real minimum requirement for Spring Security is the <code>spring-boot-starter-security</code> dependency, we typically say there are five key requirements due to practical implementation needs.</p>
+
+<p>In summary, these five building blocks form the foundation of Spring Security’s authentication and authorization process. The spring-boot-starter-security dependency activates security features by default, restricting access to endpoints. The @Configuration and @EnableWebSecurity annotations (though not always required in Spring Boot) help define and customize security settings. The SecurityFilterChain bean dictates how requests are secured, determining which endpoints require authentication and what roles users need. The UserDetailsService bean retrieves user information from a database or other storage and transforms it into a UserDetails object that Spring Security can process. Finally, the PasswordEncoder bean ensures passwords are securely hashed and compared during authentication. Together, these components enable a flexible and robust security system.</p>
+<p>I hope this article has given you a clear picture of the core building blocks of Spring Security and how they fit together. With this foundation, you should now be well-prepared to dive deeper into the world of Spring Security and explore it's finer details.</p>
+
+</div>
+
+</body>
+</html>
+
