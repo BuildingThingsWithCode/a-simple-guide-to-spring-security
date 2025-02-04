@@ -73,7 +73,7 @@ With this article, my goal is to provide exactly what I wish I had back then: a 
 
 The default behavior of Spring Security is to protect all endpoints by requiring authentication. This means that, by default, a user cannot access any endpoints, including the login page, unless they are authenticated.
 
-This creates a bit of a catch-22: you can’t access the login page unless you're already logged in. But to be able to login, you need to access the login page.</p>
+This creates a bit of a catch-22: you can’t access the login page unless you are authenticated. But to get authenticated, you need to use the login page.</p>
 
 <p>That's why authorization comes first: we need to authorize users that are not logged in to have access to the login page.</p>
 
