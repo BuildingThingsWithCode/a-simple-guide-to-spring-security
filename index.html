@@ -16,7 +16,7 @@
         <p style="margin: 0; font-size: 0.9em; color: gray;">February 4, 2025</p>
     </div>
 </div>
-		<h3>Preface</h3>
+		<h3>Preface.</h3>
 		<p>When I first started learning Spring Security, I found plenty of in-depth resources and tutorials, but I struggled to follow along. The problem was that I lacked a clear overview, a mental picture of how everything fit together. Without that foundation, all the detailed information felt overwhelming and disconnected.
 
 I was "not seeing the forest for the trees."
@@ -195,7 +195,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
 <p>Ok, our user will now be presented with a default login page configured by Spring at <code>/login</code> (the default login page).</p>
 
 <p><strong>Note:</strong> we could overwrite this to present the user with a different login endpoint if we wanted. But for now, I will keep this as default.</p>
-<h3>Authentication</h3>
+<h3>Authentication.</h3>
 <p>If we present the user with a login page, Spring will receive a username and password when the user fills out the form and submits it. It then needs to verify these credentials.
 
 To do this, Spring must know where to retrieve the necessary information to be able to handle this verification. Should it check a database, look in memory, or search the cache?
