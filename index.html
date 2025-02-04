@@ -137,7 +137,7 @@ public class ProjectConfig {
 
 </pre>
 <p>1) The method <code>securityFilterChain</code> is declared as a Spring Bean using @Bean, meaning Spring will manage and instantiate it as part of the application context. This bean is responsible for defining security configurations for the application.</p>
-<p>2) The authorizeHttpRequests() method is called on the HttpSecurity object, allowing us to configure request authorization rules. In this method we use a lambda expression <code>auth -></code> where <code>auth</code> is the name we give used to the <code>AuthorizationManagerRequestMatcherRegistry</code></p>
+<p>2) The <code>authorizeHttpRequests()</code> method is called on the <code>HttpSecurity</code> object, allowing us to configure request authorization rules. In this method we use a lambda expression <code>auth -></code> where <code>auth</code> is the name we give to the <code>AuthorizationManagerRequestMatcherRegistry</code>. This <code>AuthorizationManagerRequestMatcherRegistry</code> has methods that we can use to define the URL patterns that we want to target with our rules.</p>
 <p>3) We call the <code>requestMatches</code> method on the <code>AuthorizationManagerRequestMatcherRegistry</code> to define specific access rules for different URL patterns. This line specifies that any request matching the /admin/** pattern (e.g., /admin/dashboard, /admin/settings) can only be accessed by users who have the ADMIN role.</p>
 <p>4) Any request matching the /user/** pattern (e.g., /user/profile, /user/settings) requires the USER role to access.</p>
 <p>5) This line allows unrestricted access to any request matching /public/**. This means that anyone, whether authenticated or not, can access endpoints that start with <code>/public</code></p>
