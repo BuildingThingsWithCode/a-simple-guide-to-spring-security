@@ -110,13 +110,11 @@ public class ProjectConfig {
 }
 
 </pre>
-<p> The <code>SecurityFilterChain</code> bean takes an <code>HttpSecurity</code> object as its parameter.<br>
-
-<code>HttpSecurity</code> is an object that allows us to configure web-based security for HTTP requests. And since any interaction between our users and our application will be done in the form of an HTTP request, it's an important part of our application.</p>
+<p>The <code>SecurityFilterChain</code> bean takes an <code>HttpSecurity</code> object as its parameter.<code>HttpSecurity</code> is an object that allows us to configure web-based security for HTTP requests. And since any interaction between our users and our application will be done in the form of an HTTP request, it's an important part of our application.</p>
 
 <p>To handle authorization we use the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code>. With this method we configure authorization rules for incoming HTTP requests. HttpSecurity determines who is allowed to access which endpoints based on user roles, authentication status, or other conditions.</p>  
-<p>Inside the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code> we use a lambda function with an <code>AuthorizationManagerRequestMatcherRegistry</code> as it's parameter. We use this parameter inside the lambda because it has <code>requestMatchers(String pattern)</code> methods that we can use to specify which URL patterns the rules apply to.
-We can name this lambda parameter anything we want, I called it <code>auth</code> in our example.</p>
+<p>Inside the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code> we use a lambda function with an <code>AuthorizationManagerRequestMatcherRegistry</code> as it's parameter. That parameter has <code>requestMatchers(String pattern)</code> methods that we can use to specify which URL patterns the rules apply to.
+We can name this lambda parameter anything we want, I called it <code>auth</code> in the code example.</p>
 <p>Let's go over the code example line by line to demonstrate what's going on:</p>
 	    
 
@@ -126,18 +124,25 @@ We can name this lambda parameter anything we want, I called it <code>auth</code
 public class ProjectConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> 				1)
-            auth.requestMatchers("/admin/**").hasRole("ADMIN")		2)
-                .requestMatchers("/user/**").hasRole("USER")		3)
-                .requestMatchers("/public/**").permitAll()		4)
-                .anyRequest().authenticated()				5)
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {	1)
+        http.authorizeHttpRequests(auth -> 							2)
+            auth.requestMatchers("/admin/**").hasRole("ADMIN")					3)
+                .requestMatchers("/user/**").hasRole("USER")					4)
+                .requestMatchers("/public/**").permitAll()					5)
+                .anyRequest().authenticated()							6)
         );
-        return http.build();						6)
+        return http.build();									7)
     }
 }
 
 </pre>
+<p>1) The method <code>securityFilterChain</code> is declared as a Spring Bean using @Bean, meaning Spring will manage and instantiate it as part of the application context. This bean is responsible for defining security configurations for the application.</p>
+<p>2) The authorizeHttpRequests() method is called on the HttpSecurity object, allowing us to configure request authorization rules. In this method we use a lambda expression <code>auth -></code> where <code>auth</code> is the name we give used to the <code>AuthorizationManagerRequestMatcherRegistry</code></p>
+<p>3) We call the <code>requestMatches</code> method on the <code>AuthorizationManagerRequestMatcherRegistry</code> to define specific access rules for different URL patterns. This line specifies that any request matching the /admin/** pattern (e.g., /admin/dashboard, /admin/settings) can only be accessed by users who have the ADMIN role.</p>
+<p>4) Any request matching the /user/** pattern (e.g., /user/profile, /user/settings) requires the USER role to access.</p>
+<p>5) This line allows unrestricted access to any request matching /public/**. This means that anyone, whether authenticated or not, can access endpoints that start with <code>/public</code></p>
+<p>6) This line ensures that any other request (not explicitly mentioned in the previous matchers) must be authenticated.</p>
+<p>7) The http.build() call finalizes the HttpSecurity configuration and returns a SecurityFilterChain object, which Spring Security uses to enforce the security rules in the application.</p>
 <p>The API for <code>HttpSecurity</code> can be found at: <a href="https://docs.spring.io/spring-security/reference/api/java/org/springframework/security/config/annotation/web/builders/HttpSecurity.html" target="_blank"><code>HttpSecurity API</code></a> along with examples of its use.</p>
 <p>Note that the matchers are considered in order. Therefore, the following code will not do what we want it to do.</p> 
 
