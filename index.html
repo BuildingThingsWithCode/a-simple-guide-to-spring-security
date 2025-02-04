@@ -238,14 +238,14 @@ Or does this information come from external authentication providers (OAuth2, LD
 <pre>
 @Bean
 public UserDetailsService userDetailsService() {
-    return username -> User.withUsername("user")
+    return username -> User.withUsername("username")
                            .password("{noop}password")
                            .roles("USER")
                            .build();
 }
 </pre>
 
-<p>This current implementation serves only as an example. It will always return a <code>UserDetails</code> object that has "user" as its username. And inform Spring that the password is not encrypted (<code>{noop}</code> = no encryption) and is "password". If a user tries to login with the credentials <code>user/password</code>, then this implementation would allow them to be authenticated. In a real production environment, our <code>UserDetailsService</code> will return different usernames and actual encrypted passwords that are connected to those usernames.</p>
+<p>This current implementation serves only as an example. It will always return a <code>UserDetails</code> object that has "username" as its username. And inform Spring that the password is not encrypted (<code>{noop}</code> = no encryption) and is "password". If a user tries to login with the credentials <code>username/password</code>, then this implementation would allow them to be authenticated. In a real production environment, our <code>UserDetailsService</code> will return different usernames and actual encrypted passwords that are connected to those usernames.</p>
 
 <p>Here's another example that can be useful if you want to define custom endpoints in your <code>SecurityFilterChain</code> and experiment with different role-based access. Here we keep the user information in memory, rather than fetching it from a database or an external source like we would do in a production environment.</p>
 
