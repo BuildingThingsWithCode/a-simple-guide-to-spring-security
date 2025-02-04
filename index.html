@@ -83,7 +83,7 @@ This creates a bit of a catch-22: you can’t access the login page unless you a
 
 <p>That's why authorization comes first: we need to authorize users that are not logged in to have access to the login page.</p>
 
-<p><strong>Note:</strong> It was a deliberate decision by the Spring developers to opt for this default behavior. They could have also done the opposite and granted access to all endpoints by default, only securing those that explicitly needed to be secured. However, this would be the less safe option. It's better to secure everything by default and then open up only what needs to be accessible, rather than the other way around.</p>
+<p><strong>Note:</strong> It was a deliberate decision by the Spring developers to opt for this default behavior. They could also have done the opposite and granted access to all endpoints by default, only securing those that explicitly needed to be secured. However, this would be the less safe option. It's better to secure everything by default and then open up only what needs to be accessible, rather than the other way around.</p>
 
 <p>Since Spring is highly customizable, as a developer, you could still take the opposite approach, opening everything up and closing only those endpoints you want to keep restricted. However, I would advise you to follow the philosophy of the framework you're working with. You'll have an easier time and a more enjoyable experience that way. And it's simply the safer option.</p>
 <h3>Authorization.</h3>
