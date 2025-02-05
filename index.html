@@ -312,15 +312,12 @@ public PasswordEncoder passwordEncoder() {
 
 <strong>Grant or deny access.</strong> If the passwords match, the user is successfully authenticated; otherwise, authentication fails.</p>
 
-<p>So, to recapitulate: there are five requirements for Spring Security to work in our application:</p>
-
-<ul>
-    <li>The <code>spring-boot-starter-security</code> dependency.</li>
-    <li>A class annotated with <code>@Configuration</code> and <code>@EnableWebSecurity</code>.</li>
-    <li>A <code>SecurityFilterChain</code> bean.</li>
-    <li>A <code>UserDetailsService</code> bean.</li>
-    <li>A <code>PasswordEncoder</code> bean.</li>
-</ul>
+<p>So, to recapitulate: there are five requirements for Spring Security to work in our application:<br>
+- The <code>spring-boot-starter-security</code> dependency.<br>
+- A class annotated with <code>@Configuration</code> and <code>@EnableWebSecurity</code>.<br>
+- A <code>SecurityFilterChain</code> bean.<br>
+- A <code>UserDetailsService</code> bean.<br>
+- A <code>PasswordEncoder</code> bean.</p>
 
 <p><strong>Note:</strong> There is actually only one requirement for Spring Security to work, not five—the <code>spring-boot-starter-security</code> dependency. With this dependency alone, Spring Security will be enabled with default settings. But these defaults are often impractical for real-world applications.</p>
 
