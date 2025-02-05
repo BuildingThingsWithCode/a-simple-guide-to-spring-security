@@ -49,6 +49,7 @@ code {
     max-width: 800px;
     margin: 40px auto;
     padding: 20px;
+    border: 1px solid #000000; 
 }
 
 /* Style for the iframe within Giscus */
