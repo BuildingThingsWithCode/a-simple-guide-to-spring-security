@@ -275,31 +275,31 @@ public PasswordEncoder passwordEncoder() {
 
 <p>Here are examples of passwords encoded with different algorithms and their respective prefixes using Spring Security's <code>PasswordEncoder</code>.</p>
 <pre>
-<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+<div style="display: flex; justify-content: space-between;">
   <div style="width: 20%; font-weight: bold;">Prefix</div>
   <div style="width: 30%; font-weight: bold;">Hashing Algorithm</div>
   <div style="width: 50%; font-weight: bold;">Example Encoded Password</div>
 </div>
 
-<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+<div style="display: flex; justify-content: space-between;">
   <div style="width: 20%;">{bcrypt}</div>
   <div style="width: 30%;">BCrypt</div>
   <div style="width: 50%;">{bcrypt}$2a$10$7EqJtq98hPqEX7fNZaFWoO...</div>
 </div>
 
-<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+<div style="display: flex; justify-content: space-between;">
   <div style="width: 20%;">{argon2}</div>
   <div style="width: 30%;">Argon2</div>
   <div style="width: 50%;">{argon2}$argon2i$v=19$m=1024,t=2,p=1$Y2F2...</div>
 </div>
 
-<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+<div style="display: flex; justify-content: space-between;">
   <div style="width: 20%;">{pbkdf2}</div>
   <div style="width: 30%;">PBKDF2</div>
   <div style="width: 50%;">{pbkdf2}sha256$100000$7d935e4f8b04...</div>
 </div>
 
-<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+<div style="display: flex; justify-content: space-between;">
   <div style="width: 20%;">{noop}</div>
   <div style="width: 30%;">No Encoding</div>
   <div style="width: 50%;">{noop}password123</div>
