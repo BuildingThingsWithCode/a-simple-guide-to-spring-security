@@ -22,7 +22,7 @@
 I was "not seeing the forest for the trees."
 
 With this article, my goal is to provide exactly what I wish I had back then: a clear, high-level understanding of Spring Security’s essential building blocks and how they work together. Once you have that foundation, diving into the details becomes much easier.</p>
-        <h3>The dependency and the effects of the dependency.</h3>
+        <h3>The Security Dependency.</h3>
         <p>
             To add Spring Security to our application, all we need to do is add the <code>spring-boot-starter-security</code>
             dependency to the application's dependencies. Since I'm using Maven in my project, this means adding the following code to the pom.xml file:
@@ -54,7 +54,7 @@ With this article, my goal is to provide exactly what I wish I had back then: a 
 <p><strong>Authentication</strong> means answering the question: Is the user who he says he is? And is usually handled through the verification of a username/password combination.</p>
 
 <p><strong>Authorization</strong> means answering the question: now that we authenticated the user and know who he is, what is this user allowed to do or have access to in our application?</p>
-
+<h3>A Configuration class.</h3>
 <p>To configure these security aspects in our Spring application, we need a class that is annotated with two annotations, namely <code>@Configuration</code> and <code>@EnableWebSecurity</code>.</p>
 
 <p>The <code>@Configuration</code> annotation tells Spring to treat the class as a source of bean definitions, indicating that the class will be used to configure the application. As a result, Spring processes the class during startup to register and manage the beans defined within it.<br>
@@ -86,7 +86,7 @@ This creates a bit of a catch-22: you can’t access the login page unless you a
 <p><strong>Note:</strong> It was a deliberate decision by the Spring developers to opt for this default behavior. They could also have done the opposite and granted access to all endpoints by default, only securing those that explicitly needed to be secured. However, this would be the less safe option. It's better to secure everything by default and then open up only what needs to be accessible, rather than the other way around.</p>
 
 <p>Since Spring is highly customizable, as a developer, you could still take the opposite approach, opening everything up and closing only those endpoints you want to keep restricted. However, I would advise you to follow the philosophy of the framework you're working with. You'll have an easier time and a more enjoyable experience that way. And it's simply the safer option.</p>
-<h3>Authorization.</h3>
+<h3>Authorization: the SecurityFilterChain.</h3>
 <p>Since authorization comes first, we will also talk about that aspect of Spring Security first.
 
 The Object that is responsible for handling authorization in a Spring application is the <code>SecurityFilterChain</code>.
@@ -195,6 +195,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
 <p>Ok, our user will now be presented with a default login page configured by Spring at <code>/login</code>.</p>
 
 <h3>Authentication.</h3>
+<h3>UserDetailsService and UserDetails.</h3>
 <p>If we present the user with a login page, Spring will receive a username and password when the user fills out the form and submits it. It then needs to verify these credentials.
 
 To do this, Spring must know where to retrieve the necessary information to be able to handle this verification. Should it check a database, look in memory, or search the cache?
@@ -249,6 +250,7 @@ public UserDetailsService users() {
 
 <p>The above code would allow a user to login with the credentials user/user. And it would allow an administrator to login with the credentials admin/admin. By providing this bean, Spring has everything it needs to authenticate both this regular user and this administrator.</p>
 
+<h3>PasswordEncoder.</h3>
 <p>Since all passwords should be encrypted, we need to tell Spring how we would like to handle this encryption in our application. To do this, we need to give Spring a bean of type <code>PasswordEncoder</code>. This is an interface that allows Spring to encrypt passwords and to compare a non-encrypted password provided by the user to its encrypted counterpart provided by <code>UserDetails</code>.</p>
 
 <p>Here's an example of such a bean that returns a <code>PasswordEncoder</code>, which is in this case a <code>BCryptPasswordEncoder</code>. We can use a lot of different encryption methods in Spring. <code>BCryptPasswordEncoder</code> is a method that is commonly used. If we would like to use a different method, we can just change the return value of our <code>PasswordEncoder</code> bean:</p>
