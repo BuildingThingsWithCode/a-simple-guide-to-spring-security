@@ -304,13 +304,13 @@ public PasswordEncoder passwordEncoder() {
 <p>The <code>DelegatingPasswordEncoder</code> will read the prefix, such as {pbkdf2}, and determine the appropriate password encoding to use based on the prefix.</p>
 <p>Spring Security authenticates a user by following these steps:</p>
 
-<p><strong>1. Retrieve user details.</strong> It fetches the username and encrypted password from the <code>UserDetails</code> object provided by the <code>UserDetailsService</code>.</p>
+<p><strong>Retrieve user details.</strong> It fetches the username and encrypted password from the <code>UserDetails</code> object provided by the <code>UserDetailsService</code>.<br>
 
-<p><strong>2. Encrypt the input password.</strong> It takes the password entered by the user in the login form and encrypts it using the same password encoder that was used to store the original password.</p>
+<strong>Encrypt the input password.</strong> It takes the password entered by the user in the login form and encrypts it using the same password encoder that was used to store the original password.<br>
 
-<p><strong>3. Compare passwords.</strong> It checks if the encrypted version of the input password matches the stored password from the <code>UserDetails</code> object.</p>
+<strong>Compare passwords.</strong> It checks if the encrypted version of the input password matches the stored password from the <code>UserDetails</code> object.<br>
 
-<p><strong>4. Grant or deny access.</strong> If the passwords match, the user is successfully authenticated; otherwise, authentication fails.</p>
+<strong>Grant or deny access.</strong> If the passwords match, the user is successfully authenticated; otherwise, authentication fails.</p>
 
 <p>So, to recapitulate: there are five requirements for Spring Security to work in our application:</p>
 
