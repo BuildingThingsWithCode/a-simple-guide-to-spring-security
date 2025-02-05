@@ -44,3 +44,16 @@ code {
     padding: 2px 4px; /* Padding around inline code */
     border-radius: 4px; /* Optional: rounded corners */
 }
+/* Style for Giscus comments section */
+.giscus {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* Optional: Add a subtle background and rounded corners */
+.giscus-frame {
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
