@@ -116,7 +116,7 @@ public class ProjectConfig {
 <p>To handle authorization, we use the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code>. This method sets up the framework to enforce security rules on incoming HTTP requests, allowing us to control access based on conditions like user roles, authentication status, and other factors.
 <p>Inside <code>authorizeHttpRequests</code>, we provide a lambda function that takes an <code>AuthorizationManagerRequestMatcherRegistry</code> as a parameter. The <code>AuthorizationManagerRequestMatcherRegistry</code> gives us access to the methods that define detailed authorization rules, such as matching specific URL patterns, enforcing role-based or authority-based access, and determining whether requests should be allowed, denied, or require authentication.</p>
 <p>So the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code> is where authorization rules are set. And the <code>AuthorizationManagerRequestMatcherRegistry</code> is the object we use within this method to actually specify and configure the access rules.</p>
-<p>Here are some of the methods of <code>AuthorizeRequestsConfigurer</code>:</p>
+<p>Here are some of the methods of <code>AuthorizationManagerRequestMatcherRegistry</code>:</p>
 <pre>
 <div style="display: flex; line-height: 1;">
   <div style="width: 50%;"><code>requestMatchers(String... patterns)</code></div>
