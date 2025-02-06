@@ -278,7 +278,8 @@ Or does this information come from external authentication providers (OAuth2, LD
 
 <p>A <code>UserDetails</code> object is an object that implements the <code>UserDetails</code> interface. Spring uses this interface to authenticate users. This object has to implement the following methods: <code>getAuthorities()</code>, <code>getPassword()</code>, <code>getUsername()</code>, <code>isAccountNonExpired()</code>, <code>isAccountNonLocked()</code>, <code>isCredentialsNonExpired()</code>, <code>isEnabled()</code>. Which are all methods that answer the question if a user exist in our system and if his account is still a valid account. </p>
 
-<p>This might seem complicated, but is actually quite straightforward. When a user tries to access our application, Spring needs to verify their identity. To do this, it expects to receive the user’s information in a standardized format—something it can easily understand and work with. That standardized format is the <code>UserDetails</code> object. Think of it as a well-organized report about the user, containing their username, password, and roles.</p>
+<p>This might seem complicated, but is actually quite straightforward.<br>
+ When a user tries to access our application, Spring needs to verify their identity. To do this, it expects to receive the user’s information in a standardized format—something it can easily understand and work with. That standardized format is the <code>UserDetails</code> object. Think of it as a well-organized report about the user, containing their username, password, and roles.</p>
 
 <p>By providing Spring with a <code>UserDetails</code> object, we're giving it the necessary information to authenticate the user. Spring can then compare the credentials provided during login with the stored details and decide whether to grant access.</p>
 
