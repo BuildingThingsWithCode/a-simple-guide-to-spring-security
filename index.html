@@ -223,7 +223,7 @@ http.authorizeHttpRequests(new Customizer<AuthorizeHttpRequestsConfigurer<HttpSe
 <p>The class we use in the <code>Customizer</code> is <code>AuthorizationManagerRequestMatcherRegistry</code>, which is an inner class of <code>AuthorizeHttpRequestsConfigurer</code>.
 So, what we are actually doing in the <code>authorizeHttpRequests</code> method, is use a <code>Customizer</code> to allow us to use 
 the methods of <code>AuthorizationManagerRequestMatcherRegistry</code> within a lambda function.</p>
-<p><strong>For those who wanted to skip the nerdy bit, continue reading here:</strong>
+<p><strong>For those who wanted to skip the nerdy bit, continue reading here:</strong></p>
 <p>Note that the matchers are considered in order. Therefore, the following code will not do what we want it to do.</p> 
 
 <pre><code>
@@ -239,7 +239,7 @@ public class AuthorizeUrlsSecurityConfig {
                    .requestMatchers("/admin/**").hasRole("ADMIN");
            return http.build();
    }
-<code>
+</code>
 </pre>
 <p>The first matcher matches every request and therefore will prevent the second matcher from doing its work. A normal user who does not have administrator credentials will still get access to our <code>/admin</code> endpoint based on the first matcher that gives access to all endpoints starting with "/" <code>.requestMatcher("/**").hasRole("USER")</code>. And therefore, the second matcher <code>.requestMatchers("/admin/**").hasRole("ADMIN")</code> that is supposed to prevent this access, will not be effective.</p>
 <p>Swapping the matchers, so the <code>.requestMatchers("/admin/**").hasRole("ADMIN")</code> comes first, solves the problem.</p>
