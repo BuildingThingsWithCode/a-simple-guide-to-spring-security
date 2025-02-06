@@ -158,14 +158,14 @@ public class ProjectConfig {
 public class ProjectConfig {
 
       @Bean
- 1)   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {	
- 2)       http.authorizeHttpRequests(auth -> 							
- 3)           auth.requestMatchers("/admin/**").hasRole("ADMIN")					
- 4)               .requestMatchers("/user/**").hasRole("USER")					
- 5)               .requestMatchers("/public/**").permitAll()					
- 6)               .anyRequest().authenticated()							
+<strong>1)</strong>   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {	
+<strong>2)</strong>       http.authorizeHttpRequests(auth -> 							
+<strong>3)</strong>           auth.requestMatchers("/admin/**").hasRole("ADMIN")					
+<strong>4)</strong>               .requestMatchers("/user/**").hasRole("USER")					
+<strong>5)</strong>               .requestMatchers("/public/**").permitAll()					
+<strong>6)</strong>               .anyRequest().authenticated()							
         );
- 7)       return http.build();									
+<strong>7)</strong>       return http.build();									
     }
 }
 </code>
