@@ -8,5 +8,10 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<p></p>
+<p>Go more in depth and expand on the previous article. Subject matter:</p>
+<p>AuthenticationManager is the interface that defines how Spring Security's Filters perform authentication.</p>
+<p>ProviderManager is the most commonly used implementation of AuthenticationManager.</p>
+<p>Both UserDetailsService and PasswordEncoder are fields in the Provider. So for instance the DaoAuthenticationProvider will have UserDetailsService and PasswordEncoder as fields.
+Since the provider implements the AuthenticationManager, it has to overwrite the authenticate() method. Inside this method to provider will loop over all the providers that are given to
+Spring in the application and will try to authenticate the user with each of the providers that it has access to.</p>
 </body>
