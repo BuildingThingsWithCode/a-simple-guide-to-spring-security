@@ -201,7 +201,7 @@ http.authorizeHttpRequests(auth -> {
         .anyRequest().authenticated();
 });	
 </pre>
-<p>We can rewrite it in a more verbose way, but it does the exact same thing:</p>
+<p>It does the exact same thing, but is a lot less verbose than this code:</p>
 <pre>
 http.authorizeHttpRequests(new Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry>() {
     @Override
