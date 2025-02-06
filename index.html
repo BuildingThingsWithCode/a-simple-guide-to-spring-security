@@ -114,8 +114,8 @@ public class ProjectConfig {
 </pre>
 <p>The <code>SecurityFilterChain</code> bean takes an <code>HttpSecurity</code> object as its parameter.<code>HttpSecurity</code> is an object that allows us to configure web-based security for HTTP requests. And since any interaction between our users and our application will be done in the form of an HTTP request, it's an important part of our application.</p>
 <p>To handle authorization, we use the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code>. This method sets up the framework to enforce security rules on incoming HTTP requests, allowing us to control access based on conditions like user roles, authentication status, and other factors.
-<p>Inside <code>authorizeHttpRequests</code>, we provide a lambda function that takes an <code>AuthorizeRequestsConfigurer</code> as a parameter. The <code>AuthorizeRequestsConfigurer</code> gives us access to the methods that define detailed authorization rules, such as matching specific URL patterns, enforcing role-based or authority-based access, and determining whether requests should be allowed, denied, or require authentication.</p>
-<p>So the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code> is where authorization rules are set. And the <code>AuthorizeRequestsConfigurer</code> is the object we use within this method to actually specify and configure the access rules.</p>
+<p>Inside <code>authorizeHttpRequests</code>, we provide a lambda function that takes an <code>AuthorizationManagerRequestMatcherRegistry</code> as a parameter. The <code>AuthorizationManagerRequestMatcherRegistry</code> gives us access to the methods that define detailed authorization rules, such as matching specific URL patterns, enforcing role-based or authority-based access, and determining whether requests should be allowed, denied, or require authentication.</p>
+<p>So the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code> is where authorization rules are set. And the <code>AuthorizationManagerRequestMatcherRegistry</code> is the object we use within this method to actually specify and configure the access rules.</p>
 <p>Here are some of the methods of <code>AuthorizeRequestsConfigurer</code>:</p>
 <pre>
 <div style="display: flex; line-height: 1;">
@@ -147,7 +147,7 @@ public class ProjectConfig {
   <div style="width: 50%;">Denies access to the specified request.</div>
 </div>
 </pre>
-<p>Since we use the <code>AuthorizeRequestsConfigurer</code> in a lambda, we can name it anything we want. I called it <code>auth</code> in the code example.</p>
+<p>Since we use the <code>AuthorizationManagerRequestMatcherRegistry</code> in a lambda, we can name it anything we want. I called it <code>auth</code> in the code example.</p>
 <p>Let's go over the code example line by line to demonstrate what's going on:</p>
 <pre>
 @Configuration
@@ -168,13 +168,52 @@ public class ProjectConfig {
 
 </pre>
 <p>1) The method <code>securityFilterChain</code> is declared as a Spring Bean using <code>@Bean</code>, meaning Spring will manage and instantiate the object returned by the method as part of the application context. The method returns an object of type <code>SecurityFilterChain</code> and this bean is responsible for defining security configurations for the application.</p>
-<p>2) The <code>authorizeHttpRequests()</code> method is called on the <code>HttpSecurity</code> object, allowing us to configure request authorization rules. In this method we use a lambda expression <code>auth -></code> where <code>auth</code> is the name we give to the <code>AuthorizeRequestsConfigurer</code>.</p>
-<p>3) We call the <code>requestMatchers</code> and <code>hasRole</code> methods of the <code>AuthorizeRequestsConfigurer</code> to define specific access rules for different URL patterns. This line specifies that any request matching the /admin/** pattern (e.g., /admin/dashboard, /admin/settings) can only be accessed by users who have the ADMIN role.</p>
+<p>2) The <code>authorizeHttpRequests()</code> method is called on the <code>HttpSecurity</code> object, allowing us to configure request authorization rules. In this method we use a lambda expression <code>auth -></code> where <code>auth</code> is the name we give to the <code>AuthorizationManagerRequestMatcherRegistry</code>.</p>
+<p>3) We call the <code>requestMatchers</code> and <code>hasRole</code> methods of the <code>AuthorizationManagerRequestMatcherRegistry</code> to define specific access rules for different URL patterns. This line specifies that any request matching the /admin/** pattern (e.g., /admin/dashboard, /admin/settings) can only be accessed by users who have the ADMIN role.</p>
 <p>4) Any request matching the /user/** pattern (e.g., /user/profile, /user/settings) requires the USER role to access.</p>
 <p>5) This line allows unrestricted access to any request matching /public/**. This means that anyone, whether authenticated or not, can access endpoints that start with <code>/public</code></p>
 <p>6) This line ensures that any other request (not explicitly mentioned in the previous matchers) must be authenticated.</p>
 <p>7) The <code>http.build()</code> call finalizes the <code>HttpSecurity</code> configuration and returns a <code>SecurityFilterChain</code> object, which Spring Security uses to enforce the security rules in the application.</p>
 <p>The API for <code>HttpSecurity</code> can be found at: <a href="https://docs.spring.io/spring-security/reference/api/java/org/springframework/security/config/annotation/web/builders/HttpSecurity.html" target="_blank"><code>HttpSecurity API</code></a> along with examples of its use.</p>
+
+<p><strong>Note: Note: The next part goes beyond the scope of this article. If you really want to dive into the details of the above code, then continue reading, but know that this next section is completely unnecessary to get the most out of this article. In fact, it might make it even harder to understand the main points because it could distract and confuse you. This part is just me nerding out and wanting to explore the details. You can skip it without any issues.</strong><br>
+This is the actual method signature of <code>authorizeHttpRequests</code>:
+<pre>
+public HttpSecurity authorizeHttpRequests(
+    Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> authorizeHttpRequestsCustomizer
+) throws Exception
+</pre>
+As we can see the method takes a <code>Customizer</code> as it's parameter. So, what's a <code>Customizer</code>? A <code>Customizer</code> is just a functional interface that is often used in Spring Security for configuration purposes.
+Here is it's signature:
+<pre>
+@FunctionalInterface
+public interface Customizer<T> {
+    void customize(T t);
+}
+</pre>
+So, it's simply a lambda that takes an object and doesn't return anything. Customizers are used all over Spring Security because they make configurations more readable, maintainable, and keep the configuration context (in this case, the auth parameter) scoped to just where it's needed. This makes the code more maintainable and less prone to errors.
+Take this code for instance:
+<pre>
+http.authorizeHttpRequests(auth -> {
+      auth.requestMatchers("/admin/**").hasRole("ADMIN")
+        .requestMatchers("/user/**").hasRole("USER")
+        .anyRequest().authenticated();
+});	
+</pre>
+We can rewrite it in a more verbose way, but it does the exact same thing:
+<pre>
+http.authorizeHttpRequests(new Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry>() {
+    @Override
+    public void customize(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry auth) {
+        auth.requestMatchers("/admin/**").hasRole("ADMIN")
+            .requestMatchers("/user/**").hasRole("USER")
+            .anyRequest().authenticated();
+    }
+});
+</pre>
+The class we use in the <code>Customizer</code> is <code>AuthorizationManagerRequestMatcherRegistry</code>, which is an inner class of <code>AuthorizeHttpRequestsConfigurer</code>.
+So, what we are actually doing in the <code>authorizeHttpRequests</code> method, is use a <code>Customizer></code> to allow us to use 
+the methods of <code>AuthorizationManagerRequestMatcherRegistry</code> within a lambda function.</p>
 <p>Note that the matchers are considered in order. Therefore, the following code will not do what we want it to do.</p> 
 
 <pre>
