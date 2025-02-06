@@ -117,30 +117,37 @@ public class ProjectConfig {
 <p>To handle authorization we use the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code>. With this method we configure authorization rules for incoming HTTP requests. HttpSecurity determines who is allowed to access which endpoints based on user roles, authentication status, or other conditions.</p>  
 <p>Inside the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code> we use a lambda function with an <code>AuthorizeRequestsConfigurer</code> as it's parameter. That parameter has methods that we can use to specify which URL patterns the rules apply to. Here are some of those methods:</p>
 <pre>
-<div class="container">
-    <div class="column">
-        <p><code>requestMatchers(String... patterns)</code></p>
-        <p><code>anyRequest()</code></p>
-        <p><code>permitAll()</code></p>
-	<p><code>authenticated()</code></p>
-	<p><code>hasRole(String role)</code></p>
-	<p><code>hasAuthority(String authority)</code></p>
-	<p><code>denyAll()</code></p>
-    </div>
-    <div class="column">
-        <p>Defines URL patterns to match.</p>
-        <p>Applies rules to all requests.</p>
-        <p>Grants access to all users.</p>
-	<p>Requires authentication for access.</p>
-	<p>Grants access based on roles.</p>
-	<p>Grants access based on authorities.</p>
-	<p>Denies access to the specified request.</p>
-    </div>
+<div style="display: flex; line-height: 1;">
+  <div style="width: 50%;"><code>requestMatchers(String... patterns)</code></div>
+  <div style="width: 50%;">Defines URL patterns to match.</div>
+</div>
+<div style="display: flex; line-height: 1;">
+  <div style="width: 50%;"><code>anyRequest()</code></div>
+  <div style="width: 50%;">Applies rules to all requests.</div>
+</div>
+<div style="display: flex; line-height: 1;">
+  <div style="width: 50%;"><code>permitAll()</code></div>
+  <div style="width: 50%;">Grants access to all users.</div>
+</div>
+<div style="display: flex; line-height: 1;">
+  <div style="width: 50%;"><code>authenticated()</code></div>
+  <div style="width: 50%;">Requires authentication for access.</div>
+</div>
+<div style="display: flex; line-height: 1;">
+  <div style="width: 50%;"><code>hasRole(String role)</code></div>
+  <div style="width: 50%;">Grants access based on roles.</div>
+</div>
+<div style="display: flex; line-height: 1;">
+  <div style="width: 50%;"><code>hasAuthority(String authority)</code></div>
+  <div style="width: 50%;">Grants access based on authorities.</div>
+</div>
+<div style="display: flex; line-height: 1;">
+  <div style="width: 50%;"><code>denyAll()</code></div>
+  <div style="width: 50%;">Denies access to the specified request.</div>
 </div>
 </pre>
 <p>>Since we use the <code>AuthorizeRequestsConfigurer</code> in a lambda, we can name it anything we want. I called it <code>auth</code> in the code example.</p>
 <p>Let's go over the code example line by line to demonstrate what's going on:</p>
-
 <pre>
 @Configuration
 @EnableWebSecurity
