@@ -157,7 +157,7 @@ public class ProjectConfig {
 @EnableWebSecurity
 public class ProjectConfig {
 
-      @Bean
+    @Bean
 <strong>1)</strong>   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {	
 <strong>2)</strong>       http.authorizeHttpRequests(auth -> 							
 <strong>3)</strong>           auth.requestMatchers("/admin/**").hasRole("ADMIN")					
