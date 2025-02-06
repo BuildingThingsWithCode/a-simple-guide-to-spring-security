@@ -157,15 +157,15 @@ public class ProjectConfig {
 @EnableWebSecurity
 public class ProjectConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {	1)
-        http.authorizeHttpRequests(auth -> 							2)
-            auth.requestMatchers("/admin/**").hasRole("ADMIN")					3)
-                .requestMatchers("/user/**").hasRole("USER")					4)
-                .requestMatchers("/public/**").permitAll()					5)
-                .anyRequest().authenticated()							6)
+      @Bean
+ 1)   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {	
+ 2)       http.authorizeHttpRequests(auth -> 							
+ 3)           auth.requestMatchers("/admin/**").hasRole("ADMIN")					
+ 4)               .requestMatchers("/user/**").hasRole("USER")					
+ 5)               .requestMatchers("/public/**").permitAll()					
+ 6)               .anyRequest().authenticated()							
         );
-        return http.build();									7)
+ 7)       return http.build();									
     }
 }
 </code>
