@@ -176,7 +176,8 @@ public class ProjectConfig {
 <p>7) The <code>http.build()</code> call finalizes the <code>HttpSecurity</code> configuration and returns a <code>SecurityFilterChain</code> object, which Spring Security uses to enforce the security rules in the application.</p>
 <p>The API for <code>HttpSecurity</code> can be found at: <a href="https://docs.spring.io/spring-security/reference/api/java/org/springframework/security/config/annotation/web/builders/HttpSecurity.html" target="_blank"><code>HttpSecurity API</code></a> along with examples of its use.</p>
 
-<p><strong>Note: Note: The next part goes beyond the scope of this article. If you really want to dive into the details of the above code, then continue reading, but know that this next section is completely unnecessary to get the most out of this article. In fact, it might make it even harder to understand the main points because it could distract and confuse you. This part is just me nerding out and wanting to explore the details. You can skip it without any issues.</strong><br>
+<p><strong>Note: Note: The next part goes beyond the scope of this article. If you really want to dive into the details of the above code, then continue reading, but know that this next section is completely unnecessary to get the most out of this article. In fact, it might make it even harder to understand the main points because it could distract and confuse you. 
+This part is just me nerding out and wanting to explore the details. You can skip this section without any issues. I've marked where the main article resumes with "For those who wanted to skip the nerdy bit, continue reading here" in bold text, so feel free to jump straight to that part.</strong><br>
 This is the actual method signature of <code>authorizeHttpRequests</code>:</p>
 <pre>
 public HttpSecurity authorizeHttpRequests(
@@ -212,8 +213,9 @@ http.authorizeHttpRequests(new Customizer<AuthorizeHttpRequestsConfigurer<HttpSe
 });
 </pre>
 <p>The class we use in the <code>Customizer</code> is <code>AuthorizationManagerRequestMatcherRegistry</code>, which is an inner class of <code>AuthorizeHttpRequestsConfigurer</code>.
-So, what we are actually doing in the <code>authorizeHttpRequests</code> method, is use a <code>Customizer></code> to allow us to use 
+So, what we are actually doing in the <code>authorizeHttpRequests</code> method, is use a <code>Customizer</code> to allow us to use 
 the methods of <code>AuthorizationManagerRequestMatcherRegistry</code> within a lambda function.</p>
+<p><strong>For those who wanted to skip the nerdy bit, continue reading here:</strong>
 <p>Note that the matchers are considered in order. Therefore, the following code will not do what we want it to do.</p> 
 
 <pre>
