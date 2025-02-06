@@ -183,16 +183,16 @@ public HttpSecurity authorizeHttpRequests(
     Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> authorizeHttpRequestsCustomizer
 ) throws Exception
 </pre>
-As we can see the method takes a <code>Customizer</code> as it's parameter. So, what's a <code>Customizer</code>? A <code>Customizer</code> is just a functional interface that is often used in Spring Security for configuration purposes.
-Here is it's signature:
+<p>As we can see the method takes a <code>Customizer</code> as it's parameter. So, what's a <code>Customizer</code>? A <code>Customizer</code> is just a functional interface that is often used in Spring Security for configuration purposes.
+Here is it's signature:</p>
 <pre>
 @FunctionalInterface
 public interface Customizer<T> {
     void customize(T t);
 }
 </pre>
-So, it's simply a lambda that takes an object and doesn't return anything. Customizers are used all over Spring Security because they make configurations more readable, maintainable, and keep the configuration context (in this case, the auth parameter) scoped to just where it's needed. This makes the code more maintainable and less prone to errors.
-Take this code for instance:
+<p>So, it's simply a lambda that takes an object and doesn't return anything. Customizers are used all over Spring Security because they make configurations more readable, maintainable, and keep the configuration context (in this case, the auth parameter) scoped to just where it's needed. This makes the code more maintainable and less prone to errors.
+Take this code for instance:</p>
 <pre>
 http.authorizeHttpRequests(auth -> {
       auth.requestMatchers("/admin/**").hasRole("ADMIN")
@@ -200,7 +200,7 @@ http.authorizeHttpRequests(auth -> {
         .anyRequest().authenticated();
 });	
 </pre>
-We can rewrite it in a more verbose way, but it does the exact same thing:
+<p>We can rewrite it in a more verbose way, but it does the exact same thing:</p>
 <pre>
 http.authorizeHttpRequests(new Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry>() {
     @Override
@@ -211,7 +211,7 @@ http.authorizeHttpRequests(new Customizer<AuthorizeHttpRequestsConfigurer<HttpSe
     }
 });
 </pre>
-The class we use in the <code>Customizer</code> is <code>AuthorizationManagerRequestMatcherRegistry</code>, which is an inner class of <code>AuthorizeHttpRequestsConfigurer</code>.
+<p>The class we use in the <code>Customizer</code> is <code>AuthorizationManagerRequestMatcherRegistry</code>, which is an inner class of <code>AuthorizeHttpRequestsConfigurer</code>.
 So, what we are actually doing in the <code>authorizeHttpRequests</code> method, is use a <code>Customizer></code> to allow us to use 
 the methods of <code>AuthorizationManagerRequestMatcherRegistry</code> within a lambda function.</p>
 <p>Note that the matchers are considered in order. Therefore, the following code will not do what we want it to do.</p> 
