@@ -192,7 +192,7 @@ public interface Customizer<T> {
     void customize(T t);
 }
 </pre>
-<p>So, it's simply a lambda that takes an object and doesn't return anything. Customizers are used all over Spring Security because they make configurations more readable, maintainable, and keep the configuration context (in this case, the auth parameter) scoped to just where it's needed. This makes the code more maintainable and less prone to errors.
+<p>So, it's simply a lambda that takes an object and doesn't return anything. Customizers are used all over Spring Security because they make configurations more readable, maintainable, and keep the configuration context (in this case, the <code>auth</code> parameter) scoped to just where it's needed. This makes the code more maintainable and less prone to errors.
 Take this code for instance:</p>
 <pre>
 http.authorizeHttpRequests(auth -> {
