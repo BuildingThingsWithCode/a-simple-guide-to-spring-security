@@ -113,9 +113,10 @@ public class ProjectConfig {
 
 </pre>
 <p>The <code>SecurityFilterChain</code> bean takes an <code>HttpSecurity</code> object as its parameter.<code>HttpSecurity</code> is an object that allows us to configure web-based security for HTTP requests. And since any interaction between our users and our application will be done in the form of an HTTP request, it's an important part of our application.</p>
-
-<p>To handle authorization we use the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code>. With this method we configure authorization rules for incoming HTTP requests. HttpSecurity determines who is allowed to access which endpoints based on user roles, authentication status, or other conditions.</p>  
-<p>Inside the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code> we use a lambda function with an <code>AuthorizeRequestsConfigurer</code> as it's parameter. That parameter has methods that we can use to specify which URL patterns the rules apply to. Here are some of those methods:</p>
+<p>To handle authorization, we use the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code>. This method sets up the framework to enforce security rules on incoming HTTP requests, allowing us to control access based on conditions like user roles, authentication status, and other factors.
+Inside <code>authorizeHttpRequests</code>, we provide a lambda function that takes an <code>AuthorizeRequestsConfigurer</code> as a parameter. The <code>AuthorizeRequestsConfigurer</code> gives us access to methods that define detailed authorization rules, such as matching specific URL patterns, enforcing role-based or authority-based access, and determining whether requests should be allowed, denied, or require authentication.</p>
+<p>So the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code> is where authorization rules are set. And the <code>AuthorizeRequestsConfigurer</code> is the object we use within this method to actually specify and configure the access rules.</p>
+<p>Here are some of the methods of <code>AuthorizeRequestsConfigurer</code>:</p>
 <pre>
 <div style="display: flex; line-height: 1;">
   <div style="width: 50%;"><code>requestMatchers(String... patterns)</code></div>
