@@ -348,7 +348,7 @@ public PasswordEncoder passwordEncoder() {
 - A <code>UserDetailsService</code> bean.<br>
 - A <code>PasswordEncoder</code> bean.</p>
 
-<p><strong>Note:</strong> There is actually only one requirement for Spring Security to work, not five—the <code>spring-boot-starter-security</code> dependency. With this dependency alone, Spring Security will be enabled with default settings. But these defaults are often impractical for real-world applications.</p>
+<p><strong>Note:</strong> There is actually only one requirement for Security to work in a Spring Boot application, not five—the <code>spring-boot-starter-security</code> dependency. With this dependency alone, Spring Security will be enabled with default settings. But these defaults are often impractical for real-world applications.</p>
 
 <p>To customize the security configuration, only a <code>SecurityFilterChain</code> bean is required. As long as this bean is defined in a component-scanned class, Spring Boot will handle the rest. Therefore, a class annotated with <code>@Configuration</code> and <code>@EnableWebSecurity</code> is not strictly necessary in a Spring Boot application.</p>
 
