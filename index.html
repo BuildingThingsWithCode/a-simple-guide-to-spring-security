@@ -157,7 +157,7 @@ public class ProjectConfig {
 @EnableWebSecurity
 public class ProjectConfig {
 
-    @Bean
+     @Bean
 <strong>1)</strong>   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {	
 <strong>2)</strong>       http.authorizeHttpRequests(auth -> 							
 <strong>3)</strong>           auth.requestMatchers("/admin/**").hasRole("ADMIN")					
@@ -170,13 +170,13 @@ public class ProjectConfig {
 }
 </code>
 </pre>
-<p>1) The method <code>securityFilterChain</code> is declared as a Spring Bean using <code>@Bean</code>, meaning Spring will manage and instantiate the object returned by the method as part of the application context. The method returns an object of type <code>SecurityFilterChain</code> and this bean is responsible for defining security configurations for the application.</p>
-<p>2) The <code>authorizeHttpRequests()</code> method is called on the <code>HttpSecurity</code> object, allowing us to configure request authorization rules. In this method we use a lambda expression <code>auth -></code> where <code>auth</code> is the name we give to the <code>AuthorizationManagerRequestMatcherRegistry</code>.</p>
-<p>3) We call the <code>requestMatchers</code> and <code>hasRole</code> methods of the <code>AuthorizationManagerRequestMatcherRegistry</code> to define specific access rules for different URL patterns. This line specifies that any request matching the /admin/** pattern (e.g., /admin/dashboard, /admin/settings) can only be accessed by users who have the ADMIN role.</p>
-<p>4) Any request matching the /user/** pattern (e.g., /user/profile, /user/settings) requires the USER role to access.</p>
-<p>5) This line allows unrestricted access to any request matching /public/**. This means that anyone, whether authenticated or not, can access endpoints that start with <code>/public</code></p>
-<p>6) This line ensures that any other request (not explicitly mentioned in the previous matchers) must be authenticated.</p>
-<p>7) The <code>http.build()</code> call finalizes the <code>HttpSecurity</code> configuration and returns a <code>SecurityFilterChain</code> object, which Spring Security uses to enforce the security rules in the application.</p>
+<p><strong>1)</strong> The method <code>securityFilterChain</code> is declared as a Spring Bean using <code>@Bean</code>, meaning Spring will manage and instantiate the object returned by the method as part of the application context. The method returns an object of type <code>SecurityFilterChain</code> and this bean is responsible for defining security configurations for the application.</p>
+<p><strong>2)</strong> The <code>authorizeHttpRequests()</code> method is called on the <code>HttpSecurity</code> object, allowing us to configure request authorization rules. In this method we use a lambda expression <code>auth -></code> where <code>auth</code> is the name we give to the <code>AuthorizationManagerRequestMatcherRegistry</code>.</p>
+<p><strong>3)</strong> We call the <code>requestMatchers</code> and <code>hasRole</code> methods of the <code>AuthorizationManagerRequestMatcherRegistry</code> to define specific access rules for different URL patterns. This line specifies that any request matching the /admin/** pattern (e.g., /admin/dashboard, /admin/settings) can only be accessed by users who have the ADMIN role.</p>
+<p><strong>4)</strong> Any request matching the /user/** pattern (e.g., /user/profile, /user/settings) requires the USER role to access.</p>
+<p><strong>5)</strong> This line allows unrestricted access to any request matching /public/**. This means that anyone, whether authenticated or not, can access endpoints that start with <code>/public</code></p>
+<p><strong>6)</strong> This line ensures that any other request (not explicitly mentioned in the previous matchers) must be authenticated.</p>
+<p><strong>7)</strong> The <code>http.build()</code> call finalizes the <code>HttpSecurity</code> configuration and returns a <code>SecurityFilterChain</code> object, which Spring Security uses to enforce the security rules in the application.</p>
 <p>The API for <code>HttpSecurity</code> can be found at: <a href="https://docs.spring.io/spring-security/reference/api/java/org/springframework/security/config/annotation/web/builders/HttpSecurity.html" target="_blank"><code>HttpSecurity API</code></a> along with examples of its use.</p>
 
 <p><strong>Note: The next part goes beyond the scope of this article. If you really want to dive into the details of the above code, then continue reading, but know that this next section is completely unnecessary to get the most out of this article. In fact, it might make it even harder to understand the main points because it could distract and confuse you. 
