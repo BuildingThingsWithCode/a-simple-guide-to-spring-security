@@ -97,7 +97,7 @@ This creates a bit of a catch-22: you can’t access the login page unless you a
 The Object that is responsible for handling authorization in a Spring application is the <code>SecurityFilterChain</code>.
 
 So, if we want to handle authorization, we need to define a bean of the type <code>SecurityFilterChain</code>.<br> Here's a code example of a <code>SecurityFilterChain</code> placed in our configuration class.</p>
-<pre>
+<pre><code>
 @Configuration
 @EnableWebSecurity
 public class ProjectConfig {
@@ -113,7 +113,7 @@ public class ProjectConfig {
         return http.build();
     }
 }
-
+</code>
 </pre>
 <p>The <code>SecurityFilterChain</code> bean takes an <code>HttpSecurity</code> object as its parameter.<code>HttpSecurity</code> is an object that allows us to configure web-based security for HTTP requests. And since any interaction between our users and our application will be done in the form of an HTTP request, it's an important part of our application.</p>
 <p>To handle authorization, we use the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code>. This method sets up the framework to enforce security rules on incoming HTTP requests, allowing us to control access based on conditions like user roles, authentication status, and other factors.
@@ -152,7 +152,7 @@ public class ProjectConfig {
 </pre>
 <p>Since we use the <code>AuthorizationManagerRequestMatcherRegistry</code> in a lambda, we can name it anything we want. I called it <code>auth</code> in the code example.</p>
 <p>Let's go over the code example line by line to demonstrate what's going on:</p>
-<pre>
+<pre><code>
 @Configuration
 @EnableWebSecurity
 public class ProjectConfig {
@@ -168,7 +168,7 @@ public class ProjectConfig {
         return http.build();									7)
     }
 }
-
+</code>
 </pre>
 <p>1) The method <code>securityFilterChain</code> is declared as a Spring Bean using <code>@Bean</code>, meaning Spring will manage and instantiate the object returned by the method as part of the application context. The method returns an object of type <code>SecurityFilterChain</code> and this bean is responsible for defining security configurations for the application.</p>
 <p>2) The <code>authorizeHttpRequests()</code> method is called on the <code>HttpSecurity</code> object, allowing us to configure request authorization rules. In this method we use a lambda expression <code>auth -></code> where <code>auth</code> is the name we give to the <code>AuthorizationManagerRequestMatcherRegistry</code>.</p>
@@ -182,30 +182,33 @@ public class ProjectConfig {
 <p><strong>Note: The next part goes beyond the scope of this article. If you really want to dive into the details of the above code, then continue reading, but know that this next section is completely unnecessary to get the most out of this article. In fact, it might make it even harder to understand the main points because it could distract and confuse you. 
 This part is just me nerding out and wanting to explore the details. You can skip this section without any issues. I've marked where the main article resumes with "For those who wanted to skip the nerdy bit, continue reading here" in bold text, so feel free to jump straight to that part.</strong><br>
 This is the actual method signature of <code>authorizeHttpRequests</code>:</p>
-<pre>
+<pre><code>
 public HttpSecurity authorizeHttpRequests(
     Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> authorizeHttpRequestsCustomizer
 ) throws Exception
+</code>
 </pre>
 <p>As we can see the method takes a <code>Customizer</code> as it's parameter. So, what's a <code>Customizer</code>? A <code>Customizer</code> is just a functional interface that is often used in Spring Security for configuration purposes.
 Here is it's signature:</p>
-<pre>
+<pre><code>
 @FunctionalInterface
 public interface Customizer<T> {
     void customize(T t);
 }
+</code>
 </pre>
 <p>So, it's simply a lambda that takes an object and doesn't return anything. Customizers are used all over Spring Security because they make configurations more readable, maintainable, and keep the configuration context (in this case, the <code>auth</code> parameter) scoped to just where it's needed. This makes the code more maintainable and less prone to errors.
 Take this code for instance:</p>
-<pre>
+<pre><code>
 http.authorizeHttpRequests(auth -> {
       auth.requestMatchers("/admin/**").hasRole("ADMIN")
         .requestMatchers("/user/**").hasRole("USER")
         .anyRequest().authenticated();
-});	
+});
+</code>	
 </pre>
 <p>It does the exact same thing, but is a lot less verbose than this code:</p>
-<pre>
+<pre><code>
 http.authorizeHttpRequests(new Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry>() {
     @Override
     public void customize(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry auth) {
@@ -214,6 +217,7 @@ http.authorizeHttpRequests(new Customizer<AuthorizeHttpRequestsConfigurer<HttpSe
             .anyRequest().authenticated();
     }
 });
+</code>
 </pre>
 <p>The class we use in the <code>Customizer</code> is <code>AuthorizationManagerRequestMatcherRegistry</code>, which is an inner class of <code>AuthorizeHttpRequestsConfigurer</code>.
 So, what we are actually doing in the <code>authorizeHttpRequests</code> method, is use a <code>Customizer</code> to allow us to use 
@@ -221,7 +225,7 @@ the methods of <code>AuthorizationManagerRequestMatcherRegistry</code> within a 
 <p><strong>For those who wanted to skip the nerdy bit, continue reading here:</strong>
 <p>Note that the matchers are considered in order. Therefore, the following code will not do what we want it to do.</p> 
 
-<pre>
+<pre><code>
 @Configuration
 @EnableWebSecurity
 public class AuthorizeUrlsSecurityConfig {
@@ -234,13 +238,14 @@ public class AuthorizeUrlsSecurityConfig {
                    .requestMatchers("/admin/**").hasRole("ADMIN");
            return http.build();
    }
+<code>
 </pre>
 <p>The first matcher matches every request and therefore will prevent the second matcher from doing its work. A normal user who does not have administrator credentials will still get access to our <code>/admin</code> endpoint based on the first matcher that gives access to all endpoints starting with "/" <code>.requestMatcher("/**").hasRole("USER")</code>. And therefore, the second matcher <code>.requestMatchers("/admin/**").hasRole("ADMIN")</code> that is supposed to prevent this access, will not be effective.</p>
 <p>Swapping the matchers, so the <code>.requestMatchers("/admin/**").hasRole("ADMIN")</code> comes first, solves the problem.</p>
 
 <p>When we define a <code>SecurityFilterChain</code>, we are overwriting the defaults. This has some consequences. For instance, Spring no longer presents the user with a login form when he is not authenticated and is trying to access an endpoint that requires authentication. Take for instance this <code>SecurityFilterChain</code>:</p>
 
-<pre>
+<pre><code>
 @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
@@ -250,11 +255,12 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
         );
     return http.build();
 }
+</code>
 </pre>
 
 <p>All requests are permitted (no need to be authenticated) except the <code>/private</code> endpoint which requires authentication. The default Spring Security behavior is to present users with a login page for those endpoints that require authentication. But since we have overwritten this default behavior by using our own <code>SecurityFilterChain</code>, a user that is not logged in will no longer be presented with a login form when they try to visit our <code>/private</code> endpoint. What they will see instead is a generic error page informing them of a Forbidden Error with error code 403.</p> 
 <p>If we want to present our user with a login form for endpoints that require authentication, we now need to explicitly tell Spring that we want to do so. By adding <code>.formLogin(Customizer.withDefaults())</code> to our <code>SecurityFilterChain</code> we tell Spring to present unauthenticated users with a login form whenever they attempt to access any protected resources (i.e., endpoints that require authentication). We could customize this login procedure, but I chose to use the default implementation of Spring's form-based authentication, which is indicated by <code>Customizer.withDefaults()</code>. A code example:</p>
-<pre>
+<pre><code>
 @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
@@ -265,6 +271,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
         .formLogin(Customizer.withDefaults());
     return http.build();
 }
+</code>
 </pre>
 
 <p>Ok, our user will now be presented with a default login page configured by Spring at <code>/login</code>.</p>
@@ -293,7 +300,7 @@ Or does this information come from external authentication providers (OAuth2, LD
 
 <p>Here is a bean that implements the <code>UserDetailsService</code> and makes use of this convenient <code>User</code> class. It has only one method that takes in a String and returns a <code>UserDetails</code> object:</p>
 
-<pre>
+<pre><code>
 @Bean
 public UserDetailsService userDetailsService() {
     return username -> User.withUsername("username")
@@ -301,13 +308,14 @@ public UserDetailsService userDetailsService() {
                            .roles("USER")
                            .build();
 }
+</code>
 </pre>
 
 <p>This current implementation serves only as an example. It will always return a <code>UserDetails</code> object that has "username" as its username. And inform Spring that the password is not encrypted (<code>{noop}</code> = no encryption) and is "password". If a user tries to login with the credentials <code>username/password</code>, then this implementation would allow them to be authenticated. In a real production environment, our <code>UserDetailsService</code> will return different usernames and actual encrypted passwords that are connected to those usernames.</p>
 
 <p>Here's another example that can be useful if you want to define custom endpoints in your <code>SecurityFilterChain</code> and experiment with different role-based access. Here we keep the user information in memory, rather than fetching it from a database or an external source like we would do in a production environment. And we define two different roles: a regular user and an administrator.</p>
 
-<pre>
+<pre><code>
 @Bean
 public UserDetailsService users() {
     UserDetails user = User.builder() 
@@ -322,6 +330,7 @@ public UserDetailsService users() {
         .build();
     return new InMemoryUserDetailsManager(user, admin);
 }
+</code>
 </pre>
 
 <p>The above code would allow a user to login with the credentials user/user. And it would allow an administrator to login with the credentials admin/admin. By providing this bean, Spring has everything it needs to authenticate both this regular user and this administrator.</p>
@@ -331,20 +340,22 @@ public UserDetailsService users() {
 
 <p>Here's an example of such a bean that returns a <code>PasswordEncoder</code>, which is in this case a <code>BCryptPasswordEncoder</code>. We can use a lot of different encryption methods in Spring. <code>BCryptPasswordEncoder</code> is a method that is commonly used. If we would like to use a different method, we can just change the return value of our <code>PasswordEncoder</code> bean:</p>
 
-<pre>
+<pre><code>
 @Bean
 public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
 }
+</code>
 </pre>
 
 <p>Spring Security 5 introduced the <code>DelegatingPasswordEncoder</code> as its default encoder. It's a multifunctional encoder that automatically detects the correct encoding based on the stored password's prefix and can handle all those different encodings.</p>
 
-<pre>
+<pre><code>
 @Bean
 public PasswordEncoder passwordEncoder() {
     return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 }
+</code>
 </pre>
 
 <p>Here are examples of passwords encoded with different algorithms and their respective prefixes using Spring Security's <code>PasswordEncoder</code>.</p>
