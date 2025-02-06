@@ -119,11 +119,11 @@ public class ProjectConfig {
 <pre>
 <code>requestMatchers(String... patterns)</code> – Defines URL patterns to match.
 <code>anyRequest()</code>                        – Applies rules to all requests.
-<code>permitAll()</code> 			 – Grants access to all users.
-<code>authenticated()</code> 			 – Requires authentication for access.
-<code>hasRole(String role)</code> 		 – Grants access based on roles.
-<code>hasAuthority(String authority)</code> 	 – Grants access based on authorities.
-<code>denyAll()</code> 				 – Denies access to the specified request.	
+<code>permitAll()</code>                         – Grants access to all users.
+<code>authenticated()</code>                     – Requires authentication for access.
+<code>hasRole(String role)</code>                – Grants access based on roles.
+<code>hasAuthority(String authority)</code>      – Grants access based on authorities.
+<code>denyAll()</code>                           – Denies access to the specified request.	
 </pre>
 <p>>Since we use the <code>AuthorizeRequestsConfigurer</code> in a lambda, we can name it anything we want. I called it <code>auth</code> in the code example.</p>
 <p>Let's go over the code example line by line to demonstrate what's going on:</p>
