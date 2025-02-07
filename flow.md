@@ -1,7 +1,3 @@
-# Spring Boot Authentication Flow
-
-This is the authentication flow for a user trying to log in to a Spring Boot application.
-
 ```mermaid
 sequenceDiagram
     participant User as U
@@ -25,7 +21,13 @@ sequenceDiagram
     SC-->>App: User is authenticated
     App->>B: Redirects to home page or returns token
 
-    class U, B fill:#f9f,stroke:#333,stroke-width:2px;
-    class SSF, AM fill:#ccf,stroke:#333,stroke-width:2px;
-    class AP, UDS fill:#cff,stroke:#333,stroke-width:2px;
-    class SC, App fill:#cfc,stroke:#333,stroke-width:2px;
+    %% Style the participants
+    style U fill:#f9f,stroke:#333,stroke-width:2px;
+    style B fill:#f0f0f0,stroke:#333,stroke-width:2px;
+    style SSF fill:#ccf,stroke:#333,stroke-width:2px;
+    style AM fill:#e0e0e0,stroke:#333,stroke-width:2px;
+    style AP fill:#cff,stroke:#333,stroke-width:2px;
+    style UDS fill:#cfc,stroke:#333,stroke-width:2px;
+    style SC fill:#cff,stroke:#333,stroke-width:2px;
+    style App fill:#cfc,stroke:#333,stroke-width:2px;
+
