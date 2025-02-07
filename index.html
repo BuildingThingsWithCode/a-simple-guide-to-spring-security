@@ -429,7 +429,7 @@ public PasswordEncoder passwordEncoder() {
 <p>In summary, these five building blocks form the foundation of Spring Security’s authentication and authorization process.
 The <code>spring-boot-starter-security</code> dependency activates security features by default, restricting access to endpoints.
 A configuration class, usually annotated with <code>@Configuration</code> and <code>@EnableWebSecurity</code> defines and customizes security settings.
-The <code>SecurityFilterChain</code> bean dictates how requests are secured, determining which endpoints require authentication and what roles users need.
+The <code>SecurityFilterChain</code> dictates how requests are secured, determining which endpoints require authentication and what roles users need.
 The <code>UserDetailsService</code> retrieves user information from a database or other storage and transforms it into a <code>UserDetails</code> object that Spring Security can process.
 Finally, the <code>PasswordEncoder</code> bean ensures passwords are securely hashed and compared during authentication.
 Together, these components enable a flexible and robust security system.</p>
