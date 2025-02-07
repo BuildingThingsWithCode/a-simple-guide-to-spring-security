@@ -29,14 +29,14 @@ With this article, my goal is to provide exactly what I wish I had back then: a 
             To add Spring Security to our application, all we need to do is add the security
             dependency to the application's dependencies. Since I'm using Maven and Spring Boot in my project, this means adding the following code to the pom.xml file:
         </p>
-        <pre><code>
-            &lt;dependency&gt;
-                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-                &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
-            &lt;/dependency&gt;
-	</code>
-        </pre>
-		<p>Adding the dependency does several things:</p>
+<pre><code>
+&lt;dependency&gt;
+     &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+     &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code>
+</pre>
+<p>Adding the dependency does several things:</p>
 
 <p><strong>1) It enables Authentication.</strong> Once the security dependency is added, all endpoints in the application will require authentication. This means that endpoints, which were previously accessible without logging in, will now require valid credentials to be accessed. So, if you add the security dependency to a Spring Boot application and notice that things stop working as expected, don’t be alarmed—this is normal behavior. By adding security, you're restricting access to your endpoints, which were previously open to everyone.</p>
 
