@@ -210,7 +210,6 @@ http.authorizeHttpRequests(auth -> {
 </pre>
 <p>It does the exact same thing, but is a lot less verbose than this code:</p>
 <pre><code>
-<pre>
 http.authorizeHttpRequests(new Customizer&lt;AuthorizeHttpRequestsConfigurer&lt;HttpSecurity&gt;.AuthorizationManagerRequestMatcherRegistry&gt;() {
     @Override
     public void customize(AuthorizeHttpRequestsConfigurer&lt;HttpSecurity&gt;.AuthorizationManagerRequestMatcherRegistry auth) {
@@ -219,11 +218,10 @@ http.authorizeHttpRequests(new Customizer&lt;AuthorizeHttpRequestsConfigurer&lt;
             .anyRequest().authenticated();
     }
 });
-</pre>
 </code>
 </pre>
 <p>The class we use in the <code>Customizer</code> is <code>AuthorizeHttpRequestsConfigurer&lt;T&gt;</code>. This is a generic class where T is the type parameter.
-In this case the type is HttpSecurity, which means that this AuthorizeHttpRequestsConfigurer class is configured to work with HttpSecurity. And this configuration class as an inner class of type <code>AuthorizationManagerRequestMatcherRegistry</code>. This inner class maintains the registry 
+In this case the type is HttpSecurity, which means that this AuthorizeHttpRequestsConfigurer class is configured to work with HttpSecurity. And this configuration class has an inner class of type <code>AuthorizationManagerRequestMatcherRegistry</code>. This inner class maintains the registry 
 of request matchers and their corresponding authorization rules. So, what we are actually doing in the <code>authorizeHttpRequests</code> method, is use a <code>Customizer</code> to allow us to use 
 the methods of <code>AuthorizationManagerRequestMatcherRegistry</code> within a lambda function.</p>
 <p><strong>For those who wanted to skip the nerdy bit, continue reading here:</strong></p>
