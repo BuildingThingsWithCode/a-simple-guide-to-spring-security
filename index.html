@@ -186,7 +186,7 @@ This is the actual method signature of <code>authorizeHttpRequests</code>:</p>
 <pre><code>
 public HttpSecurity authorizeHttpRequests(
     Customizer&lt;AuthorizeHttpRequestsConfigurer&lt;HttpSecurity&gt;.AuthorizationManagerRequestMatcherRegistry&gt; authorizeHttpRequestsCustomizer
-) throws Exception
+)
 </code>
 </pre>
 <p>As we can see the method takes a <code>Customizer</code> as it's parameter. So, what's a <code>Customizer</code>? A <code>Customizer</code> is just a functional interface that is often used in Spring Security for configuration purposes.
