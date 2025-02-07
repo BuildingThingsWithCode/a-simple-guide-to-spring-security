@@ -421,12 +421,12 @@ public PasswordEncoder passwordEncoder() {
 
 <p>So, while the only real minimum requirement is the <code>spring-boot-starter-security</code> dependency, we typically say there are five key elements to ensure real-world usability of Spring Security.</p>
 <h3>Conclusion.</h3>
-<p>In summary, these five building blocks form the foundation of Spring Security’s authentication and authorization process.<br>
-The <code>spring-boot-starter-security</code> dependency activates security features by default, restricting access to endpoints.<br>
-A configuration class, usually annotated with <code>@Configuration</code> and <code>@EnableWebSecurity</code> defines and customizes security settings.<br>
-The <code>SecurityFilterChain</code> bean dictates how requests are secured, determining which endpoints require authentication and what roles users need.<br>
-The <code>UserDetailsService</code> retrieves user information from a database or other storage and transforms it into a <code>UserDetails</code> object that Spring Security can process.<br>
-Finally, the <code>PasswordEncoder</code> bean ensures passwords are securely hashed and compared during authentication.<br>
+<p>In summary, these five building blocks form the foundation of Spring Security’s authentication and authorization process.
+The <code>spring-boot-starter-security</code> dependency activates security features by default, restricting access to endpoints.
+A configuration class, usually annotated with <code>@Configuration</code> and <code>@EnableWebSecurity</code> defines and customizes security settings.
+The <code>SecurityFilterChain</code> bean dictates how requests are secured, determining which endpoints require authentication and what roles users need.
+The <code>UserDetailsService</code> retrieves user information from a database or other storage and transforms it into a <code>UserDetails</code> object that Spring Security can process.
+Finally, the <code>PasswordEncoder</code> bean ensures passwords are securely hashed and compared during authentication.
 Together, these components enable a flexible and robust security system.</p>
 <p>I hope this article has given you a clear picture of the core building blocks of Spring Security and how they fit together. With this foundation, you should now be well-prepared to dive deeper into the world of Spring Security and explore it's finer details.</p>
 <br>
