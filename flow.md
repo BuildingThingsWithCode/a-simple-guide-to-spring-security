@@ -4,23 +4,28 @@ This is the authentication flow for a user trying to log in to a Spring Boot app
 
 ```mermaid
 sequenceDiagram
-    participant User
-    participant Browser
-    participant SpringSecurityFilter
-    participant AuthenticationManager
-    participant AuthenticationProvider
-    participant UserDetailsService
-    participant SecurityContext
-    participant Application
+    participant User as U
+    participant Browser as B
+    participant SpringSecurityFilter as SSF
+    participant AuthenticationManager as AM
+    participant AuthenticationProvider as AP
+    participant UserDetailsService as UDS
+    participant SecurityContext as SC
+    participant Application as App
 
-    User->>Browser: Enters Username & Password
-    Browser->>SpringSecurityFilter: Sends login request (POST /login)
-    SpringSecurityFilter->>AuthenticationManager: Extracts credentials & sends authentication request
-    AuthenticationManager->>AuthenticationProvider: Delegates authentication
-    AuthenticationProvider->>UserDetailsService: Fetch user details from database
-    UserDetailsService-->>AuthenticationProvider: Returns user details
-    AuthenticationProvider-->>AuthenticationManager: Validates password & authenticates user
-    AuthenticationManager-->>SpringSecurityFilter: Authentication successful
-    SpringSecurityFilter->>SecurityContext: Stores user authentication
-    SecurityContext-->>Application: User is authenticated
-    Application->>Browser: Redirects to home page or returns token
+    U->>B: Enters Username & Password
+    B->>SSF: Sends login request (POST /login)
+    SSF->>AM: Extracts credentials & sends authentication request
+    AM->>AP: Delegates authentication
+    AP->>UDS: Fetch user details from database
+    UDS-->>AP: Returns user details
+    AP-->>AM: Validates password & authenticates user
+    AM-->>SSF: Authentication successful
+    SSF->>SC: Stores user authentication
+    SC-->>App: User is authenticated
+    App->>B: Redirects to home page or returns token
+
+    class U, B fill:#f9f,stroke:#333,stroke-width:2px;
+    class SSF, AM fill:#ccf,stroke:#333,stroke-width:2px;
+    class AP, UDS fill:#cff,stroke:#333,stroke-width:2px;
+    class SC, App fill:#cfc,stroke:#333,stroke-width:2px;
