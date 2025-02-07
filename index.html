@@ -198,7 +198,7 @@ public interface Customizer<T> {
 }
 </code>
 </pre>
-<p>So, it's simply a functional interface that takes an object and doesn't return anything. Customizers are used all over Spring Security because they make configurations more readable, maintainable, and keep the configuration context (in this case, the <code>auth</code> parameter) scoped to just where it's needed. This makes the code more maintainable and less prone to errors.
+<p>So, this functional interface takes an object and doesn't return anything. Customizers are used all over Spring Security because they make configurations more readable, maintainable, and keep the configuration context (in this case, the <code>auth</code> parameter) scoped to just where it's needed. This makes the code more maintainable and less prone to errors.
 Take this code for instance:</p>
 <pre><code>
 http.authorizeHttpRequests(auth -> {
@@ -222,7 +222,7 @@ http.authorizeHttpRequests(new Customizer&lt;AuthorizeHttpRequestsConfigurer&lt;
 </pre>
 <p>The class we use in the <code>Customizer</code> is <code>AuthorizeHttpRequestsConfigurer&lt;T&gt;</code>. This is a generic class where T is the type parameter.
 In this case the type is <code>HttpSecurity</code>, which means that this <code>AuthorizeHttpRequestsConfigurer</code> class is configured to work with <code>HttpSecurity</code>. And this configuration class has an inner class of type <code>AuthorizationManagerRequestMatcherRegistry</code>. This inner class maintains the registry 
-of request matchers and their corresponding authorization rules. So, what we are actually doing in the <code>authorizeHttpRequests</code> method, is use a <code>Customizer</code> to allow us to use 
+of request matchers and their corresponding authorization rules. In other words, <code>AuthorizationManagerRequestMatcherRegistry</code> is responsible for keeping track of which HTTP requests should be protected and what security rules apply to them. So, what we are actually doing in the <code>authorizeHttpRequests</code> method, is use a <code>Customizer</code> to allow us to use 
 the methods of that inner class <code>AuthorizationManagerRequestMatcherRegistry</code> within a lambda function.</p>
 <p><strong>For those who want to get on with things, continue reading here:</strong></p>
 <p>Note that the matchers are considered in order. Therefore, the following code will not do what we want it to do.</p> 
