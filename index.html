@@ -17,18 +17,23 @@
         <p style="margin: 0; font-size: 0.9em; color: gray;">February 4, 2025</p>
     </div>
 </div>
-		<h3>Preface.</h3>
-		<p>When I first started learning Spring Security, I found plenty of in-depth resources and tutorials, but I struggled to follow along. The problem was that I lacked a clear overview, a mental picture of how everything fit together. Without that foundation, all the detailed information felt overwhelming and disconnected.
-
-I was "not seeing the forest for the trees."
-
-With this article, my goal is to provide exactly what I wish I had back then: a clear, high-level understanding of Spring Security’s essential building blocks and how they work together. Once you have that foundation, diving into the details becomes much easier.</p>
+<h3>Preface.</h3>
+<p>When I first started learning Spring Security, I found plenty of in-depth resources and tutorials, but I struggled to follow along. The problem was that I lacked a clear
+overview, a mental picture of how everything fit together. Without that foundation, all the detailed information felt overwhelming and disconnected. I was "not seeing the 
+forest for the trees." Which isn't that surprising—Spring Security is huge when you really want to understand all its intricacies.</p>
+<p>And I'm pretty sure I'm not the only person who’s experienced this. On r/SpringBoot, the largest Reddit community dedicated to the Spring framework, one of the most 
+upvoted posts of all time is titled "I hate Spring Security." You can find it <a href="https://www.reddit.com/r/SpringBoot/comments/17imb9j/i_hate_spring_security/" target="_blank">here</a>.<br>
+In the post, the author shared their frustration, saying:
+<i>"I keep trying to love Spring Boot, but the security is so damn complex you forget where you are. Am I supposed to ‘memorize’ all these functions and then call myself 
+	an ‘expert’ when I do?"</i>
+<p>That is why, in this article, I'm taking a different approach. Instead of aiming to be a comprehensive guide covering every aspect of Spring Security, my goal is to teach
+only the minimum you need to know to be able to effectively implement Spring Security, so that the information stays digestible and approachable.</p>
+<p>If by the end of this article, you understand the basic building blocks of Spring Security and how they fit together, then I will consider this a success. Once you have 
+that solid foundation, diving into the details becomes a lot easier.</p>
 <p>This article is about a 20-minute read, so you probably don’t want to try reading this on a mobile device. Bookmark it and come back later.</p>
-        <h3>The Security Dependency.</h3>
-        <p>
-            To add Spring Security to our application, all we need to do is add the security
-            dependency to the application's dependencies. Since I'm using Maven and Spring Boot in my project, this means adding the following code to the pom.xml file:
-        </p>
+<h3>The Security Dependency.</h3>
+<p>To add Spring Security to our application, all we need to do is add the security dependency to the application's dependencies. Since I'm using Maven and Spring Boot in 
+my project, this means adding the following code to the pom.xml file:</p>
 <pre><code>
 &lt;dependency&gt;
      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
