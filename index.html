@@ -221,9 +221,9 @@ http.authorizeHttpRequests(new Customizer&lt;AuthorizeHttpRequestsConfigurer&lt;
 </code>
 </pre>
 <p>The class we use in the <code>Customizer</code> is <code>AuthorizeHttpRequestsConfigurer&lt;T&gt;</code>. This is a generic class where T is the type parameter.
-In this case the type is HttpSecurity, which means that this AuthorizeHttpRequestsConfigurer class is configured to work with HttpSecurity. And this configuration class has an inner class of type <code>AuthorizationManagerRequestMatcherRegistry</code>. This inner class maintains the registry 
+In this case the type is <code>HttpSecurity</code>, which means that this <code>AuthorizeHttpRequestsConfigurer</code> class is configured to work with <code>HttpSecurity</code>. And this configuration class has an inner class of type <code>AuthorizationManagerRequestMatcherRegistry</code>. This inner class maintains the registry 
 of request matchers and their corresponding authorization rules. So, what we are actually doing in the <code>authorizeHttpRequests</code> method, is use a <code>Customizer</code> to allow us to use 
-the methods of <code>AuthorizationManagerRequestMatcherRegistry</code> within a lambda function.</p>
+the methods of that inner class <code>AuthorizationManagerRequestMatcherRegistry</code> within a lambda function.</p>
 <p><strong>For those who wanted to skip the nerdy bit, continue reading here:</strong></p>
 <p>Note that the matchers are considered in order. Therefore, the following code will not do what we want it to do.</p> 
 
