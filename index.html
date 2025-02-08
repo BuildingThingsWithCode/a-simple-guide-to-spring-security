@@ -132,8 +132,9 @@ of our application.</p>
 <p>To handle authorization, we use the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code>. This method sets up the framework to enforce security rules 
 on incoming HTTP requests, allowing us to control access based on conditions like user roles, authentication status, and other factors.</p>
 <p>Inside this <code>authorizeHttpRequests</code> mehod, we provide a lambda function that takes an <code>AuthorizationManagerRequestMatcherRegistry</code> as a parameter. 
-In the code above, we have given that <code>AuthorizationManagerRequestMatcherRegistry</code> the name <code>auth</code>. This <code>AuthorizationManagerRequestMatcherRegistry</code> 
-gives us access to the methods that define detailed authorization rules, such as matching specific URL patterns, enforcing role-based or authority-based access, and determining whether requests should be allowed, denied, or require authentication.</p>
+In the code above, we have given that <code>AuthorizationManagerRequestMatcherRegistry</code> the name <code>auth</code>. It's what gives us access to methods that 
+define detailed authorization rules, such as matching specific URL patterns, enforcing role-based or authority-based access, and determining whether requests should be 
+allowed, denied, or require authentication.</p>
 <p>So, to quickly recapitulate: the <code>authorizeHttpRequests</code> method of <code>HttpSecurity</code> is where authorization rules are set. And the <code>AuthorizationManagerRequestMatcherRegistry</code> is the object we use within this method to actually specify and configure these rules.</p>
 <p>Here are some of the methods of <code>AuthorizationManagerRequestMatcherRegistry</code>:</p>
 <pre>
