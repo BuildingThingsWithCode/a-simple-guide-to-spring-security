@@ -101,8 +101,7 @@ This creates a bit of a catch-22: you can’t access the login page unless you a
 <p>Since authorization comes first, we will also talk about that aspect of Spring Security first.
 
 The Object that is responsible for handling authorization in a Spring application is the <code>SecurityFilterChain</code>.
-
-So, if we want to handle authorization, we need to define a bean of the type <code>SecurityFilterChain</code>.<br> Here's a code example of a <code>SecurityFilterChain</code> placed in our configuration class.</p>
+Here's a code example of a <code>SecurityFilterChain</code> placed in our configuration class.</p>
 <pre><code>
 @Configuration
 @EnableWebSecurity
@@ -156,7 +155,7 @@ public class ProjectConfig {
   <div style="width: 50%;">Denies access to the specified request.</div>
 </div>
 </pre>
-<p>Since we use the <code>AuthorizationManagerRequestMatcherRegistry</code> in a lambda, we can name it anything we want. I called it <code>auth</code> in the code example.</p>
+<p>We use the <code>AuthorizationManagerRequestMatcherRegistry</code> in a lambda and we can give it any name we want. I called it <code>auth</code> in the code example.</p>
 <p>Let's go over the code example line by line to demonstrate what's going on:</p>
 <pre><code>
 @Configuration
