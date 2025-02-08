@@ -320,7 +320,7 @@ so, Spring expects to receive the user’s information in a standardized format.
 <p>And to pass this information to Spring, we need a component that knows where to find user data and how to convert it into a <code>UserDetails</code> object. That’s exactly the role of the <code>UserDetailsService</code>.</p>
 
 <p><strong>Note:</strong> Spring Security provides a <code>User</code> class, which provides a convenient way to create a <code>UserDetails</code> object as it implements
-the UserDetails interface. In this class we only need to provide a username, a password and a collection of roles (can also be a collection that contains just one role).
+the UserDetails interface. In this class we only need to provide a username, a password and a collection of roles (can also be a collection that contains just one role). 
 All other fields in the <code>User</code> class are automatically set when these values are provided.The API for this class can be found at: 
 <a href="https://docs.spring.io/spring-security/reference/api/java/org/springframework/security/core/userdetails/User.html" target="_blank"><code>Spring Security User 
 API</code></a>.</p>
