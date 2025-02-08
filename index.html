@@ -363,10 +363,6 @@ public UserDetailsService users() {
 }
 </code>
 </pre>
-
-<p>The above code would allow a user to login with the credentials user/user. And it would allow an administrator to login with the credentials admin/admin. 
-This code can be usefull if you want to test role-based authentication and don't feel like setting a</p>
-
 <h3>PasswordEncoder.</h3>
 <p>Since all passwords should be encrypted, we need to tell Spring how we would like to handle this encryption in our application. To do this, we need to give Spring a bean of type <code>PasswordEncoder</code>. This is an interface that allows Spring to encrypt passwords and to compare a non-encrypted password provided by the user to its encrypted counterpart provided by <code>UserDetails</code>.</p>
 
