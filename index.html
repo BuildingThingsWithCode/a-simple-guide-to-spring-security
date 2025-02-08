@@ -79,8 +79,8 @@ So, we don't need the <code>@EnableWebSecurity</code> annotation to add Spring S
 (Don't worry about <code>SecurityFilterChain</code> or <code>UserDetailsService</code> for now. They will be explained later.)</p>
 <p>On the other hand, if we are building a Spring application (so not a Spring Boot application, but a Spring application), <code>@EnableWebSecurity</code> is necessary 
 to activate Spring Security. This is because in a Spring application there is less "magic" that does things for us behind the scenes than in a Spring Boot application. And 
-in that case, we explicitly need to  tell our framework that it needs to enable Security.</p>
-<p>Therefore, the class that handles the security configuration is usually annotated with both <code>@Configuration</code> and <code>@EnableWebSecurity</code>.</p>
+in that case, we explicitly need to  tell our framework that it needs to enable Security.<br>
+Therefore, the class that handles the security configuration is usually annotated with both <code>@Configuration</code> and <code>@EnableWebSecurity</code>.</p>
 
 <p>Now that we have annotated a class with <code>@Configuration</code> and <code>@EnableWebSecurity</code>, we are ready to start handling the security aspects ourselves. This is now our barebones configuration class. I named it ProjectConfig, but you can name it differently. All that matters are the annotations on the class.</p>
 <pre><code>
