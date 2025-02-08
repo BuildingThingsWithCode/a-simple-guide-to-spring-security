@@ -292,7 +292,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
 </code>
 </pre>
 
-<p>Ok, our user will now be presented with a default login page configured by Spring at <code>/login</code>.</p>
+<p>By explicitly adding <code>formLogin()</code>, we have re-enabled form-based authentication. Our user will be presented with a default login page configured by Spring at <code>/login</code>.</p>
 
 <h3>Authentication.</h3>
 <h3>UserDetailsService and UserDetails.</h3>
