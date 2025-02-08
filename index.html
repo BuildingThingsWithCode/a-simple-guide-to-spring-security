@@ -337,7 +337,7 @@ public UserDetailsService userDetailsService() {
 </code>
 </pre>
 
-<p>This current implementation serves only as an example. It will always return the same <code>UserDetails</code> object, with "username" as its username. And inform 
+<p>This current implementation serves only as an example. It will always return the same <code>UserDetails</code> object, with "username" as its username and inform 
 Spring that the password is not encrypted (<code>{noop}</code> = no encryption) and is "password". If a user would try to login with the credentials 
 <code>username/password</code>, then this implementation would allow that user to be authenticated. In a real production environment, our <code>UserDetailsService</code> 
 would return different usernames and actual encrypted passwords that are connected to those usernames.</p>
