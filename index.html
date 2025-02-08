@@ -75,7 +75,7 @@ with <code>@Component</code> will create a new instance of the bean every time t
 behavior (like default form login, default user, password encoding, etc.). However <code>@EnableWebSecurity</code> is not strictly required in a Spring Boot application.
 Spring Boot automatically enables Spring Security with its default settings when you add the <code>spring-boot-starter-security</code> dependency. If we want to 
 customize these default settings, we can do so by defining the necessary configuration beans, such as <code>SecurityFilterChain</code> or <code>UserDetailsService</code>. 
-So, we don't need the <code>@EnableWebSecurity</code> annotation to add Spring Security to our Spring Boot application, nor to change the defaults. <br> 
+So, we don't need the <code>@EnableWebSecurity</code> annotation to add Spring Security to our Spring Boot application, nor to change the defaults. 
 (Don't worry about <code>SecurityFilterChain</code> or <code>UserDetailsService</code> for now. They will be explained later.)</p>
 <p>On the other hand, if we are building a Spring application (so not a Spring Boot application, but a Spring application), <code>@EnableWebSecurity</code> is necessary 
 to activate Spring Security. This is because in a Spring application there is less "magic" that does things for us behind the scenes than in a Spring Boot application. And 
