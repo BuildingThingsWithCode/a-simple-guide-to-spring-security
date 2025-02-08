@@ -68,7 +68,7 @@ my project, this means adding the following code to the pom.xml file:</p>
 <p>The <code>@Configuration</code> annotation tells Spring to treat the class as a source of bean definitions, indicating that the class will be used to configure the application. As a result, Spring processes the class during startup to register and manage the beans defined within it.<br>
 We could replace <code>@Configuration</code> with <code>@Component</code>, since both annotations ensure that Spring manages the class and any <code>@Bean</code>-annotated methods, creating beans during application startup. But it's best practice to use the most precise annotation 
 for the intended purpose. And <code>@Configuration</code> is a more precise annotation for a class that is used to configure our application than <code>@Component</code>. 
-And while this goes beyond the scope of this article, I mention it for completeness: both these annotations share similarities, but there are not the same thing. A class annotated with <code>@Configuration</code> will create singleton beans, whereas a class annotated 
+And while this goes beyond the scope of this article, I mention it for completeness: both these annotations share similarities, but they are not the same thing. A class annotated with <code>@Configuration</code> will create singleton beans, whereas a class annotated 
 with <code>@Component</code> will create a new instance of the bean every time the <code>@Bean</code>-annotated method is called.</p>
 
 <p>The <code>@EnableWebSecurity</code> annotation tells Spring that we are providing a custom security configuration and may want to override the default security behavior (like default form login, default user, password encoding, etc.).
