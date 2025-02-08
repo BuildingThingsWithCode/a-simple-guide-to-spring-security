@@ -302,12 +302,18 @@ To do this, Spring must know where to retrieve the necessary information to be a
 Or does this information come from external authentication providers (OAuth2, LDAP), configuration files or environment variables (not recommended for production), API's or web services? </p>
 <p>Spring expects us to provide it with a <code>UserDetailsService</code> to help it find this information.</p>
 
-<p>A <code>UserDetailsService</code> is nothing more than an interface that has one method: <code>loadUserByUsername(String username)</code>. This method does nothing but go to the place where it can find the information regarding our users, fetch the information about the current user based on the provided username and return this in the form of a <code>UserDetails</code> object. </p>
+<p>A <code>UserDetailsService</code> is nothing more than an interface that has one method: <code>loadUserByUsername(String username)</code>. This method does nothing but 
+go to the place where it can find the information regarding our users, fetch the information about the current user based on the provided username and return this in the 
+form of a <code>UserDetails</code> object.</p>
 
-<p>A <code>UserDetails</code> object is an object that implements the <code>UserDetails</code> interface. Spring uses this interface to authenticate users. This object has to implement the following methods: <code>getAuthorities()</code>, <code>getPassword()</code>, <code>getUsername()</code>, <code>isAccountNonExpired()</code>, <code>isAccountNonLocked()</code>, <code>isCredentialsNonExpired()</code>, <code>isEnabled()</code>. Which are all methods that answer the question if a user exist in our system and if his account is still a valid account. </p>
+<p>A <code>UserDetails</code> object is an object that implements the <code>UserDetails</code> interface. Spring uses this interface to authenticate users. This object has 
+to implement the following methods: <code>getUsername()</code>, <code>getPassword()</code>, <code>getAuthorities()</code>, <code>isAccountNonExpired()</code>, <code>isAccountNonLocked()</code>, 
+<code>isCredentialsNonExpired()</code>, <code>isEnabled()</code>. These are all methods that answer the question if a user exist in our system, has the correct credentials 
+and if his account is still a valid account.</p>
 
-<p>This might seem complicated, but is actually quite straightforward.<br>
- When a user tries to access our application, Spring needs to verify their identity. To do this, it expects to receive the user’s information in a standardized format—something it can easily understand and work with. That standardized format is the <code>UserDetails</code> object. Think of it as a well-organized report about the user, containing their username, password, and roles.</p>
+<p>This might seem a bit complicated, but it is actually quite straightforward. When a user tries to access our application, Spring needs to verify their identity. To do 
+so, Spring expects to receive the user’s information in a standardized format. Something it can easily understand and work with. That standardized format is the 
+<code>UserDetails</code> object. Think of it as a well-organized report about the user, containing their username, password, and roles.</p>
 
 <p>By providing Spring with a <code>UserDetails</code> object, we're giving it the necessary information to authenticate the user. Spring can then compare the credentials provided during login with the stored details and decide whether to grant access.</p>
 
