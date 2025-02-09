@@ -126,7 +126,8 @@ code {
 }
 
 img {
-    display: block; 
-    max-width: 90%;
-    margin: 10px auto;
+    display: block;       
+    max-width: 80%;      
+    width: auto; 
+    margin: 20px auto;
 }
