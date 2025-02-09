@@ -24,5 +24,35 @@ dependency. This is the only dependency we need to be able to create a webapplic
 <img src="img/SpringInitializr.png" alt="Screenshot of Spring Initializr">
 <div class="article-container">
 <p>Save the zip-file, extract it to a folder of your choosing and import the project into your IDE of choice.</p>
+<p>Now let's create a controller class in our application. I called this class <code>UserController</code>but you
+can name if whatever you like. Give the class the following annotation <code>RestController</code> and create 3 endpoints
+in the class. Since we have not yet added security to our application, these 3 endpoints can be accessed by anyone for now.
+But we are going to secure them a little later. This is the full code of my class:</p>
+<code>
+package com.spring.basics.SpringBasics.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class UserController {
+	
+	@GetMapping("/no-security")
+	public String openToAll() {
+		return "Welcome to all";
+	}
+	
+	@GetMapping("/some-security")
+	public String openToSome() {
+		return "Welcome to some";
+	}
+	
+	@GetMapping("/full-security")
+	public String openToOne() {
+		return "Welcome to only one";
+	}
+
+}
+</code>
 </div>
 </body>
