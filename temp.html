@@ -54,8 +54,23 @@ public class UserController {
 </code></pre>
 <p>The Spring Initializer has created an application class for you. Since I named my project <code>SpringBasics</code> that application class in my project is
 <code>SpringBasicsApplication</code>. Find the application class in your project and run it to start your Spring application.</p>
-<p>With your application running open your webbrowser and surf to the URL <code>http://localhost:8080/no-security</code>. You should see a screen like this:</p></div>
+<p>Your webapplication also comes with an embedded web server that is started when you start the application. This web server will run your application on the default 
+address <code>http://localhost:8080</code>. With your application running open your webbrowser and surf to the URL <code>http://localhost:8080/no-security</code>. 
+You should see a screen like this:</p></div>
 <img src="img/endpoint no security.jpg" alt="Screenshot of no security endpoint">
 <div class="article-container">
+<p>Our application has allowed access to the <code>/no-security</code> endpoint as indicated by the fact that we can open this page and we can see the "Welcome to all"
+message. You can surf to the other two endpoints if you like and verify that they are also accessible.</p>
+<p>So, let's look at our current situation. We have a web application running on the embedded server. This application has 3 endpoints that are all accessible by anyone,
+even unauthenticated users. We have zero security at the moment. Let's change that.</p>
+<p>Let's add the Spring Security dependency to our application. This is the first and most import building block of Spring Security. In a Maven project, which is what I
+use, this is done by adding the following code the to pom.xml file:</p>
+<pre><code>
+&lt;dependency&gt;
+     &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+     &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code>
+</pre>
 </div>
 </body>
