@@ -62,7 +62,8 @@ code {
 
 img {
     display: block; 
-    max-width: 80%; 
+    max-width: 80%;
+    margin: 20px auto;
 }
 
 
