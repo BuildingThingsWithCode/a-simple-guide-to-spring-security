@@ -139,11 +139,11 @@ have already got our hands dirty with three of the basic building blocks of Spri
 roles and authorities. This means providing Spring with a <code>UserDetailsService</code> so it can handle authentication and authorization.</p>
 <p>Roles and authorities are often used interchangeably. But they are not the same thing. In Spring Security roles are a high-level grouping of permissions. While 
 authorities are a specific permission. An administrator for instance could have the role 'ADMIN', which could group the authorities read, write, delete and update. While 
-a regular user could have role 'USER' and for instance only the authorities read and write. Defining the roles and deciding which authorities are grouped in a role is up 
-to us. As an example I have created three users. The one with the least authorities is the visitor, who I have assigned the role 'RED'. The next user has more authorities 
+a regular user could have role 'USER' and for instance only the authorities read and write. Defining the roles and deciding which authorities are grouped in a role, is up 
+to us.<br>
+As an example I have created three users. The one with the least authorities is the visitor, who I have assigned the role 'RED'. The next user has more authorities 
 and I have assigned him the role 'ORANGE'. The user of our application with the most authorities has been given the role 'GREEN' and is the administrator. I have created 
-a <code>UserDetailsService</code> bean, so Spring has access to a repository of users that it can use when it needs to verify the credentials of a user that tries to 
-login or when it needs to use the <code>SecurityFilterChain</code> and verify if a user is authorized to access some part of our application.</p>
+a <code>UserDetailsService</code> bean, so Spring has access to a repository of users that it can utilize when it needs to verify credentials or authorization of a user.</p>
 </div>
 <img src="img/roles.jpg" alt="Screenshot of 403 error message">
 <div class="article-container">
