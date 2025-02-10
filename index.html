@@ -54,9 +54,11 @@ mention security beans or authentication mechanisms that you don't know yet. Jus
 
 <p><strong>3) It enables CSRF protection.</strong> CSRF stands for Cross-Site Request Forgery. This CSRF protection applies specifically to state-changing HTTP requests. This means that when a user tries to send a POST (creating new resources), PUT (updating existing resources), DELETE (removing resources) or PATCH (partially updating resources) request, Spring will not allow the request unless the correct CSRF token is also sent along with the request. This is to prevent malicious actors from impersonating others online, which is what Cross-Site Request Forgery attacks aim to do. Don't dwell too much on CSRF for now. Just know that it exists and that Spring Security by default protects against it.</p>
 
-<p><strong>4) It enables form login.</strong> When an unauthenticated user attempts to access a protected resource in the application, Spring Security will redirect them to a default login page that contains an HTML form where the user is prompted to enter their username and password. Upon successful login, Spring creates a session for the user, grants access to the requested resource, and redirects the user back to that resource they were trying to access before the login.
-<br>If the credentials are incorrect, Spring will display an error message (usually "Bad credentials") and present the login page again.
-<br>By default the login page is served at the <code>/login</code> endpoint.</p>
+<p><strong>4) It enables form login.</strong> When an unauthenticated user attempts to access a protected resource in the application, Spring Security will redirect them 
+to a default login page that contains an HTML form where the user is prompted to enter their username and password. Upon successful login, Spring creates a session for the 
+user, grants access to the requested resource and redirects the user back to that resource they were trying to access before the login.<br>
+If the credentials are incorrect, Spring will display an error message (usually "Bad credentials") and present the login page again.<br>
+By default the login page is served at the <code>/login</code> endpoint.</p>
 <p><strong>Note:</strong> Spring is highly customizable. For example, we can configure where Spring redirects the user after a successful login, or specify a different page to redirect to if the login fails. Additionally, we can change the default login page from <code>/login</code> to any custom URL. Essentially, Spring allows us to modify almost every aspect of the security flow to suit our needs.</p>
 
 <p><strong>5) It enables password encoding.</strong> Spring creates a default user with username "user" and a random password. Spring will first encode this password and 
