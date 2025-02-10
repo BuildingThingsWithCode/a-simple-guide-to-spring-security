@@ -434,7 +434,8 @@ public PasswordEncoder passwordEncoder() {
   <div style="width: 50%;">{noop}password123</div>
 </div>
 </pre>
-<p>The <code>DelegatingPasswordEncoder</code> will read the prefix, such as {pbkdf2}, and determine the appropriate password encoding to use based on the prefix.</p>
+<p>The passwords are saved in their encrypted form and with their encryption prefix. The <code>DelegatingPasswordEncoder</code> will read the prefix, such as 
+{pbkdf2}, and determine the appropriate password encoding to use based on the prefix.</p>
 
 <p>Spring Security authenticates a user by following these steps:<br>
 <strong>Retrieve user details.</strong> It fetches the username and encrypted password from the <code>UserDetails</code> object provided by the <code>UserDetailsService</code>.<br>
