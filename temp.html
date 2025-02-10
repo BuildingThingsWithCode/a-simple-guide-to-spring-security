@@ -105,8 +105,9 @@ redirect you to the page you were trying to visit. So, if you were unauthenticat
 redirect you to the login page and upon succesfull authentication show you this <code>http://localhost:8080/some-security</code> endpoint. If you tried 
 to visit <code>http://localhost:8080/no-security</code>, then that's the page that will be shown to you when you login successfully.</p>
 <p>We have enabled security and we have a default user, but that's still not very useful. We want an application that can be used by more than one user. So let's 
-start configuring our application and make it more practical. To achieve that we are going to create a configuration class.<br> I placed a new package inside the 
-main package of the application, called it "config" and created a class named ProjectConfig inside of it. Of course you can structure your application differently.</p>
+start configuring our application and make it more practical. To achieve that we are going to create a configuration class.<br> 
+I placed a new package inside the main package of the application, called it "config" and created a class named ProjectConfig inside of it. Of course you can 
+structure your application differently.</p>
 </div>
 <img src="img/add config.jpg" alt="Screenshot of project with config class">
 <div class="article-container">
@@ -127,7 +128,8 @@ message:</p>
 </div>
 <img src="img/403 error.jpg" alt="Screenshot of 403 error message">
 <div class="article-container">
-<p>Like we mentioned, Spring no longer presents our users with the default login form when they are unauthenticated and trying to use a protected endpoint. We have to 
+<p>Remember to stop and restart your application, everytime you made changes to it. Otherwise you the changes will not take effect.<br>
+Like we mentioned, Spring no longer presents our users with the default login form when they are unauthenticated and trying to use a protected endpoint. We have to 
 handle this ourselves. So let's add form login capabilities to our application. Adjust the <code>SecurityFilterChain</code>:</p>
 </div>
 <img src="img/filterChain2.jpg" alt="Screenshot of SecurityFilterChain">
@@ -160,7 +162,17 @@ endpoint. And the user with the most access, our 'admin' user, should have acces
 <img src="img/filterChain3.jpg" alt="Screenshot of SecurityFilterChain">
 <div class="article-container">
 <p>Now that we have a <code>UserDetailsService</code> and a <code>SecurityFilterChain</code> set up, you can go ahead and play around with these different user accounts. 
+First of all, none of our endpoints should be accessible without being authenticated, since we used <code>.anyRequest().authenticated()</code> to lock everything down. 
+You can try to access an endpoint, but you will be redirected to the login screen.<br>
 Try loggin in with the credentials of the first user. We have given him the name 'visitor' and that's also his password. You now should be able to login with those 
-credentials and only have access to our <code>/no-security</code> endpoint.</p>
+credentials and only have access to our <code>/no-security</code> endpoint. When you are succesfully logged in and try to access an endpoint that you do not have the 
+appropriate role for, you will see this whitelabel error message:</p>
+</div>
+<img src="img/403 whitelabel error.jpg" alt="Screenshot of whitelabel error">
+<div class="article-container">
+<p>To make it easier to play around with the different users. Let's add logout capabilities to our <code>SecurityFilterChain</code>:</p>
+</div>
+<img src="img/filterChain4.jpg" alt="Screenshot of SecurityFilterChain">
+<div class="article-container">
 </div>
 </body>
