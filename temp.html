@@ -76,5 +76,10 @@ use, this is done by adding the following code the to pom.xml file:</p>
 <p>Now that we have added the security dependency, stop your application. In Eclipse you can do that by pressing the stop button in the console window:</p></div>
 <img src="img/eclipse stop button.jpg" alt="Screenshot of eclipse stop button">
 <div class="article-container">
+<p>Now start the application again and try to go to one of the 3 endpoints we have created. You should see a screen like this:</p></div>
+<img src="img/login screen.jpg" alt="Screenshot of the login screen">
+<div class="article-container">
+<p>What has happened? By adding the security dependency, we have enabled Spring Security. Only users that are authenticated are now allowed to access our endpoints. 
+Whenever an unauthenticated user tries to visit our endpoints they are being redirected to the default login page at <code>/login</code>.</p>
 </div>
 </body>
