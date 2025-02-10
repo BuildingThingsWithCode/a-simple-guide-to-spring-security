@@ -60,11 +60,11 @@ address <code>http://localhost:8080</code>. With your application running open y
 <img src="img/endpoint no security.jpg" alt="Screenshot of no security endpoint">
 <div class="article-container">
 <p>Our application has allowed access to the <code>/no-security</code> endpoint as indicated by the fact that we can open this page and we can see the "Welcome to all"
-message. You can surf to the other two endpoints if you like and verify that they are also accessible. Just change the URL to match the other endpoint by replacing the
+message. You can surf to the other two endpoints if you like and verify that they are also accessible. Just change the URL to match the other endpoints by replacing the
 "/no-security"-part of the URL by "/some-security" or "/full-security".</p>
 <p>So, let's look at our current situation. We have a web application running on the embedded server. This application has 3 endpoints that are accessible by anyone,
 even unauthenticated users. We have zero security at the moment. Let's change that.</p>
-<p>Let's add the Spring Security dependency to our application. This is the first and most import building block of Spring Security. In a Maven project, which is what I
+<p>Let's add the Spring Security dependency to our application. This is the first and most important building block of Spring Security. In a Maven project, which is what I
 use, this is done by adding the following code the to pom.xml file:</p>
 <pre><code>
 &lt;dependency&gt;
@@ -79,7 +79,10 @@ use, this is done by adding the following code the to pom.xml file:</p>
 <p>Now start the application again and try to go to one of the 3 endpoints we have created. You should see a screen like this:</p></div>
 <img src="img/login screen.jpg" alt="Screenshot of the login screen">
 <div class="article-container">
-<p>What has happened? By adding the security dependency, we have enabled Spring Security. Only users that are authenticated are now allowed to access our endpoints. 
-Whenever an unauthenticated user tries to visit our endpoints they are being redirected to the default login page at <code>/login</code>.</p>
+<p>What has happened? By adding the security dependency, we have enabled Spring Security. And when security is enabled, Spring will restrict access to all endpoints
+for unauthenticated users. Anytime an unauthenticated user tries to visit our endpoints they are being redirected to the default login page at <code>/login</code>.
+Notice that whenever you try to access one of the endpoints to URL is automatically changed to <code>http://localhost:8080/login</code></p> and you are presented with
+a HTML page that includes a login form.</p>
+<p></p>
 </div>
 </body>
