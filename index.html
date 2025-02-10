@@ -61,7 +61,7 @@ If the credentials are incorrect, Spring will display an error message (usually 
 By default the login page is served at the <code>/login</code> endpoint.</p>
 <p><strong>Note:</strong> Spring is highly customizable. For example, we can configure where Spring redirects the user after a successful login, or specify a different page to redirect to if the login fails. Additionally, we can change the default login page from <code>/login</code> to any custom URL. Essentially, Spring allows us to modify almost every aspect of the security flow to suit our needs.</p>
 
-<p><strong>5) It enables password encoding.</strong> Spring creates a default user with username "user" and a random password. Spring will first encode this password and 
+<p><strong>5) It enables password encoding.</strong> Spring creates a default user with username 'user' and a random password. Spring will first encode this password and 
 it's only this encoded version of the password that will be shown in the console. It's good practice to never show passwords without encoding them. So Spring Security 
 enables this by default. The default encryption method used by Spring is BCrypt encoding. Don't worry about BCrypt for now, just know that it's the default encryption 
 method.</p>
