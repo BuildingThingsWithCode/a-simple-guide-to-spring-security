@@ -130,7 +130,7 @@ message:</p>
 <p>Like we mentioned, Spring no longer presents our users with the default login form when they are unauthenticated and trying to use a protected endpoint. We have to 
 handle this ourselves. So let's add form login capabilities to our application. Adjust the <code>SecurityFilterChain</code>:</p>
 </div>
-<img src="img/filterChain2.jpg" alt="Screenshot of 403 error message">
+<img src="img/filterChain2.jpg" alt="Screenshot of SecurityFilterChain">
 <div class="article-container">
 <p>Adding <code>.formLogin()</code> to our <code>SecurityFilterChain</code> is functionally the same as adding <code>.formLogin(Customizer.withDefaults())</code> to it. 
 Both enable form-based authentication with default settings, <code>.formLogin()</code> is a shorthand method that internally calls <code>.formLogin(Customizer.withDefaults())</code>.</p>
@@ -141,15 +141,20 @@ roles and authorities. This means providing Spring with a <code>UserDetailsServi
 authorities are a specific permission. An administrator for instance could have the role 'ADMIN', which could group the authorities read, write, delete and update. While 
 a regular user could have role 'USER' and for instance only the authorities read and write. Defining the roles and deciding which authorities are grouped in a role, is up 
 to us.</p>
-<p>As an example I have created three users. The one with the least access is the visitor, who I have assigned the role 'RED'. The next user can do more in our application 
-and I have assigned him the roles 'ORANGE' and 'RED'. The user of our application with the most access has been given the role 'GREEN', 'ORANGE' and 'RED' and is the 
-administrator. I have created a <code>UserDetailsService</code> bean, so Spring has access to a repository of these users that it can utilize when it needs to verify 
-credentials or authorization.</p>
+<p>As an example I have created three users. The one with the least access is the visitor, who has been given the role 'RED'. The next user is one we want to give more access 
+in our application. He has been given the roles 'ORANGE' and the username 'user'. And the final user, who we have given the name 'admin' and who will have the most access 
+has been given the role 'GREEN'. I have created a <code>UserDetailsService</code> bean, so Spring has access to a repository of these users that it can utilize when it 
+needs to verify credentials or authorization. Here is the code I used:</p>
 </div>
-<img src="img/roles.jpg" alt="Screenshot of 403 error message">
+<img src="img/roles.jpg" alt="Screenshot of UserDetailsService">
 <div class="article-container">
-<p>So, in this case we have regulated the levels of access a users has in our application by giving them roles. More roles means more "power". But we could have given 
-each of them just a role and then created different groups of authorities assigned to each role for a more fine grained control of what users can do. Usually this would 
-be achieved by putting these roles in a table in a database. And connecting the authorities, that are in their own table to these roles.</p>
+<p>So, in this case we have regulated the levels of access a users has in our application by giving them roles. I made no use of authorities. If you want to make use of 
+both roles and authorities all depends on the level of fine grained control that you requier in your application. For very complex applications it might be necessary to 
+use them both. So, you can handle what a user is allowed to do or access in more detail by using authorities. And then create roles to make it more practical to group 
+these authorities together and assign them as a group to users. But in our current application with only three endpoints, using authorities would be a bit of overkill.</p>
+<p>Let rewrite our <code>SecurityFilterChain</code> so that I handles the different roles we have created. I want none of our endpoints to be accessible without 
+authentication. The user with the least amount of access (role 'RED') should only be able to access our <code>/no-security</p> endpoint. The user with a bit more access 
+(role 'ORANGE') should be able to access both <code>/no-security</p> and <code>/some-security</p>, but be restricted from <code>/full-security</p>. And the user with the 
+most access, our 'admin' user, should have access to all three endpoints. This is the <code>SecurityFilterChain</code> after the rewrite: </p>
 </div>
 </body>
