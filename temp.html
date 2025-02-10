@@ -128,7 +128,7 @@ message:</p>
 </div>
 <img src="img/403 error.jpg" alt="Screenshot of 403 error message">
 <div class="article-container">
-<p>Remember to stop and restart your application, everytime you made changes to it. Otherwise you the changes will not take effect.<br>
+<p>Remember to stop and restart your application, everytime you make changes to it. Otherwise the changes will not take effect.<br>
 Like we mentioned, Spring no longer presents our users with the default login form when they are unauthenticated and trying to use a protected endpoint. We have to 
 handle this ourselves. So let's add form login capabilities to our application. Adjust the <code>SecurityFilterChain</code>:</p>
 </div>
@@ -166,7 +166,8 @@ First of all, none of our endpoints should be accessible without being authentic
 You can try to access an endpoint, but you will be redirected to the login screen.<br>
 Try loggin in with the credentials of the first user. We have given him the name 'visitor' and that's also his password. You now should be able to login with those 
 credentials and only have access to our <code>/no-security</code> endpoint. When you are succesfully logged in and try to access an endpoint that you do not have the 
-appropriate role for, you will see this whitelabel error message:</p>
+appropriate role for, you will see this whitelabel error message. This means that our security is working as intended. We could customize this behaviour to show the user
+something more professional than this whitelabel error, but for the intentions of this article this error page will do.</p>
 </div>
 <img src="img/403 whitelabel error.jpg" alt="Screenshot of whitelabel error">
 <div class="article-container">
@@ -175,7 +176,26 @@ appropriate role for, you will see this whitelabel error message:</p>
 <img src="img/filterChain4.jpg" alt="Screenshot of SecurityFilterChain">
 <div class="article-container">
 <p>By adding <code>.logout()</code></p> we have enabled the default logout behaviour of Spring Security. You can go to the URL <code>http://localhost:8080/logout</code>
-where you will be presented with a button you can press to log our of the current account. Once you press this button, Spring will redirect you to the login page, where
-you can log back to experiment with a different account if you want.</p>
+where you will be presented with a button you can press to log out of the current account. Once you press this button, Spring will redirect you to the login page, where
+you can log back in to experiment with a different user account if you want to.</p>
+<p>We have now played around with four out of the five building blocks that were mentioned: the Spring Security dependency, a configuration class annotated with 
+<code>@Configuration</code> and <code>@EnableWebSecurity</code>, a <code>SecurityFilterChain</code> and a <code>UserDetailsService</code>. The only element we haven't used 
+yet is a <code>PasswordEncoder</code>. Let's see what happens when we don't provide Spring Security with the information it needs to be able to handle passwords. You 
+might think, we never provided Spring with password information, so Spring seems to be doing fine without it. But actually we did. We told Spring that we were going 
+to be handling passwords without any encoding. We included this information in our <code>UserDetailsService</code> in lines like this one:
+<code>.password("{noop}user")</code>, where the <code>{noop}</code> stands for stands for "No Operation" password encoding. It tells Spring Security not to hash or 
+encode the password. If we remove these lines from our <code>UserDetailsService</code>, so it looks like this:</p> 
+</div>
+<img src="img/no password info.jpg" alt="Screenshot of UserDetailsService with no password information">
+<div class="article-container">
+<p>Then no user will be able to login. Even when they use credentials that should be correct. Simply because Spring lacks the necessary information to handle passwords. 
+The user will see a server error with error code 500:</p>
+</div>
+<img src="img/500 error.jpg" alt="Screenshot of 500 error">
+<div class="article-container">
+<p>And in the console, this error will be shown:</p>
+</div>
+<img src="img/no passwordEncoder error.jpg" alt="Screenshot of no passwordEncoder error">
+<div class="article-container">
 </div>
 </body>
