@@ -283,7 +283,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
 </code>
 </pre>
 
-<p>All requests are permitted (no need to be authenticated) except the <code>/private</code> endpoint which requires authentication. Since we have overwritten the default behavior, a user that is not logged in will 
+<p>All requests are permitted except the <code>/private</code> endpoint which requires authentication. Since we have overwritten the default behavior, a user that is not logged in will 
 no longer be presented with a login form when they try to visit our <code>/private</code> endpoint. What they will see instead is a generic error page, informing them of a Forbidden Error with error code 403. By the 
 way, do not do this in production. It's never a good idea to open up all endpoints like this.</p> 
 <p>If we want to present our user with a login form for endpoints that require authentication, we now need to explicitly tell Spring that we want to do so. By adding <code>.formLogin(Customizer.withDefaults())</code> 
