@@ -354,8 +354,8 @@ public UserDetailsService userDetailsService() {
 </code>
 </pre>
 
-<p>This current implementation serves only as an example. It will always return the same <code>UserDetails</code> object, with "username" as its username and inform 
-Spring that the password is not encrypted (<code>{noop}</code> = no encryption) and is "password". If a user would try to login with the credentials 
+<p>This current implementation serves only as an example. It will always return the same <code>UserDetails</code> object, with 'username' as its username and inform 
+Spring that the password is not encrypted (<code>{noop}</code> = no encryption) and is 'password'. If a user would try to login with the credentials 
 <code>username/password</code>, then this implementation would allow that user to be authenticated. However, in a real production environment, our <code>UserDetailsService</code> 
 would return different usernames and actual encrypted passwords that are connected to those usernames.</p>
 
@@ -380,9 +380,13 @@ public UserDetailsService users() {
 </code>
 </pre>
 <h3>PasswordEncoder.</h3>
-<p>Since all passwords should be encrypted, we need to tell Spring how we would like to handle this encryption in our application. To do this, we need to give Spring a bean of type <code>PasswordEncoder</code>. This is an interface that allows Spring to encrypt passwords and to compare a non-encrypted password provided by the user to its encrypted counterpart provided by <code>UserDetails</code>.</p>
+<p>Since all passwords should be encrypted, we need to tell Spring how we would like to handle this encryption in our application. To do this, we need to give Spring a 
+bean of type <code>PasswordEncoder</code>. This is an interface that allows Spring to encrypt passwords and to compare a non-encrypted password provided by the user to 
+its encrypted counterpart provided by <code>UserDetails</code>.</p>
 
-<p>Here's an example of such a bean that returns a <code>PasswordEncoder</code>, which is in this case a <code>BCryptPasswordEncoder</code>. We can use a lot of different encryption methods in Spring. <code>BCryptPasswordEncoder</code> is a method that is commonly used. If we would like to use a different method, we can just change the return value of our <code>PasswordEncoder</code> bean:</p>
+<p>Here's an example of such a bean that returns a <code>PasswordEncoder</code>, which is in this case a <code>BCryptPasswordEncoder</code>. We can use a lot of different 
+encryption methods in Spring. <code>BCryptPasswordEncoder</code> is a method that is commonly used. If we would like to use a different method, we can just change the 
+return value of our <code>PasswordEncoder</code> bean:</p>
 
 <pre><code>
 @Bean
