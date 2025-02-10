@@ -99,8 +99,8 @@ credentials we can use to log into the application. This default username is 'us
 </div>
 <img src="img/default user.jpg" alt="Screenshot of default credentials">
 <div class="article-container">
-<p>Note that the password that is being shown to you in the console is an encoded password. By default Spring uses the BCrypt algorithm for this encoding.<br> 
-Copy the password that is displayed in your console and go ahead and login by using 'user' as the username and that copied password. Spring should log you in and 
+<p>Note that the password that is being shown to you in the console is an encoded password. By default Spring uses the BCrypt algorithm for this encoding.</p> 
+<p>Copy the password that is displayed in your console and go ahead and login by using 'user' as the username and that copied password. Spring should log you in and 
 redirect you to the page you were trying to visit. So, if you were unauthenticated and tried to visit <code>http://localhost:8080/some-security</code>, Spring will 
 redirect you to the login page and upon succesfull authentication show you this <code>http://localhost:8080/some-security</code> endpoint. If you tried 
 to visit <code>http://localhost:8080/no-security</code>, then that's the page that will be shown to you when you login successfully.</p>
