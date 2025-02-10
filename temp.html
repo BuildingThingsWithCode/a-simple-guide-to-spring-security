@@ -89,7 +89,7 @@ in the address balk of your web browser, press enter and you should now see a sc
 By adding the security dependency we have enabled Spring Security. And when security is enabled, Spring will restrict access to all endpoints for unauthenticated users. 
 Anytime an unauthenticated user tries to visit our endpoints they are being redirected to the default login page at <code>/login</code>.
 <p>Restricting access for unauthenticated users and redirecting them to a HTML page that includes a login form at <code>/login</code> are all default behaviours that come
-with Spring Security. And there is more. For instance try using the login form while you have left the username or password field empty. Spring will show you a message 
+with Spring Security. And there is more. For instance try using the login form while leaving the username or password field empty. Spring will show you a message 
 asking you to fill out those fields. This is Spring giving you form validation out of the box. And if you try to login with a username and a password that do not exist, 
 Spring will redirect you to an empty login form and show you the error message "Bad credentials".</p>
 <p>All these default security behaviours are very nice, but we had a working web application with functioning endpoints and now none of that is working anymore. It's our
@@ -100,8 +100,16 @@ credentials we can use to log into the application. This default username is "us
 <div class="article-container">
 <p>Note that the password that is being shown to you in the console is an encoded password. By default Spring uses the BCrypt algorithm for this encoding.<br> 
 Copy the password that is displayed in your console and go ahead and login by using "user" as the username and that copied password. Spring should log you in and 
-redirect you to the page you were trying to visit. So: if you were unauthenticated and tried to visit <code>http://localhost:8080/some-security</code></p>, then 
-Spring will redirect you to the login page and upon succesfull authentication show you this <code>http://localhost:8080/some-security</code> endpoint. If you tried 
+redirect you to the page you were trying to visit. So, if you were unauthenticated and tried to visit <code>http://localhost:8080/some-security</code>, Spring will 
+redirect you to the login page and upon succesfull authentication show you this <code>http://localhost:8080/some-security</code> endpoint. If you tried 
 to visit <code>http://localhost:8080/no-security</code>, then that's the page that will be shown to you when you login successfully.</p>
+<p>We have enabled security and we have a default user, but that's still not very useful. We want an application that can be used by more than one user. So let's 
+start configuring our application and make it more practical. To achieve that we are going to create a configuration class.<br> I placed a new package inside the 
+main package of the application, called it "config" and created a class named ProjectConfig inside of it. Of course you can structure your application differently.</p>
+</div>
+<img src="img/add config.jpg" alt="Screenshot of project with config class">
+<div class="article-container">
+<p>As explained it the previous article, we are going to give this class the <code>@Configuration</code> and <code>@EnableWebSecurity</code> annotations. It's inside 
+this class that we are going to be handling most of the security aspects of our application.</p>
 </div>
 </body>
