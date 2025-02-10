@@ -153,12 +153,14 @@ both roles and authorities or not, depends on the level of fine grained control 
 So you can handle what a user is allowed to do or access in more details by creating authorities. And then group these authorities together as roles, so you can assign 
 them in one go to a user. But in our application with only three endpoints, using authorities would be a bit of overkill.</p>
 <p>Let's rewrite our <code>SecurityFilterChain</code> so that it handles the different roles we have created. I want none of our endpoints to be accessible without 
-authentication. The user with the least amount of access (role 'RED') should only be able to access our <code>/no-security</p> endpoint. The user with a bit more access 
-(role 'ORANGE') should be able to access both <code>/no-security</p> and <code>/some-security</p>, but also be restricted from our <code>/full-security</code> endpoint. And 
-the user with the most access, our 'admin' user, should have access to all three endpoints. This is the <code>SecurityFilterChain</code> after the rewrite:</p>
+authentication. The user with the least amount of access (role 'RED') should only be able to access our <code>/no-security</code> endpoint. The user with a bit more access 
+(role 'ORANGE') should be able to access both <code>/no-security</p> and <code>/some-security</code>, but also be restricted from our <code>/full-security</code> endpoint. 
+And the user with the most access, our 'admin' user, should have access to all three endpoints. This is the <code>SecurityFilterChain</code> after the rewrite:</p>
 </div>
 <img src="img/filterChain3.jpg" alt="Screenshot of SecurityFilterChain">
 <div class="article-container">
-<p></p>
+<p>Now that we have a <code>UserDetailsService</code> and a <code>SecurityFilterChain</code> set up, you can go ahead and play around with these different user accounts. 
+Try loggin in with the credentials of the first user. We have given him the name 'visitor' and that's also his password. You now should be able to login with those 
+credentials and only have access to our <code>/no-security</code> endpoint.</p>
 </div>
 </body>
