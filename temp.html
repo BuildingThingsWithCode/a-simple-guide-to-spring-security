@@ -25,9 +25,9 @@ dependency. This is the only dependency we need to be able to create a webapplic
 <div class="article-container">
 <p>Save the zip-file, extract it to a folder of your choosing and import the project into your IDE of choice.</p>
 <p>Now let's create a controller class in our application. I called this class <code>UserController</code> but you
-can name it whatever you like. Give the class the following annotation <code>@RestController</code> and create 3 endpoints
-in the class like I have done in the code example. Since we haven't added security to our application, these 3 endpoints are 
-accessible to anyone. We will secure them soon. This is the full code of the class:</p>
+can name it whatever you like. Give the class the annotation <code>@RestController</code> and create 3 endpoints 
+like I have done in the code example. Since we haven't added security to our application, these 3 endpoints are 
+accessible to anyone. Don't worry, we will secure them soon. This is the code of the class:</p>
 <pre><code>
 package com.spring.basics.SpringBasics.controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,8 +52,8 @@ public class UserController {
 	}
 }
 </code></pre>
-<p>The Spring Initializer has created an application class for you. Since I named my project <code>SpringBasics</code>, the name generated for my
-application class is <code>SpringBasicsApplication</code>. Yours can have a different name. Find your application class and run it to start your Spring application.</p>
+<p>The Spring Initializer has created an application class for you. Since I named my project <code>SpringBasics</code>, the application class generated for me
+is called <code>SpringBasicsApplication</code>. Yours can have a different name. Find your application class and run it to start your Spring application.</p>
 <p>Your webapplication also comes with an embedded web server that is started when you start the application. This web server will run your application on the default 
 address <code>http://localhost:8080</code>. With your application running open your webbrowser and surf to the first endpoint we have create at the URL 
 <code>http://localhost:8080/no-security</code>. You should see a screen like this:</p></div>
@@ -93,11 +93,10 @@ credentials we can use to log into the application. This default username is "us
 </div>
 <img src="img/default user.jpg" alt="Screenshot of default credentials">
 <div class="article-container">
-<p>The password that is being shown to you in the console is an encoded password. By default Spring uses the bcrypt algorithm for this encoding.<br> 
+<p>Note that the password that is being shown to you in the console is an encoded password. By default Spring uses the BCrypt algorithm for this encoding.<br> 
 Copy the password that is displayed in your console and go ahead and login by using "user" as the username and that copied password. Spring should log you in and 
-redirect you to the page you were trying to visit before Spring showed you the login screen. So if you were unauthenticated and tried to visit 
-<code>http://localhost:8080/some-security</code></p>, then Spring will redirect you to the login page and upon succesfull authentication show you this 
-<code>http://localhost:8080/some-security</code> endpoint. If you tried to visit <code>http://localhost:8080/no-security</code>, then that's the page that will be shown 
-to you when you login successfully.</p>
+redirect you to the page you were trying to visit. So: if you were unauthenticated and tried to visit <code>http://localhost:8080/some-security</code></p>, then 
+Spring will redirect you to the login page and upon succesfull authentication show you this <code>http://localhost:8080/some-security</code> endpoint. If you tried 
+to visit <code>http://localhost:8080/no-security</code>, then that's the page that will be shown to you when you login successfully.</p>
 </div>
 </body>
