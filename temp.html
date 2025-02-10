@@ -141,12 +141,15 @@ roles and authorities. This means providing Spring with a <code>UserDetailsServi
 authorities are a specific permission. An administrator for instance could have the role 'ADMIN', which could group the authorities read, write, delete and update. While 
 a regular user could have role 'USER' and for instance only the authorities read and write. Defining the roles and deciding which authorities are grouped in a role, is up 
 to us.<br>
-As an example I have created three users. The one with the least authorities is the visitor, who I have assigned the role 'RED'. The next user has more authorities 
-and I have assigned him the role 'ORANGE'. The user of our application with the most authorities has been given the role 'GREEN' and is the administrator. I have created 
-a <code>UserDetailsService</code> bean, so Spring has access to a repository of users that it can utilize when it needs to verify credentials or authorization.</p>
+As an example I have created three users. The one with the least access is the visitor, who I have assigned the role 'RED'. The next user can do more in our application 
+and I have assigned him the roles 'ORANGE' and 'RED'. The user of our application with the most access has been given the role 'GREEN', 'ORANGE' and 'RED' and is the 
+administrator. I have created a <code>UserDetailsService</code> bean, so Spring has access to a repository of these users that it can utilize when it needs to verify 
+credentials or authorization.</p>
 </div>
 <img src="img/roles.jpg" alt="Screenshot of 403 error message">
 <div class="article-container">
-<p></p>
+<p>So, in this case we have regulated the levels of access a users has in our application by giving them roles. More roles means more "power". But we could have given 
+each of them just a role and then created different groups of authorities assigned to each role for a more fine grained control of what users can do. Usually this would 
+be achieved by putting these roles in a table in a database. And connecting the authorities, that are in their own table to these roles.</p>
 </div>
 </body>
