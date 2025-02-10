@@ -120,5 +120,10 @@ The same thing happens with authorization. Once Spring notices that we are handl
 </div>
 <img src="img/filterChain1.jpg" alt="Screenshot of filterChain">
 <div class="article-container">
+<p>By adding this <code>SecurityFilterChain</code> we have locked down all endpoints in our application except the <code>/no-security</code> endpoint that is open
+to all. Users will see be able to visit the <code>/no-security</code> endpoint, but when they try to go to one of the other endpoints, they will see the following:</p>
+</div>
+<img src="img/403 error.jpg" alt="Screenshot of 403 error message">
+<div class="article-container">
 </div>
 </body>
