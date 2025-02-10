@@ -85,13 +85,15 @@ By adding the security dependency we have enabled Spring Security. And when secu
 Anytime an unauthenticated user tries to visit our endpoints they are being redirected to the default login page at <code>/login</code>.
 <p>Restricting access for unauthenticated users and redirecting them to a HTML page that includes a login form at <code>/login</code> are all default behaviours that come
 with Spring Security. And there is more. For instance try using the login form while you have left the username or password empty. Spring will show you a message 
-asking you to fill out those fields. And if you try to login with a username and a password that do not exist, Spring will redirect you to an empty login form and show 
-you the error message "Bad credentials".</p>
-<p>All these default security behaviours are very nice, but we had a nice web application with functioning endpoints and now none of them are working anymore. It's our
-application and even we are locked out of it. But don't worry, Spring has you covered here. Each time we start our application Spring creates a default user with
-credentials we can use to log into the application. This default username is "username" and the default password is being displayed in the console at startup:</p>
+asking you to fill out those fields. This is Spring giving you form validation out of the box. And if you try to login with a username and a password that do not exist, 
+Spring will redirect you to an empty login form and show you the error message "Bad credentials".</p>
+<p>All these default security behaviours are very nice, but we had a working web application with functioning endpoints and now none of that is working anymore. It's our
+application and even we are locked out of it! But don't worry, Spring has you covered. Each time we start our application Spring creates a default user with
+credentials we can use to log into the application. This default username is "user" and the default password is being displayed in the console at startup:</p>
 </div>
 <img src="img/default user.jpg" alt="Screenshot of default credentials">
 <div class="article-container">
+<p>Copy the password that is displayed in your console and go ahead and login by using "user" as the username and that copied password. Spring should log you in and 
+redirect you to the page you were trying to visit before Spring showed you the login screen.</p>
 </div>
 </body>
