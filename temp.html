@@ -111,5 +111,14 @@ main package of the application, called it "config" and created a class named Pr
 <div class="article-container">
 <p>As explained it the previous article, we are going to give this class the <code>@Configuration</code> and <code>@EnableWebSecurity</code> annotations. It's inside 
 this class that we are going to be handling most of the security aspects of our application.</p>
+<p>To handle authorization, we are going to need a <code>SecurityFilterChain</code>. Remember that once we are adding a <code>SecurityFilterChain</code> to our application 
+Spring assumes that we are handling authorization ourselves. This means that Spring will no longer present users with a login form or handle the security of our endpoints
+for us. All that will become our responsibility.<br>
+The same thing happens with authorization. Once Spring notices that we are handling authorization ourselves, for instance because we have declared a 
+<code>UserDetailsService</code> bean, it will no longer provide us we a default user and password.</p>
+<p>Let's add a <code>SecurityFilterChain:</code></p>
+</div>
+<img src="img/filterChain1.jpg" alt="Screenshot of filterChain">
+<div class="article-container">
 </div>
 </body>
