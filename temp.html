@@ -180,7 +180,8 @@ where you will be presented with a button you can press to log out of the curren
 you can log back in to experiment with a different user account if you want to.</p>
 <p>We have now played around with four out of the five building blocks that were mentioned: the Spring Security dependency, a configuration class annotated with 
 <code>@Configuration</code> and <code>@EnableWebSecurity</code>, a <code>SecurityFilterChain</code> and a <code>UserDetailsService</code>. The only element we haven't used 
-yet is a <code>PasswordEncoder</code>. Let's see what happens when we don't provide Spring Security with the information it needs to be able to handle passwords. You 
+yet is a <code>PasswordEncoder</code>.<br> 
+Let's see what happens when we don't provide Spring Security with the information it needs to be able to handle passwords. You 
 might think, we never provided Spring with password information, so Spring seems to be doing fine without it. But actually we did. We told Spring that we were going 
 to be handling passwords without any encoding. We included this information in our <code>UserDetailsService</code> in lines like this one:
 <code>.password("{noop}user")</code>, where the <code>{noop}</code> stands for stands for "No Operation" password encoding. It tells Spring Security not to hash or 
