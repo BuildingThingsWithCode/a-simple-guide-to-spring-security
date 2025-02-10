@@ -180,21 +180,20 @@ where you will be presented with a button you can press to log out of the curren
 you can log back in to experiment with a different user account if you want to.</p>
 <p>We have now played around with four out of the five building blocks that were mentioned: the Spring Security dependency, a configuration class annotated with 
 <code>@Configuration</code> and <code>@EnableWebSecurity</code>, a <code>SecurityFilterChain</code> and a <code>UserDetailsService</code>. The only element we haven't used 
-yet is a <code>PasswordEncoder</code>.<br> 
-Let's see what happens when we don't provide Spring Security with the information it needs to be able to handle passwords. You 
+yet is a <code>PasswordEncoder</code>.</p>
+<p>Let's see what happens when we don't provide Spring Security with the information it needs to be able to handle passwords. You 
 might think, we never provided Spring with password information, so Spring seems to be doing fine without it. But actually we did. We told Spring that we were going 
 to be handling passwords without any encoding. We included this information in our <code>UserDetailsService</code> in lines like this one:
-<code>.password("{noop}user")</code>, where the <code>{noop}</code> stands for stands for "No Operation" password encoding. It tells Spring Security not to hash or 
+<code>.password("{noop}user")</code>, where the <code>{noop}</code> stands for "No Operation" password encoding. It tells Spring Security not to hash or 
 encode the password. If we remove these lines from our <code>UserDetailsService</code>, so it looks like this:</p> 
 </div>
 <img src="img/no password info.jpg" alt="Screenshot of UserDetailsService with no password information">
 <div class="article-container">
 <p>Then no user will be able to login. Even when they use credentials that should be correct. Simply because Spring lacks the necessary information to handle passwords. 
-The user will see a server error with error code 500:</p>
+The user will see a server error with error code 500 and in the console there will be an error message informing us that there's no PasswordEncoder mapped:</p>
 </div>
 <img src="img/500 error.jpg" alt="Screenshot of 500 error">
 <div class="article-container">
-<p>And in the console, this error will be shown:</p>
 </div>
 <img src="img/no passwordEncoder error.jpg" alt="Screenshot of no passwordEncoder error">
 <div class="article-container">
