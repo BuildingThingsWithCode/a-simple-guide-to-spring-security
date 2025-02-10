@@ -133,8 +133,7 @@ handle this ourselves. So let's add form login capabilities to our application. 
 <img src="img/filterChain2.jpg" alt="Screenshot of 403 error message">
 <div class="article-container">
 <p>Adding <code>.formLogin()</code> to our <code>SecurityFilterChain</code> is functionally the same as adding <code>.formLogin(Customizer.withDefaults())</code> to it. 
-Both enable form-based authentication with default settings, <code>.formLogin()</code> is a shorthand method that internally calls 
-<code>.formLogin(Customizer.withDefaults())</code>.</p>
+Both enable form-based authentication with default settings, <code>.formLogin()</code> is a shorthand method that internally calls <code>.formLogin(Customizer.withDefaults())</code>.</p>
 <p>We have added to security dependency, we have created a configuration class and inside that class we have defined our <code>SecurityFilterChain</code>. That means we 
 have already got our hands dirty with three of the basic building blocks of Spring Security. Let's add a fourth. Let's define some users, so we can experiment with 
 roles and authorities.</p>
