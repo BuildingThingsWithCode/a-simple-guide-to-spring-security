@@ -104,8 +104,8 @@ to visit <code>http://localhost:8080/some-security</code>, Spring would have red
 <code>http://localhost:8080/some-security</code> page that you were trying to visit. If you tried to visit a different page, then that's the page that Spring will show you 
 upon successful authentication.</p>
 <p>Right now, we have security enabled and a default user, but that’s not very useful. Our goal is to create an application that supports multiple users with proper 
-authentication. To do this, we need to configure our application. Let's create a Configuration Class<br> 
-I created a new package named "config" inside the main package of the application. Inside this config package, I added a new class called <code>ProjectConfig</code>.
+authentication. To do this, we need to configure our application. Let's create a Configuration Class.</p> 
+<p>I created a new package named "config" inside the main package of the application. Inside this config package, I added a new class called <code>ProjectConfig</code>.
 Of course, you can structure your application differently if you prefer.</p>
 </div>
 <img src="img/add config.jpg" alt="Screenshot of project with config class">
@@ -127,8 +127,8 @@ message:</p>
 </div>
 <img src="img/403 error.jpg" alt="Screenshot of 403 error message">
 <div class="article-container">
-<p>Remember to stop and restart your application every time you make changes. Otherwise, those changes will not take effect.<br>
-As mentioned earlier, Spring no longer automatically presents users with the default login form when they try to access a protected endpoint while unauthenticated. We 
+<p>Remember to stop and restart your application every time you make changes. Otherwise, those changes will not take effect.</p>
+<p>As mentioned earlier, Spring no longer automatically presents users with the default login form when they try to access a protected endpoint while unauthenticated. We 
 now need to handle this ourselves. To add form login capabilities to our application, adjust the <code>SecurityFilterChain</code> by including the following line:
 <code>.formLogin()</code>:</p>
 </div>
@@ -155,7 +155,7 @@ In order for Spring to access a repository of these users, I’ve created a <cod
 </div>
 <img src="img/roles.jpg" alt="Screenshot of UserDetailsService">
 <div class="article-container">
-<p>In this case, we've regulated the levels of access a user has in our application by assigning them roles. I haven’t made use of authorities here.<br>
+<p>In this case, we will regulated the levels of access a user has in our application by assigning them roles. I haven’t made use of authorities here.<br>
 The decision to use both roles and authorities depends on the level of fine-grained control you need in your application. For more complex applications, it might be 
 necessary to use both.<br>
 - Authorities allow you to handle what a user is allowed to do or access in greater detail.<br>
@@ -176,8 +176,8 @@ Here’s how the <code>SecurityFilterChain</code> would look after this rewrite:
 <p>Now that we have a <code>UserDetailsService</code> and a <code>SecurityFilterChain</code> set up, you can go ahead and experiment with the different user accounts. 
 Since we used <code>.anyRequest().authenticated()</code> to lock everything down, none of the endpoints should be accessible without authentication. If you try to 
 access an endpoint without being logged in, it will fail, and you will be redirected to the login screen.</p>
-<p>Try logging in with the username 'visitor' and the password 'visitor'. Once logged in, you should only have access to the <code>/no-security</code> endpoint.</p>
-<p>If you try to access an endpoint that you don't have the appropriate role for, such as <code>/some-security</code> or <code>/full-security</code>, you will see a 
+<p>Try logging in with the username 'visitor' and the password 'visitor'. Once logged in, you should only have access to the <code>/no-security</code> endpoint.
+If you try to access an endpoint that you don't have the appropriate role for, such as <code>/some-security</code> or <code>/full-security</code>, you will see a 
 whitelabel error page. This is a 403 Forbidden error, which means our security is working as intended—this user doesn't have the necessary permissions for 
 those endpoints.</p>
 <p>While we could customize this error page to make it look more professional, for the purpose of this article, the default error page clearly indicates that the user 
@@ -213,7 +213,7 @@ mapped:</p>
 <img src="img/no passwordEncoder error.jpg" alt="Screenshot of no passwordEncoder error">
 <div class="article-container">
 <p>Let's fix these errors by telling Spring that we'll use BCrypt encoding to hash our passwords, which is the same encoding Spring uses for the default user’s password. 
-To do this, we need to provide Spring with a <code>>PasswordEncoder</code> bean. Simply add the following code to our configuration class:</p>
+To do this, we need to provide Spring with a <code>PasswordEncoder</code> bean. Simply add the following code to our configuration class:</p>
 </div>
 <img src="img/bcrypt encoder.jpg" alt="Screenshot of BCrypt Encoder">
 <div class="article-container">
@@ -225,7 +225,7 @@ that although you are using correct credentials, you are not being authenticated
 <p>This situation happens because Spring always saves passwords in their encrypted form. And also expects us to provide them in encrypted form. But in our 
 <code>UserDetailsService</code> we have saved the passwords unencrypted. So, when we try to login, Spring takes the password that we use in the login form, encrypts 
 it and then compares that encrypted password to the unencrypted one it receives from our <code>UserDetailsService</code>. Those two will, of course, never match, hence 
-the "Bad credentials" error.<br>
+the 'Bad credentials' error.<br>
 <p>Change the <code>UserDetailsService</code> so it takes a <code>PasswordEncoder</code> as a parameter. Spring will make sure that the correct
 <code>PasswordEncoder</code> will be injected into the <code>UserDetailsService</code>. Also add code so the encoder hashes the passwords. Like 
 for instance <code>.password(passwordEncoder.encode("admin"))</code>. Don't forget to stop and restart your application after you made the changes:</p>
@@ -233,12 +233,12 @@ for instance <code>.password(passwordEncoder.encode("admin"))</code>. Don't forg
 <img src="img/password encoder in UserDetailsService.jpg" alt="Screenshot of UserDetailsService + PasswordEncoder">
 <div class="article-container">
 <p>If at any point you succesfully log in, but get redirected to a 'Whitelabel Error Page' with a 'Not Found, status=404' code (like happened to me), know that 
-this happened because you did not first try to visit one of the endpoins in our application. When you go directly to the login page, Spring will not redirect you to 
-the endpoint you were trying to visit before you logged in (because there is none, you went directly to the login page). In this case, it's default behaviour to 
-redirect you to the home page, which is by default the <code>/</code> endpoint. But we did not configure this endpoint in our application. That's why you see that 
-404 not found error page. We can fix this situation by creating a new mapping for this <code>/</code> endpoint in our controller class or by configuring a 
-<code>.defaultSuccessUrl()</code> method in our <code>SecurityFilterChain</code>. The <code>.defaultSuccessUrl()</code> configures where Spring should redirect users 
-when they have succesfully authenticated.</p>
+this happened because you did not first try to visit one of the endpoins in our application.<br>
+When you go directly to the login page, Spring will not redirect you to the endpoint you were trying to visit before you logged in (because there is none, you 
+went directly to the login page). In this case, it's default behaviour to redirect you to the home page, which is by default the <code>/</code> endpoint. But we did 
+not configure this endpoint in our application. That's why you see that 404 not found error page. We can fix this situation by creating a new mapping for this 
+<code>/</code> endpoint in our controller class or by configuring a <code>.defaultSuccessUrl()</code> method in our <code>SecurityFilterChain</code>. The 
+<code>.defaultSuccessUrl()</code> configures where Spring should redirect users when they have succesfully authenticated.</p>
 <p>We have now covered all the basic building blocks of Spring Security. With these components, we've been able to handle authentication and authorization for 
 different users in our web application. I hope this has given you a better understanding of Spring Security, showing that it's not as daunting as it might have seemed 
 at first, and that you had some fun along the way.</p>
