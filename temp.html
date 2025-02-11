@@ -90,8 +90,8 @@ By adding the Spring Security dependency, we have enabled security in our applic
 unauthenticated users. Anytime an unauthenticated user tries to visit our endpoints, they are automatically redirected to the default login page at <code>/login</code>.
 <p>Restricting access for unauthenticated users and redirecting them to an HTML login form at <code>/login</code> are just a few of Spring Security’s default features.</p> 
 <p>But there’s more: try submitting the login form without entering a username or password and Spring will show a validation message asking you to fill out the fields.
-And if you try logging in with an incorrect username or password, Spring will redirect you to an empty login form and display the error message 'Bad credentials.'
-These built-in security behaviors are useful, but there's a problem: our previously accessible web application is now completely locked down! Even we, the developers, are 
+And if you try logging in with an incorrect username or password, Spring will redirect you to an empty login form and display the error message 'Bad credentials.'</p>
+<p>These built-in security behaviors are useful, but there's a problem: our previously accessible web application is now completely locked down! Even we, the developers, are 
 locked out.</p>
 <p>But don't worry, Spring has you covered. Each time we start our application Spring creates a default user with credentials we can use to log into the application. The 
 default username is 'user' and the default password is being displayed in the console at startup:</p>
