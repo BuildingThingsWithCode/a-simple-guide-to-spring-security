@@ -32,7 +32,7 @@ can name it differently and also use a different structure if you like.</p>
 <div class="article-container">
 <p>Give the class the annotation <code>@RestController</code> and create three endpoints 
 like I have done in the code example. Since we haven't added security to our application, these three endpoints are 
-accessible to anyone. Don't worry, we will secure them soon.<br> This is the code of the class:</p>
+accessible to anyone. Don't worry, we will secure them soon. This is the code of the class:</p>
 <pre><code>
 package com.spring.basics.SpringBasics.controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,13 +61,12 @@ public class UserController {
 is called <code>SpringBasicsApplication</code>. Yours can have a different name. Find your application class and run it to start your Spring application.</p>
 <p>Your webapplication also comes with an embedded web server that is started when you start the application. This web server will run your application on the default 
 address <code>http://localhost:8080</code>. With your application running open your webbrowser and surf to the first endpoint we have created at the URL 
-<code>http://localhost:8080/no-security</code>.<br>
-You should see a screen like this:</p></div>
+<code>http://localhost:8080/no-security</code>. You should see a screen like this:</p></div>
 <img src="img/endpoint no security.jpg" alt="Screenshot of no security endpoint">
 <div class="article-container">
 <p>Our application has allowed access to the <code>/no-security</code> endpoint as indicated by the fact that we can open this page and we can see the "Welcome to all"
 message. You can surf to the other two endpoints if you like and verify that they are also accessible. Just change the URL to match the other endpoints by replacing the
-"/no-security"-part of the URL by "/some-security" or "/full-security".</p>
+'/no-security'-part of the URL by '/some-security' or '/full-security'.</p>
 <p>So, let's look at our current situation. We have a web application running on the embedded server. This application has three endpoints that are accessible to anyone,
 even unauthenticated users. We have zero security at the moment. Let's change that.</p>
 <p>Add the Spring Security dependency to our application. This is the first and most important building block of Spring Security. In a Maven project, which is what I
@@ -114,7 +113,7 @@ structure your application differently.</p>
 </div>
 <img src="img/add config.jpg" alt="Screenshot of project with config class">
 <div class="article-container">
-<p>As explained it the previous article, we are going to give this class the <code>@Configuration</code> and <code>@EnableWebSecurity</code> annotations. It's inside 
+<p>As explained it the <a href="https://buildingthingswithcode.github.io/spring-security-understanding-the-basics/>previous article</a>, we are going to give this class the <code>@Configuration</code> and <code>@EnableWebSecurity</code> annotations. It's inside 
 this class that we are going to be handling most of the security aspects of our application.</p>
 <p>To handle authorization, we are going to need a <code>SecurityFilterChain</code>. Remember that once we are adding a <code>SecurityFilterChain</code> to our application, 
 Spring assumes that we are handling authorization ourselves. This means that Spring will no longer present users with a login form or handle the security of our endpoints
