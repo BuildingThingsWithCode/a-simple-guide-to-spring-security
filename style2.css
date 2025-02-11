@@ -67,7 +67,7 @@ img {
     margin: 20px auto;
 }
 
-custom-profile {
+.custom-profile {
     display: flex;           /* Ensures it's a flex container */
     justify-content: flex-start; /* Align the content to the left */
     align-items: center;     /* Keep items centered vertically */
@@ -77,4 +77,21 @@ custom-profile {
 /* Additional styling for child elements, if necessary */
 .custom-profile img {
     margin-right: 10px;
+}
+
+.custom-profile div {
+    text-align: left;
+}
+
+.custom-profile p {
+    margin: 0;
+}
+
+.custom-profile p:first-of-type {
+    font-weight: bold;
+}
+
+.custom-profile p:last-of-type {
+    font-size: 0.9em;
+    color: gray;
 }
