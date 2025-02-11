@@ -113,7 +113,7 @@ structure your application differently.</p>
 </div>
 <img src="img/add config.jpg" alt="Screenshot of project with config class">
 <div class="article-container">
-<p>As explained it the <a href="https://buildingthingswithcode.github.io/spring-security-understanding-the-basics/>previous article</a>, we are going to give this class the <code>@Configuration</code> and <code>@EnableWebSecurity</code> annotations. It's inside 
+<p>As explained it the <a href="https://buildingthingswithcode.github.io/spring-security-understanding-the-basics/">previous article</a>, we are going to give this class the <code>@Configuration</code> and <code>@EnableWebSecurity</code> annotations. It's inside 
 this class that we are going to be handling most of the security aspects of our application.</p>
 <p>To handle authorization, we are going to need a <code>SecurityFilterChain</code>. Remember that once we are adding a <code>SecurityFilterChain</code> to our application, 
 Spring assumes that we are handling authorization ourselves. This means that Spring will no longer present users with a login form or handle the security of our endpoints
