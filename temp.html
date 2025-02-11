@@ -22,16 +22,14 @@ generate a Spring project. I chose Java and Maven, but you can select whatever y
 Web dependency, which is all we need to create a basic web application.</p></div>
 <img src="img/spring initializer.jpg" alt="Screenshot of Spring Initializr">
 <div class="article-container">
-<p>Save the zip-file, extract it to a folder of your choosing and import the project into your IDE of choice.</p>
-<p>Now let's create a controller class in our application. I created a new package named "controller" in the main package of 
-the application. And inside this controller package I created a new class with the name <code>UserController</code> but you
-can name it differently and also use a different structure if you like.</p>
+<p>Save the zip file, extract it to a folder of your choice, and import the project into your preferred IDE. Now, let's create a controller class in our 
+application. I created a new package named 'controller' inside the main package of the application. Within this controller package, I created a new class called 
+<code>UserController</code>. However, you can choose a different name or structure if you prefer.</p>
 </div>
 <img src="img/add controller.jpg" alt="Screenshot of project structure">
 <div class="article-container">
-<p>Give the class the annotation <code>@RestController</code> and create three endpoints 
-like I have done in the code example. Since we haven't added security to our application, these three endpoints are 
-accessible to anyone. Don't worry, we will secure them soon. This is the code of the class:</p>
+<p>Give the class the <code>@RestController</code> annotation and create three endpoints, as shown in the code example. Since we haven't added security to our 
+application yet, these endpoints will be accessible to anyone. Don't worry, we will secure them soon. Here is the code for the class:</p>
 <pre><code>
 package com.spring.basics.SpringBasics.controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,20 +54,20 @@ public class UserController {
 	}
 }
 </code></pre>
-<p>The Spring Initializer has created an application class for you. Since I named my project <code>SpringBasics</code>, the application class generated for me
-is called <code>SpringBasicsApplication</code>. Yours can have a different name. Find your application class and run it to start your Spring application.</p>
-<p>Your webapplication also comes with an embedded web server that is started when you start the application. This web server will run your application on the default 
-address <code>http://localhost:8080</code>. With your application running open your webbrowser and surf to the first endpoint we have created at the URL 
+<p>The Spring Initializer has generated an application class for you. Since I named my project <code>SpringBasics</code>, the generated application class is called 
+<code>SpringBasicsApplication</code>. Yours might have a different name. Locate your application class and run it to start your Spring application. Your web application 
+also includes an embedded web server, which starts automatically when you run the application. This server will host your application at the default address: 
+<code>http://localhost:8080</code>. With your application running, open your web browser and navigate to the first endpoint we created at:
 <code>http://localhost:8080/no-security</code>. You should see a screen like this:</p></div>
 <img src="img/endpoint no security.jpg" alt="Screenshot of no security endpoint">
 <div class="article-container">
-<p>Our application has allowed access to the <code>/no-security</code> endpoint as indicated by the fact that we can open this page and we can see the "Welcome to all"
-message. You can surf to the other two endpoints if you like and verify that they are also accessible. Just change the URL to match the other endpoints by replacing the
-'/no-security'-part of the URL by '/some-security' or '/full-security'.</p>
-<p>So, let's look at our current situation. We have a web application running on the embedded server. This application has three endpoints that are accessible to anyone,
-even unauthenticated users. We have zero security at the moment. Let's change that.</p>
-<p>Add the Spring Security dependency to our application. This is the first and most important building block of Spring Security. In a Maven project, which is what I
-use, this is done by adding the following code to the pom.xml file:</p>
+<p>Our application allows access to the <code>/no-security</code> endpoint, as confirmed by the fact that we can open this page and see the "Welcome to all" message. 
+You can also visit the other two endpoints to verify that they are accessible. Simply modify the URL by replacing <code>/no-security</code> with <code>/some-security</code> 
+or <code>/full-security</code>.</p>
+<p>We have a web application running on an embedded server. This application includes three endpoints, all of which are accessible to anyone, including unauthenticated 
+users. At this point, we have zero security in place. Let's change that.</p>
+<p>The first and most important step in securing our application is adding the Spring Security dependency. In a Maven project (which is what I’m using), you can do this 
+by adding the following code to the pom.xml file:</p>
 <pre><code>
 &lt;dependency&gt;
      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
@@ -80,45 +78,44 @@ use, this is done by adding the following code to the pom.xml file:</p>
 <p>Now that we have added the security dependency, stop your application. In Eclipse you can do that by pressing the stop button in the console window:</p></div>
 <img src="img/eclipse stop button.jpg" alt="Screenshot of eclipse stop button">
 <div class="article-container">
-<p>Now restart the application so that the changes we made take effect. Then try to visit one of the three endpoints we have created. For instance type 
-<code>http://localhost:8080/no-security</code> in the address balk of your web browser, press enter and you should now see a screen like this:</p>
+<p>Restart the application to apply the changes we made. Then, try accessing one of the three endpoints again. For example, type 
+<code>http://localhost:8080/no-security</code> into the address bar of your web browser and press Enter. You should now see a screen like this:</p>
 </div>
 <img src="img/login screen.jpg" alt="Screenshot of the login screen">
 <div class="article-container">
-<p>What happened? We tried to visit <code>http://localhost:8080/no-security</code> and now we see a login page at <code>http://localhost:8080/login</code>?<br> 
-By adding the security dependency we have enabled Spring Security. And when security is enabled, Spring will restrict access to all endpoints for unauthenticated users. 
-Anytime an unauthenticated user tries to visit our endpoints, they are being redirected to the default login page at <code>/login</code>.
-<p>Restricting access for unauthenticated users and redirecting them to a HTML page that includes a login form, located at <code>/login</code>, are all default behaviours 
-that come with Spring Security. And there is more.<br>
-For instance try using the login form while leaving the username or password field empty. Spring will show you a message asking you to fill out those fields. This is 
-Spring giving you form validation out of the box. And if you try to login with a username and a password that do not exist, Spring will redirect you to an empty login 
-form and show you the error message 'Bad credentials'.</p>
-<p>All these default security behaviours are very nice, but we had a working web application with functioning endpoints and now none of that is working anymore. It's our
-application and even we are locked out of it!</p>
-<p>But don't worry, Spring has you covered. Each time we start our application Spring creates a default user with
-credentials we can use to log into the application. The default username is 'user' and the default password is being displayed in the console at startup:</p>
+<p>What happened? We tried to visit <code>http://localhost:8080/no-security</code>, but instead of seeing that page, we were redirected to a login page at 
+<code>http://localhost:8080/login</code>.<br> 
+By adding the Spring Security dependency, we have enabled security in our application. When security is enabled, Spring restricts access to all endpoints for 
+unauthenticated users. Anytime an unauthenticated user tries to visit our endpoints, they are automatically redirected to the default login page at <code>/login</code>.
+<p>Restricting access for unauthenticated users and redirecting them to an HTML login form at <code>/login</code> are just a few of Spring Security’s default features.</p> 
+<p>But there’s more: try submitting the login form without entering a username or password and Spring will show a validation message asking you to fill out the fields.
+And if you try logging in with an incorrect username or password, Spring will redirect you to an empty login form and display the error message 'Bad credentials.'
+These built-in security behaviors are useful, but there's a problem: our previously accessible web application is now completely locked down! Even we, the developers, are 
+locked out.</p>
+<p>But don't worry, Spring has you covered. Each time we start our application Spring creates a default user with credentials we can use to log into the application. The 
+default username is 'user' and the default password is being displayed in the console at startup:</p>
 </div>
 <img src="img/default user.jpg" alt="Screenshot of default credentials">
 <div class="article-container">
-<p>Note that the password that is being shown to you in the console is an encoded password. By default Spring uses the BCrypt algorithm for this encoding.</p> 
-<p>Copy the password that is displayed in your console and go ahead and login with 'user' as the username and the copied password. Spring should log you in and 
-redirect you to the page you were trying to visit before the login. So, if you were unauthenticated and tried to visit <code>http://localhost:8080/some-security</code>, 
-Spring will redirect you to the login page and upon succesfull authentication show you the <code>http://localhost:8080/some-security</code> endpoint. If you tried 
-to visit <code>http://localhost:8080/no-security</code>, then that's the page that will be shown to you when you login successfully.</p>
-<p>We have enabled security and we have a default user, but that's still not very useful. We want an application that can be used by more than one user. So let's 
-start configuring our application and make it more practical. To achieve this we are going to create a configuration class.<br> 
-I placed a new package inside the main package of the application, called it "config" and created a class named ProjectConfig inside of it. Of course you can 
-structure your application differently.</p>
+<p>The password displayed in the console is encoded using the BCrypt algorithm, which Spring Security applies by default. Copy the generated password from the console and 
+use 'user' as the username to log in. Once authenticated, Spring will redirect you back to the page you originally tried to visit. So, if you were unauthenticated and tried 
+to visit <code>http://localhost:8080/some-security</code>, Spring would have redirected you to the login page and upon successful authentication would have shown you that 
+<code>http://localhost:8080/some-security</code> page that you were trying to visit. If you tried to visit a different page, then that's the page that Spring will show you 
+upon successful authentication.</p>
+<p>Right now, we have security enabled and a default user, but that’s not very useful. Our goal is to create an application that supports multiple users with proper 
+authentication. To do this, we need to configure our application. Let's create a Configuration Class<br> 
+I created a new package named "config" inside the main package of the application. Inside this config package, I added a new class called <code>ProjectConfig</code>.
+Of course, you can structure your application differently if you prefer.</p>
 </div>
 <img src="img/add config.jpg" alt="Screenshot of project with config class">
 <div class="article-container">
-<p>As explained it the <a href="https://buildingthingswithcode.github.io/spring-security-understanding-the-basics/">previous article</a>, we are going to give this class the <code>@Configuration</code> and <code>@EnableWebSecurity</code> annotations. It's inside 
-this class that we are going to be handling most of the security aspects of our application.</p>
-<p>To handle authorization, we are going to need a <code>SecurityFilterChain</code>. Remember that once we are adding a <code>SecurityFilterChain</code> to our application, 
-Spring assumes that we are handling authorization ourselves. This means that Spring will no longer present users with a login form or handle the security of our endpoints
-for us. All that will become our responsibility.<br>
-The same thing happens with authorization. Once Spring notices that we are handling authorization ourselves, for instance because we have declared a 
-<code>UserDetailsService</code> bean, it will no longer provide us we a default user and password.</p>
+<p>As explained it the <a href="https://buildingthingswithcode.github.io/spring-security-understanding-the-basics/">previous article</a>, we are going to give this class 
+the <code>@Configuration</code> and <code>@EnableWebSecurity</code> annotations. It's inside this class that we are going to be handling most of the security aspects of 
+our application.</p>
+<p>To handle authorization, we need a <code>SecurityFilterChain</code>. Once we add a <code>SecurityFilterChain</code> to our application, Spring assumes that we are 
+handling authorization ourselves. This means that Spring will no longer present users with a login form or automatically secure our endpoints for us. Instead, 
+handling both login and security will become our responsibility. Similarly, when Spring detects that we are managing authorization ourselves, such as by declaring a 
+<code>UserDetailsService</code> bean, it will no longer provide a default user and password for the application.</p>
 <p>Let's add a <code>SecurityFilterChain</code> in our <code>ProjectConfig</code> class:</p>
 </div>
 <img src="img/filterChain1.jpg" alt="Screenshot of filterChain">
@@ -129,74 +126,81 @@ message:</p>
 </div>
 <img src="img/403 error.jpg" alt="Screenshot of 403 error message">
 <div class="article-container">
-<p>Remember to stop and restart your application, everytime you make changes to it. Otherwise the changes will not take effect.<br>
-Like we mentioned, Spring no longer presents our users with the default login form when they are unauthenticated and trying to use a protected endpoint. We have to 
-handle this ourselves. So let's add form login capabilities to our application. Adjust the <code>SecurityFilterChain</code> so that it includes the line 
+<p>Remember to stop and restart your application every time you make changes. Otherwise, those changes will not take effect.<br>
+As mentioned earlier, Spring no longer automatically presents users with the default login form when they try to access a protected endpoint while unauthenticated. We 
+now need to handle this ourselves. To add form login capabilities to our application, adjust the <code>SecurityFilterChain</code> by including the following line:
 <code>.formLogin()</code>:</p>
 </div>
 <img src="img/filterChain2.jpg" alt="Screenshot of SecurityFilterChain">
 <div class="article-container">
-<p>Adding <code>.formLogin()</code> to our <code>SecurityFilterChain</code> is functionally the same as adding <code>.formLogin(Customizer.withDefaults())</code> to it. 
-Both enable form-based authentication with default settings. <code>.formLogin()</code> is just a shorthand method that internally calls 
+<p>Adding <code>.formLogin()</code> to our <code>SecurityFilterChain</code> is functionally the same as adding <code>.formLogin(Customizer.withDefaults())</code>. Both 
+methods enable form-based authentication with the default settings. The <code>.formLogin()</code> method is simply a shorthand that internally calls 
 <code>.formLogin(Customizer.withDefaults())</code>.</p>
-<p>We've added the security dependency, we have created a configuration class and inside that class we have defined our <code>SecurityFilterChain</code>. That means we 
-have already got our hands dirty with three of the basic building blocks of Spring Security. Let's add a fourth.<br>
-Let's define some users, so we can experiment with 
-roles and authorities. This means providing Spring with a <code>UserDetailsService</code> so it can handle authentication and authorization.</p>
-<p>Roles and authorities are often used interchangeably. But they are not the same thing. In Spring Security roles are a high-level grouping of permissions. While 
-authorities are a specific permission. An administrator for instance could have the role 'ADMIN', which could group the authorities read, write, delete and update. While 
-a regular user could have role 'USER' and for instance only the authorities read and write. Defining the roles and deciding which authorities are grouped in a role, is up 
-to us.</p>
-<p>As an example I have created three users. I used the names of colors to define the roles. Roles or authorities are not some kind of fixed concept. We can use any String 
-we want to create them. The user with the least access is the 'visitor'. He has been given the role 'RED'. The next user is one we want to give a bit more access 
-in our application. He has been given the role 'ORANGE' and the username 'user'. And the final user, who we have given the name 'admin', will get the most access and 
-receives the role 'GREEN'. To make it easier to test these users, I have given them passwords that are the same as their names. In order for Spring to have access 
-to a repository of these users, I've created a <code>UserDetailsService</code> bean. Here is the code:</p>
+<p>So far, we've added the security dependency, created a configuration class, and defined our <code>SecurityFilterChain</code>. This means we’ve already worked with 
+three of the core building blocks of Spring Security. Now, let’s move on to the fourth building block: defining users. By doing this, we can experiment with roles and 
+authorities. This requires providing Spring with a <code>UserDetailsService</code>, so it can manage authentication and authorization.</p>
+<p>While roles and authorities are often used interchangeably, they are not the same thing. Roles in Spring Security are high-level groupings of permissions. For 
+example, an administrator could have the role 'ADMIN', which may group the authorities read, write, delete, and update. Authorities, on the other hand, represent 
+specific permissions. For instance, a regular user might have the role 'USER' and only the authorities 'read' and 'write'.</p>
+<p>Defining roles and assigning authorities to them is up to us, giving us the flexibility to customize security in our application.</p>
+
+<p>As an example, I have created three users, using the names of colors to define their roles. Roles or authorities are not fixed concepts in Spring Security, we can 
+use any String to create them.<br>
+- The user with the least access is named 'visitor' and has been assigned the role 'RED'.<br>
+- The next user is given more access with the role 'ORANGE' and the username 'user'.<br>
+- The final user, 'admin', has the most access and receives the role 'GREEN'.<br>
+To make it easier to test these users, I’ve given them passwords that are the same as their usernames (e.g., the password for the 'visitor' is 'visitor').<br>
+In order for Spring to access a repository of these users, I’ve created a <code>UserDetailsService</code> bean. Here is the code:</p>
 </div>
 <img src="img/roles.jpg" alt="Screenshot of UserDetailsService">
 <div class="article-container">
-<p>So, in this case we have regulated the levels of access a users has in our application by giving them roles. I made no use of authorities. The decision to make use of 
-both roles and authorities or not, will depend on the level of fine grained control that you requier in your application. For very complex applications it might be necessary 
-to use them both. So you can handle what a user is allowed to do or have access to in more detail by creating authorities. And then group these authorities together as roles, 
-so they can easily be assigned in one go to a user. This is more practical then having to assign each individual authority, to each individual user that needs them. But in 
-our application with only three endpoints, using authorities would be a bit overkill.</p>
-<p>Let's rewrite our <code>SecurityFilterChain</code> so that it handles the different roles we have created.<br>
-I want none of our endpoints to be accessible without authentication. The user with the least amount of access (role 'RED') should only be able to access our 
-<code>/no-security</code> endpoint. The user with a bit more access (role 'ORANGE') should be able to access both <code>/no-security</code> and <code>/some-security</code>, 
-but also be restricted from our <code>/full-security</code> endpoint. And the user with the most access, our 'admin' user, should have access to all three endpoints. 
-This is the <code>SecurityFilterChain</code> after the rewrite:</p>
+<p>In this case, we've regulated the levels of access a user has in our application by assigning them roles. I haven’t made use of authorities here.<br>
+The decision to use both roles and authorities depends on the level of fine-grained control you need in your application. For more complex applications, it might be 
+necessary to use both.<br>
+- Authorities allow you to handle what a user is allowed to do or access in greater detail.<br>
+- Roles group these authorities together, making it easier to assign them to users in one go.<br>
+This approach is more practical than assigning each individual authority to every user that needs it. However, for our relatively simple application with only three 
+endpoints, using authorities would be a bit of an overkill.</p>
+<p>Let's rewrite our <code>SecurityFilterChain</code> so that it handles the different roles we’ve created. We want to ensure that none of our endpoints are 
+accessible without authentication. Here's the breakdown of how access should be handled:<br>
+- The user with the least access (role 'RED') should only be able to access the <code>/no-security</code> endpoint.<br>
+- The user with a bit more access (role 'ORANGE') should be able to access <code>/no-security</code> and <code>/some-security</code>, but should not have access to the 
+<code>/full-security</code> endpoint.<br>
+- The 'admin' user (role 'GREEN') should have access to all three endpoints.<br>
+Here’s how the <code>SecurityFilterChain</code> would look after this rewrite:</p>
 </div>
 <img src="img/filterChain3.jpg" alt="Screenshot of SecurityFilterChain">
 <div class="article-container">
-<p>Don't forget to stop and restart your application. Now that we have a <code>UserDetailsService</code> and a <code>SecurityFilterChain</code> set up, you can go ahead 
-and play around with these different user accounts.None of our endpoints should be accessible without being authenticated, since we used 
-<code>.anyRequest().authenticated()</code> to lock everything down. You can try to access an endpoint, but this should fail and you should be redirected to the login 
-screen.<br>
-Next try loggin in with the credentials of the first user. We have given him the name 'visitor' and that's also his password. You should be able to login with those 
-credentials and only have access to our <code>/no-security</code> endpoint. When you are succesfully logged in and try to access an endpoint that you do not have the 
-appropriate role for, you will see this whitelabel error message. This means that our security is working as intended. We could customize this behaviour to show the user
-something more professional looking, but for the intents of this article this error page will do. It's clear from the '403 Forbidden error' that we don't have the required
-authorization.</p>
+<p>Don't forget to stop and restart your application.<br>
+<p>Now that we have a <code>UserDetailsService</code> and a <code>SecurityFilterChain</code> set up, you can go ahead and experiment with the different user accounts. 
+Since we used <code>.anyRequest().authenticated()</code> to lock everything down, none of the endpoints should be accessible without authentication. If you try to 
+access an endpoint without being logged in, it will fail, and you will be redirected to the login screen.</p>
+<p>Try logging in with the username 'visitor' and the password 'visitor'. Once logged in, you should only have access to the <code>/no-security</code> endpoint.</p>
+<p>If you try to access an endpoint that you don't have the appropriate role for, such as <code>/some-security</code> or <code>/full-security</code>, you will see a 
+whitelabel error page. This is a 403 Forbidden error, which means our security is working as intended—this user doesn't have the necessary permissions for 
+those endpoints.</p>
+<p>While we could customize this error page to make it look more professional, for the purpose of this article, the default error page clearly indicates that the user 
+doesn't have the required authorization and is sufficient.</p>
 </div>
 <img src="img/403 whitelabel error.jpg" alt="Screenshot of whitelabel error">
 <div class="article-container">
-<p>At the moment, if you want to switch users, you will have to stop and start the application again. So, you can login with a different user account. There's no way to 
-logout. Let's add logout capabilities to our <code>SecurityFilterChain</code> by adding the <code>.logout()</code>:</p>
+<p>At the moment, if you want to switch users, you will need to stop and restart the application. This is because there's no logout functionality implemented yet. 
+Let's fix this by adding logout capabilities to our <code>SecurityFilterChain</code>. To do this, we simply need to include <code>.logout()</code> in the configuration. 
+This will enable Spring Security's default logout mechanism. Here’s the updated <code>SecurityFilterChain</code> with logout functionality:</p>
 </div>
 <img src="img/filterChain4.jpg" alt="Screenshot of SecurityFilterChain">
 <div class="article-container">
-<p>By adding <code>.logout()</code> we have enabled the default logout behaviour of Spring Security. You can go to the URL <code>http://localhost:8080/logout</code>
-where you will be presented with a button you can press to log out of the current account. Once you press this button, Spring will redirect you to the login page, where
-you can log back in, to experiment with a different user account if you wish.</p>
+<p>By adding <code>.logout()</code>, we’ve enabled the default logout behavior of Spring Security. You can now visit the URL <code>http://localhost:8080/logout</code> 
+where you will be presented with a button to log out of the current account. Once you press the logout button, Spring will automatically redirect you to the login page. 
+From there, you can log in with a different user account to continue testing and experimenting with different user roles and permissions.</p>
 <p>We have now played around with four out of the five Security building blocks: the Spring Security dependency, a configuration class annotated with 
 <code>@Configuration</code> and <code>@EnableWebSecurity</code>, a <code>SecurityFilterChain</code> and a <code>UserDetailsService</code>. The only element we haven't used 
 yet is a <code>PasswordEncoder</code>.</p>
-<p>Let's see what happens when we don't provide Spring Security with the information it needs to be able to handle passwords. You 
-might think that up until now we never provided Spring with any password information and Spring seems to be doing fine without it. But that is not the case. We actually 
-did tell Spring how to handle passwords by telling it that we were going to handle passwords without any encoding. We included this information in our 
-<code>UserDetailsService</code> in lines like this one: <code>.password("{noop}user")</code>, where the <code>{noop}</code> stands for "No Operation" password encoding. 
-It tells Spring Security not to hash or encode the password. If we remove these lines from our <code>UserDetailsService</code>, so it looks like this, then user will 
-no longer be able to login:</p> 
+<p>Let's explore what happens when we don't provide Spring Security with the necessary information to handle passwords. Up until now, we’ve actually provided Spring with 
+password handling instructions, even though it may not seem so. This was done by specifying that we would handle passwords without any encoding. We provided this in lines
+like this one: <code>.password("{noop}user")</code>, where the <code>{noop}</code> stands for "No Operation" password encoding, meaning the password is stored in plain text.
+If we remove these lines from the <code>UserDetailsService</code>, so that it no longer includes the <code>{noop}</code> prefix or any password encoding mechanism, then 
+users will no longer be able to log in.</p> 
 </div>
 <img src="img/no password info.jpg" alt="Screenshot of UserDetailsService with no password information">
 <div class="article-container">
@@ -207,8 +211,8 @@ mapped:</p>
 <img src="img/500 error.jpg" alt="Screenshot of 500 error">
 <img src="img/no passwordEncoder error.jpg" alt="Screenshot of no passwordEncoder error">
 <div class="article-container">
-<p>Let's fix these errors by telling Spring that we are going to use BCrypt-encoding to hash our passwords. It's the encoding that Spring also uses to encode the password 
-of the default user. Give Spring a <code>PasswordEncoder</code> bean by adding this code to our configuration class:</p>
+<p>Let's fix these errors by telling Spring that we'll use BCrypt encoding to hash our passwords, which is the same encoding Spring uses for the default user’s password. 
+To do this, we need to provide Spring with a <code>>PasswordEncoder</code> bean. Simply add the following code to our configuration class:</p>
 </div>
 <img src="img/bcrypt encoder.jpg" alt="Screenshot of BCrypt Encoder">
 <div class="article-container">
@@ -219,8 +223,8 @@ that although you are using correct credentials, you are not being authenticated
 <div class="article-container">
 <p>This situation happens because Spring always saves passwords in their encrypted form. And also expects us to provide them in encrypted form. But in our 
 <code>UserDetailsService</code> we have saved the passwords unencrypted. So, when we try to login, Spring takes the password that we use in the login form, encrypts 
-it and then compares that encrypted password to the unencrypted one it receives from our <code>UserDetailsService</code>. Those two will of course never match, hence 
-the 'bad credentials' error.<br>
+it and then compares that encrypted password to the unencrypted one it receives from our <code>UserDetailsService</code>. Those two will, of course, never match, hence 
+the "Bad credentials" error.<br>
 <p>Change the <code>UserDetailsService</code> so it takes a <code>PasswordEncoder</code> as a parameter. Spring will make sure that the correct
 <code>PasswordEncoder</code> will be injected into the <code>UserDetailsService</code>. Also add code so the encoder hashes the passwords. Like 
 for instance <code>.password(passwordEncoder.encode("admin"))</code>. Don't forget to stop and restart your application after you made the changes:</p>
@@ -234,8 +238,8 @@ redirect you to the home page, which is by default the <code>/</code> endpoint. 
 404 not found error page. We can fix this situation by creating a new mapping for this <code>/</code> endpoint in our controller class or by configuring a 
 <code>.defaultSuccessUrl()</code> method in our <code>SecurityFilterChain</code>. The <code>.defaultSuccessUrl()</code> configures where Spring should redirect users 
 when they have succesfully authenticated.</p>
-<p>We have now used all the basic building blocks of Spring Security. With these building blocks, we were able to handle authentication and authorization for 
-different users in our webapplication. I hope you now have a better understanding of Spring Security, realize it is not as daunting as it might have seem at first sight 
-and had some fun while doing so.</p>
+<p>We have now covered all the basic building blocks of Spring Security. With these components, we've been able to handle authentication and authorization for 
+different users in our web application. I hope this has given you a better understanding of Spring Security, showing that it's not as daunting as it might have seemed 
+at first, and that you had some fun along the way.</p>
 </div>
 </body>
