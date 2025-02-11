@@ -200,8 +200,6 @@ encode the password. If we remove these lines from our <code>UserDetailsService<
 The user will see a server error with error code 500 and in the console there will be an error message informing us that there's no PasswordEncoder mapped:</p>
 </div>
 <img src="img/500 error.jpg" alt="Screenshot of 500 error">
-<div class="article-container">
-</div>
 <img src="img/no passwordEncoder error.jpg" alt="Screenshot of no passwordEncoder error">
 <div class="article-container">
 <p>Let's use the BCrypt encoding to hash our passwords. It's the default encoding that Spring Security uses as well. Let's give Spring a <code>PasswordEncoder</code> 
