@@ -226,7 +226,7 @@ for instance <code>.password(passwordEncoder.encode("admin"))</code>. Don't forg
 this happened because you did not first try to visit one of the endpoins in our application. When you go directly to the login page, Spring will not redirect you to 
 the endpoint you were trying to visit before you logged in (because there is none, you went directly to the login page). In this case, it's default behaviour to 
 redirect you to the home page, which is by default at the <code>/</code> endpoint. But we did not configure this endpoint in our application. That's why you see that 
-404 not found error page. We can fix this situation by creating a new mapping for this <code>/</code> endpoint in our controller class or configure a 
+404 not found error page. We can fix this situation by creating a new mapping for this <code>/</code> endpoint in our controller class or by configuring a 
 <code>.defaultSuccessUrl()</code> method in our <code>SecurityFilterChain</code>. The <code>.defaultSuccessUrl()</code> configures where Spring should redirect users 
 when they have succesfully logged in.</p>
 <p>We have now used all the basic building blocks of Spring Security. With these building blocks, we were able to handle authentication and authorization for 
