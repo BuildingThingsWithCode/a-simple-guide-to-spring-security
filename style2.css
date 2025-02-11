@@ -71,7 +71,6 @@ img {
     display: flex;           /* Ensures it's a flex container */
     justify-content: flex-start; /* Align the content to the left */
     align-items: center;     /* Keep items centered vertically */
-    margin-bottom: 20px;     /* Apply the bottom margin */
 }
 
 /* Additional styling for child elements, if necessary */
