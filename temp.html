@@ -212,21 +212,23 @@ credentials, you are not being authenticated. Spring informs you that your crede
 </div>
 <img src="img/bad credentials.jpg" alt="Screenshot of bad credentials error">
 <div class="article-container">
-<p>This situation happens because Spring always saves passwords in their encrypted form. We did not do that. In our <code>UserDetailsService</code> our passwords 
-where being saved unencrypted. So, when we try to login, Spring takes the password that we use in the login form, encrypts it and then compares that encrypted 
-password to the one it receives from the <code>UserDetailsService</code>. And this last one is not encrypted, hence the 'bad credentials' error.<br>
+<p>This situation happens because Spring always saves passwords in their encrypted form and also expects us to provide them in encrypted form. But in our 
+<code>UserDetailsService</code> we have saved the passwords unencrypted. So, when we try to login, Spring takes the password that we use in the login form, encrypts 
+it and then compares that encrypted password to the unencrypted one it receives from our <code>UserDetailsService</code>. Those two will of course never match, hence 
+the 'bad credentials' error.<br>
 <p>Let's fix this. Change the <code>UserDetailsService</code> so it takes a <code>PasswordEncoder</code> as a parameter. Spring will make sure that the correct
-<code>PasswordEncoder</code> will be injected into the <code>UserDetailsService</code>. And add the lines that use the encoder to encode the passwords. Like 
-for instance <code>.password(passwordEncoder.encode("admin"))</code>. Don't forget to stop and restart your application after you made changes:</p>
+<code>PasswordEncoder</code> will be injected into the <code>UserDetailsService</code>. Also add the code that uses the encoder to hash the passwords. Like 
+for instance <code>.password(passwordEncoder.encode("admin"))</code>. Don't forget to stop and restart your application after you made the changes:</p>
 </div>
 <img src="img/password encoder in UserDetailsService.jpg" alt="Screenshot of UserDetailsService + PasswordEncoder">
 <div class="article-container">
 <p>If at any point you succesfully log in, but get redirected to a 'Whitelabel Error Page' with a 'Not Found, status=404' code (like happened to me), know that 
 this happened because you did not first try to visit one of the endpoins in our application. When you go directly to the login page, Spring will not redirect you to 
 the endpoint you were trying to visit before you logged in (because there is none, you went directly to the login page). In this case, it's default behaviour to 
-redirect you to the home page, which is at the <code>/</code> endpoint. But we did not configure this page in our application. That's why you see that 404 not found 
-error page. We can fix this situation by creating a new mapping for this <code>/</code> endpoint in our controller class or configure a <code>.defaultSuccessUrl()</code> 
-method in our <code>SecurityFilterChain</code></p>
+redirect you to the home page, which is by default at the <code>/</code> endpoint. But we did not configure this endpoint in our application. That's why you see that 
+404 not found error page. We can fix this situation by creating a new mapping for this <code>/</code> endpoint in our controller class or configure a 
+<code>.defaultSuccessUrl()</code> method in our <code>SecurityFilterChain</code>. The <code>.defaultSuccessUrl()</code> configures where Spring should redirect users 
+when they have succesfully logged in.</p>
 <p>We have now used all the basic building blocks of Spring Security. With these building blocks, we were able to handle authentication and authorization for 
 different users in our webapplication. I hope you now have a better understanding of Spring Security, realize it is not as daunting as it might have seem at first sight 
 and had some fun while doing so.</p>
