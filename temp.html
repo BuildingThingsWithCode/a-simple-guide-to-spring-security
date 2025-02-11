@@ -146,41 +146,45 @@ roles and authorities. This means providing Spring with a <code>UserDetailsServi
 authorities are a specific permission. An administrator for instance could have the role 'ADMIN', which could group the authorities read, write, delete and update. While 
 a regular user could have role 'USER' and for instance only the authorities read and write. Defining the roles and deciding which authorities are grouped in a role, is up 
 to us.</p>
-<p>As an example I have created three users. The one with the least access is the visitor, who has been given the role 'RED'. The next user is one we want to give more access 
-in our application. He has been given the roles 'ORANGE' and the username 'user'. And the final user, who we have given the name 'admin', will get the most access and 
-receives the role 'GREEN'. I have created a <code>UserDetailsService</code> bean, so Spring has access to a repository of these users that it can utilize when it 
-needs to verify credentials or authorization. Here is the code I used:</p>
+<p>As an example I have created three users. I used the names of colors to define the roles. Roles or authorities are not some kind of fixed concept. We can use any String 
+we want to create them. The user with the least access is the 'visitor'. He has been given the role 'RED'. The next user is one we want to give a bit more access 
+in our application. He has been given the role 'ORANGE' and the username 'user'. And the final user, who we have given the name 'admin', will get the most access and 
+receives the role 'GREEN'. To make it easier to test these users, I have given them passwords that are the same as their names. In order for Spring to have access 
+to a repository of these users, I've created a <code>UserDetailsService</code> bean.<br>
+Here is the code:</p>
 </div>
 <img src="img/roles.jpg" alt="Screenshot of UserDetailsService">
 <div class="article-container">
 <p>So, in this case we have regulated the levels of access a users has in our application by giving them roles. I made no use of authorities. If you want to make use of 
 both roles and authorities or not, depends on the level of fine grained control that you requier. For very complex applications it might be necessary to use them both. 
-So you can handle what a user is allowed to do or access in more details by creating authorities. And then group these authorities together as roles, so you can assign 
-them in one go to a user. But in our application with only three endpoints, using authorities would be a bit overkill.</p>
-<p>Let's rewrite our <code>SecurityFilterChain</code> so that it handles the different roles we have created. I want none of our endpoints to be accessible without 
-authentication. The user with the least amount of access (role 'RED') should only be able to access our <code>/no-security</code> endpoint. The user with a bit more access 
-(role 'ORANGE') should be able to access both <code>/no-security</code> and <code>/some-security</code>, but also be restricted from our <code>/full-security</code> 
-endpoint. And the user with the most access, our 'admin' user, should have access to all three endpoints. This is the <code>SecurityFilterChain</code> after the rewrite:</p>
+So you can handle what a user is allowed to do or have access to, in more detail by creating authorities. And then group these authorities together as roles, so you can 
+easily assign them in one go to a user. But in our application with only three endpoints, using authorities would be a bit overkill.</p>
+<p>Let's rewrite our <code>SecurityFilterChain</code> so that it handles the different roles we have created.<br>
+I want none of our endpoints to be accessible without authentication. The user with the least amount of access (role 'RED') should only be able to access our 
+<code>/no-security</code> endpoint. The user with a bit more access (role 'ORANGE') should be able to access both <code>/no-security</code> and <code>/some-security</code>, 
+but also be restricted from our <code>/full-security</code> endpoint. And the user with the most access, our 'admin' user, should have access to all three endpoints. 
+This is the <code>SecurityFilterChain</code> after the rewrite:</p>
 </div>
 <img src="img/filterChain3.jpg" alt="Screenshot of SecurityFilterChain">
 <div class="article-container">
-<p>Now that we have a <code>UserDetailsService</code> and a <code>SecurityFilterChain</code> set up, you can go ahead and play around with these different user accounts. 
-First of all, none of our endpoints should be accessible without being authenticated, since we used <code>.anyRequest().authenticated()</code> to lock everything down. 
-You can try to access an endpoint, but you will be redirected to the login screen.<br>
-Try loggin in with the credentials of the first user. We have given him the name 'visitor' and that's also his password. You now should be able to login with those 
+<p>Don't forget to stop and restart your application. Now that we have a <code>UserDetailsService</code> and a <code>SecurityFilterChain</code> set up, you can go ahead 
+and play around with these different user accounts. First of all, none of our endpoints should be accessible without being authenticated, since we used 
+<code>.anyRequest().authenticated()</code> to lock everything down. You can try to access an endpoint, but you will be redirected to the login screen.<br>
+Try loggin in with the credentials of the first user. We have given him the name 'visitor' and that's also his password. You should be able to login with those 
 credentials and only have access to our <code>/no-security</code> endpoint. When you are succesfully logged in and try to access an endpoint that you do not have the 
 appropriate role for, you will see this whitelabel error message. This means that our security is working as intended. We could customize this behaviour to show the user
-something more professional than this whitelabel error, but for the intentions of this article this error page will do.</p>
+something more professional looking, but for the intentions of this article this error page will do.</p>
 </div>
 <img src="img/403 whitelabel error.jpg" alt="Screenshot of whitelabel error">
 <div class="article-container">
-<p>To make it easier to play around with the different users. Let's add logout capabilities to our <code>SecurityFilterChain</code>:</p>
+<p>At the moment, if you want to switch users, you will have to stop and start the application again. There's no way to logout. Let's add logout capabilities to our 
+<code>SecurityFilterChain</code>:</p>
 </div>
 <img src="img/filterChain4.jpg" alt="Screenshot of SecurityFilterChain">
 <div class="article-container">
 <p>By adding <code>.logout()</code> we have enabled the default logout behaviour of Spring Security. You can go to the URL <code>http://localhost:8080/logout</code>
 where you will be presented with a button you can press to log out of the current account. Once you press this button, Spring will redirect you to the login page, where
-you can log back in to experiment with a different user account if you want to.</p>
+you can log back in to experiment with a different user account if you wish.</p>
 <p>We have now played around with four out of the five building blocks that were mentioned: the Spring Security dependency, a configuration class annotated with 
 <code>@Configuration</code> and <code>@EnableWebSecurity</code>, a <code>SecurityFilterChain</code> and a <code>UserDetailsService</code>. The only element we haven't used 
 yet is a <code>PasswordEncoder</code>.</p>
@@ -206,22 +210,27 @@ bean by adding this code to our configuration class:</p>
 <img src="img/bcrypt encoder.jpg" alt="Screenshot of BCrypt Encoder">
 <div class="article-container">
 <p>Stop and restart your application and try to login with the correct credentials of one of our three users. You will notice that although you are using correct 
-credentials, you are not being authenticated. And Spring informs you that your credentials are bad with the following error message:</p>
+credentials, you are not being authenticated. Spring informs you that your credentials are bad with the following error message:</p>
 </div>
 <img src="img/bad credentials.jpg" alt="Screenshot of bad credentials error">
 <div class="article-container">
 <p>This situation happens because Spring always saves passwords in their encrypted form. We did not do that. In our <code>UserDetailsService</code> our passwords 
 where being saved unencrypted. So, when we try to login, Spring takes the password that we use in the login form, encrypts it and then compares that encrypted 
 password to the one it receives from the <code>UserDetailsService</code>. And this last one is not encrypted, hence the 'bad credentials' error.<br>
-<Let's fix this. Change the <code>UserDetailsService</code> so it takes a <code>PasswordEncoder</code> as a parameter. Spring will make sure that the correct
+<p>Let's fix this. Change the <code>UserDetailsService</code> so it takes a <code>PasswordEncoder</code> as a parameter. Spring will make sure that the correct
 <code>PasswordEncoder</code> will be injected into the <code>UserDetailsService</code>. And add the lines that use the encoder to encode the passwords. Like 
-this for instance <code>.password(passwordEncoder.encode("admin"))</code>. Don't forget to stop and restart your application:</p>
+for instance <code>.password(passwordEncoder.encode("admin"))</code>. Don't forget to stop and restart your application after you made changes:</p>
 </div>
 <img src="img/password encoder in UserDetailsService.jpg" alt="Screenshot of UserDetailsService + PasswordEncoder">
 <div class="article-container">
 <p>If at any point you succesfully log in, but get redirected to a 'Whitelabel Error Page' with a 'Not Found, status=404' code (like happened to me), know that 
-this happened because you did not first try to visit one of the endpoins in our application. When you do directly to the login page, Spring will not redirect you to 
-the endpoint you were trying to visit before you logged in (because there is none, you went directly to the login page). It's default behaviour to redirect you to the 
-home page, which is at the <code>/</code> endpoint. But we did not configure this page in our application. That's why you see that 404 not found error page.</p>
+this happened because you did not first try to visit one of the endpoins in our application. When you go directly to the login page, Spring will not redirect you to 
+the endpoint you were trying to visit before you logged in (because there is none, you went directly to the login page). In this case, it's default behaviour to 
+redirect you to the home page, which is at the <code>/</code> endpoint. But we did not configure this page in our application. That's why you see that 404 not found 
+error page. We can fix this situation by creating a new mapping for this <code>/</code> endpoint in our controller class or configure a <code>.defaultSuccessUrl()</code> 
+method in our <code>SecurityFilterChain</code></p>
+<p>We have now used all the basic building blocks of Spring Security. With these building blocks, we were able to handle authentication and authorization for 
+different users in our webapplication. I hope you now have a better understanding of Spring Security, realize it is not as daunting as it might have seem at first sight 
+and had some fun while doing so.</p>
 </div>
 </body>
