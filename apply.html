@@ -172,7 +172,7 @@ use any String to create them. We will use the <code>SecurityFilterChain</code> 
 <p>To make it easier to test these users, I’ve given them passwords that are the same as their usernames (e.g., the password for the 'visitor' is 'visitor').<br>
 In order for Spring to access a repository of these users, I’ve created a <code>UserDetailsService</code> bean. Notice that this <code>UserDetailsService</code> returns 
 a <code>InMemoryUserDetailsManager</code>. This is a class that implements the <code>UserDetailsService</code> interface, so Spring can use it to verify the credentials 
-and to see what roles a user has. It keeps the information about the user in memory. In a real production ready application we would use a database and not keep this 
+and to see what roles a user has. It keeps the information about the user in memory. In a real production-ready application, we would use a database and not keep this 
 information in memory.</p>
 <p>Here is the code:</p>
 </div>
