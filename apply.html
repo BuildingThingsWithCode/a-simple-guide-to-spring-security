@@ -99,12 +99,13 @@ by adding the following code to the pom.xml file:</p>
 <code>http://localhost:8080/login</code>.<br> 
 By adding the Spring Security dependency, we have enabled security in our application. When security is enabled, Spring restricts access to all endpoints for 
 unauthenticated users. Anytime an unauthenticated user tries to visit our endpoints, they are automatically redirected to the default login page at <code>/login</code>.
-<p>Restricting access for unauthenticated users and redirecting them to an HTML login form at <code>/login</code> are just a few of Spring Security’s default features.</p> 
+<p>Restricting access for unauthenticated users and redirecting them to an HTML login form at <code>/login</code> are a few of Spring Security’s default features.</p> 
 <p>But there’s more: try submitting the login form without entering a username or password and Spring will show a validation message asking you to fill out the fields.
-And if you try logging in with an incorrect username or password, Spring will redirect you to an empty login form and display the error message 'Bad credentials.'</p>
+This is Spring providing you with input validation out of the box. And if you try logging in with an incorrect username or password, Spring will redirect you to an empty 
+login form and display the error message 'Bad credentials.'</p>
 <p>These built-in security behaviors are useful, but there's a problem: our previously accessible web application is now completely locked down! Even we, the developers, are 
-locked out.</p>
-<p>But don't worry, Spring has you covered. Each time we start our application Spring creates a default user with credentials we can use to log into the application. The 
+locked out of the application.</p>
+<p>But don't worry, Spring has us covered. Each time we start our application Spring creates a default user with credentials we can use to log into the application. The 
 default username is 'user' and the default password is being displayed in the console at startup:</p>
 </div>
 <img src="img/default user.jpg" alt="Screenshot of default credentials">
