@@ -176,11 +176,11 @@ We will use the <code>SecurityFilterChain</code> to control the level of access 
 - The next user will be given more access, had the role 'ORANGE' and the username 'user'.<br>
 - The final user, 'admin', has the most access and receives the role 'GREEN'.</p>
 	
-<p>To make it easier to test these users, I’ve given them passwords that are the same as their usernames (e.g., the password for the 'visitor' is 'visitor').<br>
-In order for Spring to access a repository of these users, I’ve created a <code>UserDetailsService</code> bean. Notice that this <code>UserDetailsService</code> returns 
+<p>To make it easier to test these users, I’ve given them passwords that are the same as their usernames (e.g., the password for the 'visitor' is 'visitor').</p>
+<p>In order for Spring to access a repository of these users, I’ve created a <code>UserDetailsService</code> bean. Notice that this <code>UserDetailsService</code> returns 
 a <code>InMemoryUserDetailsManager</code>. This is a class that implements the <code>UserDetailsService</code> interface, so Spring can use it to verify the credentials 
-and to see what roles a user has. It keeps the information about the user in memory. In a real production-ready application, we would use a database and not keep this 
-information in memory.</p>
+and see what roles a user has.<br> Like you could have guessed from its name, the <code>InMemoryUserDetailsManager</code> keeps the information about the user in memory. 
+In a real production-ready application, we would use a database that can persist data and not a <code>InMemoryUserDetailsManager</code>.</p>
 <p>Here is the code:</p>
 </div>
 <img src="img/roles.jpg" alt="Screenshot of UserDetailsService">
