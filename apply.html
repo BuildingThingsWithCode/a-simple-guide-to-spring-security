@@ -113,11 +113,12 @@ default username is 'user' and the default password is being displayed in the co
 </div>
 <img src="img/default user.jpg" alt="Screenshot of default credentials">
 <div class="article-container">
-<p>The password displayed in the console is encoded using the BCrypt algorithm, which Spring Security applies by default. Copy the generated password from the console and 
-use 'user' as the username to log in. Once authenticated, Spring will redirect you back to the page you originally tried to visit. So, if you were unauthenticated and tried 
-to visit <code>http://localhost:8080/some-security</code>, Spring would have redirected you to the login page and upon successful authentication would have shown you that 
-<code>http://localhost:8080/some-security</code> page that you were trying to visit. If you tried to visit a different page, then that's the page that Spring will show you 
-upon successful authentication. So, Spring remembers what we were trying to visit, and that's what it will show to us once we are authenticated.</p>
+<p>The password displayed in the console is encoded using the BCrypt algorithm, which Spring Security applies by default.</p>
+<p>Copy the generated password from the console and use 'user' as the username to log in. Once authenticated, Spring will redirect you back to the page you originally 
+tried to visit. So, if you were unauthenticated and tried to visit <code>http://localhost:8080/some-security</code>, Spring would have redirected you to the login page 
+and upon successful authentication would have shown you that <code>http://localhost:8080/some-security</code> page that you were trying to visit. If you tried to visit a 
+different page, then that's the page that Spring will show you upon successful authentication. So, Spring remembers what we were trying to visit, and that's what it will 
+show to us once we are authenticated.</p>
 <p>Right now, we have security enabled and a default user, but that’s not very useful. Our goal is to create an application that supports multiple users, not just one 
 default user with a default password. It's time to configure our application. Let's create a Configuration Class.</p>
 <h3>Add a configuration class.</h3> 
