@@ -271,7 +271,7 @@ because you didn't first attempt to visit one of the endpoints in our applicatio
 <p>When you navigate directly to the login page, Spring won't redirect you to the endpoint you were trying to visit before logging in (because there is none, you accessed 
 the login page directly). In this case, it's default behavior to redirect you to the home page after a successful login. And this home page is, 
 by default, the <code>/</code> endpoint.<br>
-Since we did not configure this endpoint in our application, Spring is trying to redirect us to a non-existent page, causing that 404 not found error page.</p>
+Since we did not configure this endpoint in our application, Spring is trying to redirect us to a non-existent page, causing that '404 not found' error page.</p>
 
 <p>We can fix this situation by creating a new mapping for this <code>/</code> endpoint in our controller class or by configuring a <code>.defaultSuccessUrl()</code> 
 method in our <code>SecurityFilterChain</code>. The <code>.defaultSuccessUrl()</code> configures where Spring should redirect users when they have succesfully 
