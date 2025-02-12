@@ -220,7 +220,11 @@ This will enable Spring Security's default logout mechanism.</p>
 <img src="img/filterChain4.jpg" alt="Screenshot of SecurityFilterChain">
 <div class="article-container">
 <p>Now that we’ve enabled the default logout behavior of Spring Security, we can visit the URL <code>http://localhost:8080/logout</code>. There we will be presented with a 
-button to log us out of the current account. Once we press the logout button, Spring will automatically redirect us to the login page. 
+button to log us out of the current account.</p>
+</div>
+<img src="img/logout.jpg" alt="Screenshot of logout screen">
+<div class="article-container">
+<p> Once we press the logout button, Spring will automatically redirect us to the login page. 
 From there, we can log in with a different user account to continue testing and experimenting with different user roles and permissions.</p>
 <h3>Add a PasswordEncoder.</h3>
 <p>We have now played around with four out of the five Security building blocks: the Spring Security dependency, a configuration class annotated with 
