@@ -167,16 +167,21 @@ Authorities, on the other hand, represent specific permissions. For instance, a 
 use any String to create them. We will use the <code>SecurityFilterChain</code> to control the level of access associated with a specific role.<br>
 - The user with the least access is named 'visitor' and has been assigned the role 'RED'.<br>
 - The next user will be given more access, had the role 'ORANGE' and the username 'user'.<br>
-- The final user, 'admin', has the most access and receives the role 'GREEN'.<br>
-To make it easier to test these users, I’ve given them passwords that are the same as their usernames (e.g., the password for the 'visitor' is 'visitor').<br>
-In order for Spring to access a repository of these users, I’ve created a <code>UserDetailsService</code> bean. Here is the code:</p>
+- The final user, 'admin', has the most access and receives the role 'GREEN'.</p>
+	
+<p>To make it easier to test these users, I’ve given them passwords that are the same as their usernames (e.g., the password for the 'visitor' is 'visitor').<br>
+In order for Spring to access a repository of these users, I’ve created a <code>UserDetailsService</code> bean. Notice that this <code>UserDetailsService</code> returns 
+a <code>InMemoryUserDetailsManager</code>. This is a class that implements the <code>UserDetailsService</code> interface, so Spring can use it to verify the credentials 
+and to see what roles a user has. It keeps the information about the user in memory. In a real production ready application we would use a database and not keep this 
+information in memory.</p>
+<p>Here is the code:</p>
 </div>
 <img src="img/roles.jpg" alt="Screenshot of UserDetailsService">
 <div class="article-container">
 <p>In our application, we will regulated the level of access a user has by assigning him roles. We will not use any authorities. For our relatively simple 
-application with only three endpoints, using authorities would be a bit of an overkill</p>
+application with only three endpoints, using authorities would be a bit of an overkill.</p>
 <p>For more complex applications, it might be necessary to use both roles and authorities. It all depends on the level of fine-grained control you need in your 
-application. In a complex application, authorities allow us to handle what a user is allowed to do or access in greater detail. While roles make it easier to assign 
+application.<br> In a complex application, authorities allow us to handle what a user is allowed to do or access in greater detail. While roles make it easier to assign 
 the authorities to individual users by grouping them together. It's for instance much easier to assign the 'ADMIN' role to each administrator, than to manually grant 
 every required authority to each new administrator that has to be added to the system.<br>
 <p>Let's rewrite our <code>SecurityFilterChain</code> so that it handles the different roles we’ve created. We want to ensure that none of our endpoints are 
