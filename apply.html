@@ -266,8 +266,8 @@ this <code>.password(passwordEncoder.encode("admin"))</code>. Don't forget to st
 <img src="img/password encoder in UserDetailsService.jpg" alt="Screenshot of UserDetailsService + PasswordEncoder">
 <div class="article-container">
 <p>If at any point you successfully log in, but get redirected to a 'Whitelabel Error Page' with a 'Not Found, status=404' code (like happened to me), know that 
-this happened because you did not first try to visit one of the endpoins in our application. Let me explain.</p>
-<p>When you go directly to the login page, Spring will not redirect you to the endpoint you were trying to visit before you logged in (because there is none, you 
+this happened because you did not first try to visit one of the endpoins in our application. Let me explain.<br>
+When you go directly to the login page, Spring will not redirect you to the endpoint you were trying to visit before you logged in (because there is none, you 
 went directly to the login page). In this case, it's default behaviour to redirect you to the home page, which is by default the <code>/</code> endpoint. But we did 
 not configure this endpoint in our application. That's why you see that 404 not found error page. We can fix this situation by creating a new mapping for this 
 <code>/</code> endpoint in our controller class or by configuring a <code>.defaultSuccessUrl()</code> method in our <code>SecurityFilterChain</code>. The 
