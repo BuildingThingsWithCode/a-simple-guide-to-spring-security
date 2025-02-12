@@ -323,7 +323,8 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
 
 <h3>Authentication.</h3>
 <h3>UserDetailsService and UserDetails.</h3>
-<p>Since we presented the user with a login page, Spring will also receive a username and password when the user fills out the form and submits it. It then needs to verify these credentials.
+<p>Since we presented the user with a login page, Spring will also receive a username and password when the user fills out the form and submits it. It then needs to 
+verify these credentials.
 
 To do this, Spring must know where to retrieve the necessary information to be able to handle this verification. Should it check a database, look in memory, or search the cache?
 Or does this information come from external authentication providers (OAuth2, LDAP), configuration files or environment variables (not recommended for production), API's or web services? </p>
@@ -476,13 +477,14 @@ public PasswordEncoder passwordEncoder() {
 
 <p>So, while the only real minimum requirement is the security dependency, we typically say there are five key elements to ensure real-world usability of Spring Security.</p>
 <h3>Conclusion.</h3>
-<p>In summary, these five building blocks form the foundation of Spring Security’s authentication and authorization process.
-The <code>spring-boot-starter-security</code> dependency activates security features by default, restricting access to endpoints.
-A configuration class, usually annotated with <code>@Configuration</code> and <code>@EnableWebSecurity</code> defines and customizes security settings.
-The <code>SecurityFilterChain</code> dictates how requests are secured, determining which endpoints require authentication and what roles users need.
-The <code>UserDetailsService</code> retrieves user information from a database or other storage and transforms it into a <code>UserDetails</code> object that Spring Security can process.
-Finally, the <code>PasswordEncoder</code> ensures passwords are securely hashed and compared during authentication.
-Together, these components enable a flexible and robust security system.</p>
+<p>In summary, these five building blocks form the foundation of Spring Security’s authentication and authorization process.</p>
+<p>The <code>spring-boot-starter-security</code> dependency activates security features by default, restricting access to endpoints.</p>
+</p>A configuration class, usually annotated with <code>@Configuration</code> and <code>@EnableWebSecurity</code> defines and customizes security settings.</p>
+<p>The <code>SecurityFilterChain</code> dictates how requests are secured, determining which endpoints require authentication and what roles users need.</p>
+<p>The <code>UserDetailsService</code> retrieves user information from a database or other storage and transforms it into a <code>UserDetails</code> object that Spring 
+Security can process.</p>
+<p>Finally, the <code>PasswordEncoder</code> ensures passwords are securely hashed and compared during authentication.</p>
+<p>Together, these components enable a flexible and robust security system.</p>
 <p>I hope this article has given you a clear picture of the core building blocks of Spring Security and how they fit together. With this foundation, you should now be 
 well-prepared to dive deeper into the world of Spring Security and explore it's finer details.</p>
 <p>If you're eager to dive in and explore the basics of Spring Security with a more hands-on approach, I've written another article that guides you through building a 
