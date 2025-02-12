@@ -164,14 +164,15 @@ authorities.</p>
 <p>Spring uses the <code>UserDetailsService</code> to manage authentication and authorization. Remember from the previous article that it's the <code>UserDetailsService</code> that provides Spring with a <code>UserDetails</code> object. And it's this 
 <code>UserDetails</code> object that Spring uses to verify the credentials of a user and to know what roles and authorities the user has.</p>
 <p>While roles and authorities are often used interchangeably, they are not the same thing.<br>
-Roles in Spring Security are high-level groupings of permissions. For example, an administrator could have the role 'ADMIN', which may group the authorities read, write, 
-delete, and update.<br>
-Authorities, on the other hand, represent specific permissions. For instance, a regular user might have the role 'USER' and only the authorities 'read' and 'write'.</p>
-<p>Defining roles and assigning authorities to them is up to us, giving us the flexibility to customize security in our application.</p>
+- Roles in Spring Security are high-level groupings of permissions.<br>
+- Authorities, on the other hand, represent specific permissions.</p>
+<p>For example, an administrator could have the role 'ADMIN', which may group the authorities read, write, delete, and update. While a regular user might have the role 
+'USER' and only the authorities 'read' and 'write'.</p>
 
-<p>As an example, I have created three users, using the names of colors to define their roles. Roles or authorities are not fixed concepts in Spring Security, we can 
-use any String to create them. We will use the <code>SecurityFilterChain</code> to control the level of access associated with a specific role.<br>
-- The user with the least access is named 'visitor' and has been assigned the role 'RED'.<br>
+<p>As an example, I have created three users, using the names of colors to define their roles. I used colors to demonstrate that roles and authorities are not fixed 
+concepts in Spring Security. We can use any String we want to name them and we have the freedom to define them as we see fit.</p>
+<p>We will use the <code>SecurityFilterChain</code> to control the level of access associated with a specific role.</p>
+<p>- The user with the least access is named 'visitor' and has been assigned the role 'RED'.<br>
 - The next user will be given more access, had the role 'ORANGE' and the username 'user'.<br>
 - The final user, 'admin', has the most access and receives the role 'GREEN'.</p>
 	
