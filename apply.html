@@ -155,22 +155,21 @@ specific permissions. For instance, a regular user might have the role 'USER' an
 <p>Defining roles and assigning authorities to them is up to us, giving us the flexibility to customize security in our application.</p>
 
 <p>As an example, I have created three users, using the names of colors to define their roles. Roles or authorities are not fixed concepts in Spring Security, we can 
-use any String to create them.<br>
+use any String to create them. We will use the <code>SecurityFilterChain</code> to control the level of access associated with a specific role.c<br>
 - The user with the least access is named 'visitor' and has been assigned the role 'RED'.<br>
-- The next user is given more access with the role 'ORANGE' and the username 'user'.<br>
+- The next user will be given more access, had the role 'ORANGE' and the username 'user'.<br>
 - The final user, 'admin', has the most access and receives the role 'GREEN'.<br>
 To make it easier to test these users, I’ve given them passwords that are the same as their usernames (e.g., the password for the 'visitor' is 'visitor').<br>
 In order for Spring to access a repository of these users, I’ve created a <code>UserDetailsService</code> bean. Here is the code:</p>
 </div>
 <img src="img/roles.jpg" alt="Screenshot of UserDetailsService">
 <div class="article-container">
-<p>In this case, we will regulated the levels of access a user has in our application by assigning them roles. I haven’t made use of authorities here.<br>
+<p>We will regulated the levels of access a user has in our application by only assigning them roles. I haven’t made use of authorities.<br>
 The decision to use both roles and authorities depends on the level of fine-grained control you need in your application. For more complex applications, it might be 
-necessary to use both.<br>
+necessary to use both. However, for our relatively simple application with only three endpoints, using authorities would be a bit of an overkill.<br>
 - Authorities allow you to handle what a user is allowed to do or access in greater detail.<br>
 - Roles group these authorities together, making it easier to assign them to users in one go.<br>
-This approach is more practical than assigning each individual authority to every user that needs it. However, for our relatively simple application with only three 
-endpoints, using authorities would be a bit of an overkill.</p>
+This approach of grouping authorities together is more practical than assigning each individual authority to every user that needs it.</p>
 <p>Let's rewrite our <code>SecurityFilterChain</code> so that it handles the different roles we’ve created. We want to ensure that none of our endpoints are 
 accessible without authentication. Here's the breakdown of how access should be handled:<br>
 - The user with the least access (role 'RED') should only be able to access the <code>/no-security</code> endpoint.<br>
