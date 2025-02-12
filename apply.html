@@ -78,7 +78,7 @@ or <code>/full-security</code>.</p>
 <p>We have a web application running on an embedded server. This application includes three endpoints, all of which are accessible to anyone, including unauthenticated 
 users. At this point, we have zero security in place. Let's change that.</p>
 <h3>Add the Security dependency.</h3>
-<p>The first and most important step in securing our application is adding the Spring Security dependency. In a Maven project (which is what I’m using), you can do this 
+<p>The first and most important step in securing our application is adding the Spring Security dependency. In a Maven project (which is what I’m using), we can do this 
 by adding the following code to the pom.xml file:</p>
 <pre><code>
 &lt;dependency&gt;
@@ -114,11 +114,11 @@ default username is 'user' and the default password is being displayed in the co
 use 'user' as the username to log in. Once authenticated, Spring will redirect you back to the page you originally tried to visit. So, if you were unauthenticated and tried 
 to visit <code>http://localhost:8080/some-security</code>, Spring would have redirected you to the login page and upon successful authentication would have shown you that 
 <code>http://localhost:8080/some-security</code> page that you were trying to visit. If you tried to visit a different page, then that's the page that Spring will show you 
-upon successful authentication.</p>
-<p>Right now, we have security enabled and a default user, but that’s not very useful. Our goal is to create an application that supports multiple users with proper 
-authentication. To do this, we need to configure our application. Let's create a Configuration Class.</p>
+upon successful authentication. So, Spring remembers what we were trying to visit, and that's what it will show to us once we are authenticated.</p>
+<p>Right now, we have security enabled and a default user, but that’s not very useful. Our goal is to create an application that supports multiple users, not just one 
+default user with a default password. It's time to configure our application. Let's create a Configuration Class.</p>
 <h3>Add a configuration class.</h3> 
-<p>I created a new package named "config" inside the main package of the application. Inside this config package, I added a new class called <code>ProjectConfig</code>.
+<p>I created a new package named "config" inside the main package of the application. Inside this config package, I've added a new class called <code>ProjectConfig</code>.
 Of course, you can structure your application differently if you prefer.</p>
 </div>
 <img src="img/add config.jpg" alt="Screenshot of project with config class">
@@ -153,8 +153,10 @@ methods enable form-based authentication with the default settings. The <code>.f
 <h3>Add a UserDetailsService.</h3>
 <p>So far, we've added the security dependency, created a configuration class, and defined our <code>SecurityFilterChain</code>. This means we’ve already worked with 
 three of the core building blocks of Spring Security.<br>
-Now, let’s move on to the fourth building block: defining users. By doing this, we can experiment with roles and authorities. This requires providing Spring with a 
-<code>UserDetailsService</code>, so it can manage authentication and authorization.</p>
+Now, let’s move on to the fourth building block, the <code>UserDetailsService</code>. By creating a <code>UserDetailsService</code>, we can experiment with roles and 
+authorities. Spring uses the <code>UserDetailsService</code> to manage authentication and authorization. Remember from the previous article that it's the 
+<code>UserDetailsService</code> that provides Spring with a <code>UserDetails</code> object. And it's this <code>UserDetails</code> object that Spring needs to verify 
+the credentials of a user and to know what roles and authorities the user has.</p>
 <p>While roles and authorities are often used interchangeably, they are not the same thing.<br>
 Roles in Spring Security are high-level groupings of permissions. For example, an administrator could have the role 'ADMIN', which may group the authorities read, write, 
 delete, and update.<br>
@@ -171,12 +173,12 @@ In order for Spring to access a repository of these users, I’ve created a <cod
 </div>
 <img src="img/roles.jpg" alt="Screenshot of UserDetailsService">
 <div class="article-container">
-<p>We will regulated the levels of access a user has in our application by only assigning them roles. I haven’t made use of authorities.<br>
-The decision to use both roles and authorities depends on the level of fine-grained control you need in your application. For more complex applications, it might be 
-necessary to use both. However, for our relatively simple application with only three endpoints, using authorities would be a bit of an overkill.<br>
-- Authorities allow you to handle what a user is allowed to do or access in greater detail.<br>
-- Roles group these authorities together, making it easier to assign them to users in one go.<br>
-This approach of grouping authorities together is more practical than assigning each individual authority to every user that needs it.</p>
+<p>In our application, we will regulated the level of access a user has by assigning him roles. We will not use any authorities. For our relatively simple 
+application with only three endpoints, using authorities would be a bit of an overkill</p>
+<p>For more complex applications, it might be necessary to use both roles and authorities. It all depends on the level of fine-grained control you need in your 
+application. In a complex application, authorities allow us to handle what a user is allowed to do or access in greater detail. While roles make it easier to assign 
+the authorities to individual users by grouping them together. It's for instance much easier to assign the 'ADMIN' role to each administrator, than to manually grant 
+every required authority to each new administrator that has to be added to the system.<br>
 <p>Let's rewrite our <code>SecurityFilterChain</code> so that it handles the different roles we’ve created. We want to ensure that none of our endpoints are 
 accessible without authentication. Here's the breakdown of how access should be handled:<br>
 - The user with the least access (role 'RED') should only be able to access the <code>/no-security</code> endpoint.<br>
