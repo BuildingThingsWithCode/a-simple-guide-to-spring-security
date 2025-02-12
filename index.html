@@ -56,10 +56,10 @@ the username 'user' and the password that is provided by Spring.</p>
 mention security beans or authentication mechanisms that you don't know yet. Just remember that if Spring no longer provides a default user, it’s because you’ve started implementing custom security yourself.</p>
 
 <p><strong>3) It enables CSRF protection.</strong> CSRF stands for Cross-Site Request Forgery. In this context, a request refers to an HTTP request, which is a message sent 
-by a client (usually a web browser) to a server, to request data or perform an action on the internet. This CSRF protection applies specifically to state-changing HTTP 
+by a client (usually a web browser) to a server, to request data or perform an action on the internet.<br> This CSRF protection applies specifically to state-changing HTTP 
 requests. This means that when a user tries to send a POST (creating new resources), PUT (updating existing resources), DELETE (removing resources) or PATCH (partially 
 updating resources) request, Spring will not allow the request unless the correct CSRF token is also sent along with the request. This is to prevent malicious actors from 
-impersonating others online, which is what Cross-Site Request Forgery attacks aim to do. Don't dwell too much on CSRF for now. Just know that it exists and that Spring 
+impersonating others online, which is what Cross-Site Request Forgery attacks aim to do.<br> Don't dwell too much on CSRF for now. Just know that it exists and that Spring 
 Security by default protects against it.</p>
 
 <p><strong>4) It enables form login.</strong> When an unauthenticated user attempts to access a protected resource in the application, Spring Security will redirect them 
