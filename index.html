@@ -111,7 +111,7 @@ public class ProjectConfig {
 </code>
 </pre>
 <p>In Spring Security, the default behavior is to protect all endpoints by requiring authentication. It’s better to secure everything by default and then 
-open up only what needs to be accessible, rather than the other way around. Once we override the defaults by defining our own SecurityFilterChain, Spring no longer restricts 
+open up only what needs to be accessible, rather than the other way around.<br> Once we override the defaults by defining our own SecurityFilterChain, Spring no longer restricts 
 access to all endpoints. From that point forward, it becomes our responsibility to secure the application. Since Spring is highly customizable, as developers, we could choose 
 to protect only the endpoints we believe need securing while leaving others open, but that would be a mistake. It’s wise to follow the framework’s philosophy and require 
 authentication for everything. It’s simply the safer choice.</p>
