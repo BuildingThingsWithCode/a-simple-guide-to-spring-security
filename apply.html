@@ -266,13 +266,12 @@ this <code>.password(passwordEncoder.encode("admin"))</code>. Don't forget to st
 <img src="img/password encoder in UserDetailsService.jpg" alt="Screenshot of UserDetailsService + PasswordEncoder">
 <div class="article-container">
 
-<p>If at any point you successfully log in, but get redirected to a 'Whitelabel Error Page' with a 'Not Found, status=404' code (like happened to me), know that 
-this happened because you did not first try to visit one of the endpoins in our application. Let me explain.<br>
-When you go directly to the login page, Spring will not redirect you to the endpoint you were trying to visit before you logged in (because there is none, you 
-went directly to the login page). In this case, it's default behavior to redirect you to the home page when you are successfully logged in. And this home page is, 
+<p>If, at any point, you successfully log in but are redirected to a 'Whitelabel Error Page' with a 'Not Found, status=404' error (as happened to me), this occurs 
+because you didn't first attempt to visit one of the endpoints in our application. Let me explain.<br>
+When you navigate directly to the login page, Spring won't redirect you to the endpoint you were trying to visit before logging in (because there is none, you accessed 
+the login page directly). In this case, it's default behavior to redirect you to the home page when you are successfully logged in. And this home page is, 
 by default, the <code>/</code> endpoint.<br>
-But we did not configure this endpoint in our application. So, Spring is trying to redirect us to a non-existent page.That's why 
-we get that 404 not found error page.</p>
+But we did not configure this endpoint in our application. So, Spring is trying to redirect us to a non-existent page.That's why we get that 404 not found error page.</p>
 
 <p>We can fix this situation by creating a new mapping for this <code>/</code> endpoint in our controller class or by configuring a <code>.defaultSuccessUrl()</code> 
 method in our <code>SecurityFilterChain</code>. The <code>.defaultSuccessUrl()</code> configures where Spring should redirect users when they have succesfully 
