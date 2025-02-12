@@ -182,8 +182,8 @@ accessible without authentication. Here's the breakdown of how access should be 
 - The user with the least access (role 'RED') should only be able to access the <code>/no-security</code> endpoint.<br>
 - The user with a bit more access (role 'ORANGE') should be able to access <code>/no-security</code> and <code>/some-security</code>, but should not have access to the 
 <code>/full-security</code> endpoint.<br>
-- The 'admin' user (role 'GREEN') should have access to all three endpoints.<br>
-Here’s how the <code>SecurityFilterChain</code> would look after this rewrite:</p>
+- The 'admin' user (role 'GREEN') should have access to all three endpoints.</p>
+<p>Here’s how the <code>SecurityFilterChain</code> would look after this rewrite:</p>
 </div>
 <img src="img/filterChain3.jpg" alt="Screenshot of SecurityFilterChain">
 <div class="article-container">
