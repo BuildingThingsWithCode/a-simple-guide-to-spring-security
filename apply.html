@@ -270,7 +270,8 @@ this <code>.password(passwordEncoder.encode("admin"))</code>. Don't forget to st
 this happened because you did not first try to visit one of the endpoins in our application. Let me explain.<br>
 When you go directly to the login page, Spring will not redirect you to the endpoint you were trying to visit before you logged in (because there is none, you 
 went directly to the login page). In this case, it's default behavior to redirect you to the home page when you are successfully logged in. And this home page is, 
-by default, the <code>/</code> endpoint. But we did not configure this endpoint in our application. So, Spring is trying to redirect us to a non-existent page.That's why 
+by default, the <code>/</code> endpoint.<br>
+But we did not configure this endpoint in our application. So, Spring is trying to redirect us to a non-existent page.That's why 
 we get that 404 not found error page.</p>
 
 <p>We can fix this situation by creating a new mapping for this <code>/</code> endpoint in our controller class or by configuring a <code>.defaultSuccessUrl()</code> 
