@@ -25,6 +25,7 @@
 - A <code>SecurityFilterChain</code>.<br>
 - A <code>UserDetailsService</code>.<br>
 - A <code>PasswordEncoder</code>.</p>
+<h3>Create a web application.</h3>
 <p>In this article, we are going to get hands-on and use these building blocks to secure an application. So, let's start by creating our 
 web application. Go to the Spring Initializr page at: <a href="https://start.spring.io/">https://start.spring.io/</a> and use the initializer to 
 generate a Spring project. I chose Java and Maven, but you can select whatever you prefer. The only dependency we will add for now is the Spring 
@@ -76,6 +77,7 @@ You can also visit the other two endpoints to verify that they are accessible. S
 or <code>/full-security</code>.</p>
 <p>We have a web application running on an embedded server. This application includes three endpoints, all of which are accessible to anyone, including unauthenticated 
 users. At this point, we have zero security in place. Let's change that.</p>
+<h3>Add the security dependency.</h3>
 <p>The first and most important step in securing our application is adding the Spring Security dependency. In a Maven project (which is what I’m using), you can do this 
 by adding the following code to the pom.xml file:</p>
 <pre><code>
@@ -113,7 +115,8 @@ to visit <code>http://localhost:8080/some-security</code>, Spring would have red
 <code>http://localhost:8080/some-security</code> page that you were trying to visit. If you tried to visit a different page, then that's the page that Spring will show you 
 upon successful authentication.</p>
 <p>Right now, we have security enabled and a default user, but that’s not very useful. Our goal is to create an application that supports multiple users with proper 
-authentication. To do this, we need to configure our application. Let's create a Configuration Class.</p> 
+authentication. To do this, we need to configure our application. Let's create a Configuration Class.</p>
+<h3>Add a configuration class.</h3> 
 <p>I created a new package named "config" inside the main package of the application. Inside this config package, I added a new class called <code>ProjectConfig</code>.
 Of course, you can structure your application differently if you prefer.</p>
 </div>
@@ -122,6 +125,7 @@ Of course, you can structure your application differently if you prefer.</p>
 <p>As explained it the <a href="https://buildingthingswithcode.github.io/spring-security-understanding-the-basics/">previous article</a>, we are going to give this class 
 the <code>@Configuration</code> and <code>@EnableWebSecurity</code> annotations. It's inside this class that we are going to be handling most of the security aspects of 
 our application.</p>
+<h3>Add a SecurityFilterChain.</h3>
 <p>To handle authorization, we need a <code>SecurityFilterChain</code>. Once we add a <code>SecurityFilterChain</code> to our application, Spring assumes that we are 
 handling authorization ourselves. This means that Spring will no longer present users with a login form or automatically secure our endpoints for us. Instead, 
 handling both login and security will become our responsibility. Similarly, when Spring detects that we are managing authorization ourselves, such as by declaring a 
@@ -146,6 +150,7 @@ now need to handle this ourselves. To add form login capabilities to our applica
 <p>Adding <code>.formLogin()</code> to our <code>SecurityFilterChain</code> is functionally the same as adding <code>.formLogin(Customizer.withDefaults())</code>. Both 
 methods enable form-based authentication with the default settings. The <code>.formLogin()</code> method is simply a shorthand that internally calls 
 <code>.formLogin(Customizer.withDefaults())</code>.</p>
+<h3>Add a UserDetailsService.</h3>
 <p>So far, we've added the security dependency, created a configuration class, and defined our <code>SecurityFilterChain</code>. This means we’ve already worked with 
 three of the core building blocks of Spring Security. Now, let’s move on to the fourth building block: defining users. By doing this, we can experiment with roles and 
 authorities. This requires providing Spring with a <code>UserDetailsService</code>, so it can manage authentication and authorization.</p>
@@ -202,6 +207,7 @@ This will enable Spring Security's default logout mechanism. Here’s the update
 <p>By adding <code>.logout()</code>, we’ve enabled the default logout behavior of Spring Security. You can now visit the URL <code>http://localhost:8080/logout</code> 
 where you will be presented with a button to log out of the current account. Once you press the logout button, Spring will automatically redirect you to the login page. 
 From there, you can log in with a different user account to continue testing and experimenting with different user roles and permissions.</p>
+<h3>Add a PasswordEncoder.</h3>
 <p>We have now played around with four out of the five Security building blocks: the Spring Security dependency, a configuration class annotated with 
 <code>@Configuration</code> and <code>@EnableWebSecurity</code>, a <code>SecurityFilterChain</code> and a <code>UserDetailsService</code>. The only element we haven't used 
 yet is a <code>PasswordEncoder</code>.</p>
