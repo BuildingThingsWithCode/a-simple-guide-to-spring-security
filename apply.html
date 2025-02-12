@@ -265,13 +265,18 @@ this <code>.password(passwordEncoder.encode("admin"))</code>. Don't forget to st
 </div>
 <img src="img/password encoder in UserDetailsService.jpg" alt="Screenshot of UserDetailsService + PasswordEncoder">
 <div class="article-container">
+
 <p>If at any point you successfully log in, but get redirected to a 'Whitelabel Error Page' with a 'Not Found, status=404' code (like happened to me), know that 
 this happened because you did not first try to visit one of the endpoins in our application. Let me explain.<br>
 When you go directly to the login page, Spring will not redirect you to the endpoint you were trying to visit before you logged in (because there is none, you 
-went directly to the login page). In this case, it's default behaviour to redirect you to the home page, which is by default the <code>/</code> endpoint. But we did 
-not configure this endpoint in our application. That's why you see that 404 not found error page. We can fix this situation by creating a new mapping for this 
-<code>/</code> endpoint in our controller class or by configuring a <code>.defaultSuccessUrl()</code> method in our <code>SecurityFilterChain</code>. The 
-<code>.defaultSuccessUrl()</code> configures where Spring should redirect users when they have succesfully authenticated.</p>
+went directly to the login page). In this case, it's default behavior to redirect you to the home page when you are successfully logged in. And this home page is, 
+by default, the <code>/</code> endpoint. But we did not configure this endpoint in our application. So, Spring is trying to redirect us to a non-existent page.That's why 
+we get that 404 not found error page.</p>
+
+<p>We can fix this situation by creating a new mapping for this <code>/</code> endpoint in our controller class or by configuring a <code>.defaultSuccessUrl()</code> 
+method in our <code>SecurityFilterChain</code>. The <code>.defaultSuccessUrl()</code> configures where Spring should redirect users when they have succesfully 
+authenticated.</p>
+
 <p>We have now covered all the basic building blocks of Spring Security. With these components, we've been able to handle authentication and authorization for 
 different users in our web application. I hope this has given you a better understanding of the basics of Spring Security, showing that it's not as daunting as it might 
 have seemed at first, and that you had some fun along the way.</p>
