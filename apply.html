@@ -152,8 +152,9 @@ methods enable form-based authentication with the default settings. The <code>.f
 <code>.formLogin(Customizer.withDefaults())</code>.</p>
 <h3>Add a UserDetailsService.</h3>
 <p>So far, we've added the security dependency, created a configuration class, and defined our <code>SecurityFilterChain</code>. This means we’ve already worked with 
-three of the core building blocks of Spring Security. Now, let’s move on to the fourth building block: defining users. By doing this, we can experiment with roles and 
-authorities. This requires providing Spring with a <code>UserDetailsService</code>, so it can manage authentication and authorization.</p>
+three of the core building blocks of Spring Security.<br>
+Now, let’s move on to the fourth building block: defining users. By doing this, we can experiment with roles and authorities. This requires providing Spring with a 
+<code>UserDetailsService</code>, so it can manage authentication and authorization.</p>
 <p>While roles and authorities are often used interchangeably, they are not the same thing. Roles in Spring Security are high-level groupings of permissions. For 
 example, an administrator could have the role 'ADMIN', which may group the authorities read, write, delete, and update. Authorities, on the other hand, represent 
 specific permissions. For instance, a regular user might have the role 'USER' and only the authorities 'read' and 'write'.</p>
