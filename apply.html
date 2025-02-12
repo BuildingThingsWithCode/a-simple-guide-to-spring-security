@@ -155,9 +155,10 @@ methods enable form-based authentication with the default settings. The <code>.f
 three of the core building blocks of Spring Security.<br>
 Now, let’s move on to the fourth building block: defining users. By doing this, we can experiment with roles and authorities. This requires providing Spring with a 
 <code>UserDetailsService</code>, so it can manage authentication and authorization.</p>
-<p>While roles and authorities are often used interchangeably, they are not the same thing. Roles in Spring Security are high-level groupings of permissions. For 
-example, an administrator could have the role 'ADMIN', which may group the authorities read, write, delete, and update. Authorities, on the other hand, represent 
-specific permissions. For instance, a regular user might have the role 'USER' and only the authorities 'read' and 'write'.</p>
+<p>While roles and authorities are often used interchangeably, they are not the same thing.<br>
+Roles in Spring Security are high-level groupings of permissions. For example, an administrator could have the role 'ADMIN', which may group the authorities read, write, 
+delete, and update.<br>
+Authorities, on the other hand, represent specific permissions. For instance, a regular user might have the role 'USER' and only the authorities 'read' and 'write'.</p>
 <p>Defining roles and assigning authorities to them is up to us, giving us the flexibility to customize security in our application.</p>
 
 <p>As an example, I have created three users, using the names of colors to define their roles. Roles or authorities are not fixed concepts in Spring Security, we can 
