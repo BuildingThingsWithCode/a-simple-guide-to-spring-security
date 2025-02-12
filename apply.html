@@ -143,8 +143,7 @@ message:</p>
 <div class="article-container">
 <p>Remember to stop and restart your application every time you make changes. Otherwise, those changes will not take effect.</p>
 <p>As mentioned earlier, Spring no longer automatically presents users with the default login form when they try to access a protected endpoint while unauthenticated. We 
-now need to handle this ourselves. To add form login capabilities to our application, adjust the <code>SecurityFilterChain</code> by including the following line:
-<code>.formLogin()</code>:</p>
+now need to handle this ourselves. To add form login capabilities to our application, adjust the <code>SecurityFilterChain</code> so it includes <code>.formLogin()</code>:</p>
 </div>
 <img src="img/filterChain2.jpg" alt="Screenshot of SecurityFilterChain">
 <div class="article-container">
