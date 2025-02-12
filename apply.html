@@ -193,22 +193,21 @@ Since we used <code>.anyRequest().authenticated()</code> to lock everything down
 access an endpoint without being logged in, it will fail, and you will be redirected to the login screen.</p>
 <p>Try logging in with the username 'visitor' and the password 'visitor'. Once logged in, you should only have access to the <code>/no-security</code> endpoint.
 If you try to access an endpoint that you don't have the appropriate role for, such as <code>/some-security</code> or <code>/full-security</code>, you will see a 
-whitelabel error page. This is a 403 Forbidden error, which means our security is working as intended—this user doesn't have the necessary permissions for 
-those endpoints.</p>
-<p>While we could customize this error page to make it look more professional, for the purpose of this article, the default error page clearly indicates that the user 
-doesn't have the required authorization and is sufficient.</p>
+whitelabel error page. This is a 403 Forbidden error, which means our security is working as intended. Forbidden is exactly what the page is when a user doesn't have 
+the necessary permissions.</p>
+<p>While we could customize this error page to make it look more professional, for the purpose of this article this default page is sufficient.</p>
 </div>
 <img src="img/403 whitelabel error.jpg" alt="Screenshot of whitelabel error">
 <div class="article-container">
 <p>At the moment, if you want to switch users, you will need to stop and restart the application. This is because there's no logout functionality implemented yet. 
-Let's fix this by adding logout capabilities to our <code>SecurityFilterChain</code>. To do this, we simply need to include <code>.logout()</code> in the configuration. 
-This will enable Spring Security's default logout mechanism. Here’s the updated <code>SecurityFilterChain</code> with logout functionality:</p>
+Let's fix this by adding logout capabilities to our <code>SecurityFilterChain</code>. We simply need to include <code>.logout()</code> in the <code>SecurityFilterChain</code> 
+This will enable Spring Security's default logout mechanism.</p>
 </div>
 <img src="img/filterChain4.jpg" alt="Screenshot of SecurityFilterChain">
 <div class="article-container">
-<p>By adding <code>.logout()</code>, we’ve enabled the default logout behavior of Spring Security. You can now visit the URL <code>http://localhost:8080/logout</code> 
-where you will be presented with a button to log out of the current account. Once you press the logout button, Spring will automatically redirect you to the login page. 
-From there, you can log in with a different user account to continue testing and experimenting with different user roles and permissions.</p>
+<p>Now that we’ve enabled the default logout behavior of Spring Security, we can visit the URL <code>http://localhost:8080/logout</code>. There we will be presented with a 
+button to log us out of the current account. Once we press the logout button, Spring will automatically redirect us to the login page. 
+From there, we can log in with a different user account to continue testing and experimenting with different user roles and permissions.</p>
 <h3>Add a PasswordEncoder.</h3>
 <p>We have now played around with four out of the five Security building blocks: the Spring Security dependency, a configuration class annotated with 
 <code>@Configuration</code> and <code>@EnableWebSecurity</code>, a <code>SecurityFilterChain</code> and a <code>UserDetailsService</code>. The only element we haven't used 
@@ -221,14 +220,14 @@ users will no longer be able to log in.</p>
 </div>
 <img src="img/no password info.jpg" alt="Screenshot of UserDetailsService with no password information">
 <div class="article-container">
-<p>And this is the case even when they use correct credentials. Simply because Spring lacks the necessary information to be able to verify that the credentials are correct 
-in the first place. The user will see a server error with error code 500 and in the console there will be an error message, informing us that there's no PasswordEncoder 
+<p>User won't be able to log in, even when they use correct credentials. Simply because Spring lacks the necessary information to be able to verify if the credentials are 
+correct or not. The user will see a server error with error code 500. And in the console there will be an error message, informing us that there's no PasswordEncoder 
 mapped:</p>
 </div>
 <img src="img/500 error.jpg" alt="Screenshot of 500 error">
 <img src="img/no passwordEncoder error.jpg" alt="Screenshot of no passwordEncoder error">
 <div class="article-container">
-<p>Let's fix these errors by telling Spring that we'll use BCrypt encoding to hash our passwords, which is the same encoding Spring uses for the default user’s password. 
+<p>Let's fix these errors by telling Spring that we'll use BCrypt encoding to hash our passwords. It's the same encoding Spring uses for the default user’s password. 
 To do this, we need to provide Spring with a <code>PasswordEncoder</code> bean. Simply add the following code to our configuration class:</p>
 </div>
 <img src="img/bcrypt encoder.jpg" alt="Screenshot of BCrypt Encoder">
@@ -244,13 +243,13 @@ it and then compares that encrypted password to the unencrypted one it receives 
 the 'Bad credentials' error.<br>
 <p>Change the <code>UserDetailsService</code> so it takes a <code>PasswordEncoder</code> as a parameter. Spring will make sure that the correct
 <code>PasswordEncoder</code> will be injected into the <code>UserDetailsService</code>. Also add code so the encoder hashes the passwords. Like 
-for instance <code>.password(passwordEncoder.encode("admin"))</code>. Don't forget to stop and restart your application after you made the changes:</p>
+this <code>.password(passwordEncoder.encode("admin"))</code>. Don't forget to stop and restart your application after you made the changes:</p>
 </div>
 <img src="img/password encoder in UserDetailsService.jpg" alt="Screenshot of UserDetailsService + PasswordEncoder">
 <div class="article-container">
-<p>If at any point you succesfully log in, but get redirected to a 'Whitelabel Error Page' with a 'Not Found, status=404' code (like happened to me), know that 
-this happened because you did not first try to visit one of the endpoins in our application.<br>
-When you go directly to the login page, Spring will not redirect you to the endpoint you were trying to visit before you logged in (because there is none, you 
+<p>If at any point you successfully log in, but get redirected to a 'Whitelabel Error Page' with a 'Not Found, status=404' code (like happened to me), know that 
+this happened because you did not first try to visit one of the endpoins in our application. Let me explain.</p>
+<p>When you go directly to the login page, Spring will not redirect you to the endpoint you were trying to visit before you logged in (because there is none, you 
 went directly to the login page). In this case, it's default behaviour to redirect you to the home page, which is by default the <code>/</code> endpoint. But we did 
 not configure this endpoint in our application. That's why you see that 404 not found error page. We can fix this situation by creating a new mapping for this 
 <code>/</code> endpoint in our controller class or by configuring a <code>.defaultSuccessUrl()</code> method in our <code>SecurityFilterChain</code>. The 
