@@ -99,8 +99,8 @@ by adding the following code to the pom.xml file:</p>
 <img src="img/login screen.jpg" alt="Screenshot of the login screen">
 <div class="article-container">
 <p>What happened? We tried to visit <code>http://localhost:8080/no-security</code>, but instead of seeing that page, we were redirected to a login page at 
-<code>http://localhost:8080/login</code>.<br> 
-By adding the Spring Security dependency, we have enabled security in our application. When security is enabled, Spring restricts access to all endpoints for 
+<code>http://localhost:8080/login</code>?</p> 
+<p>By adding the Spring Security dependency, we have enabled security in our application. When security is enabled, Spring restricts access to all endpoints for 
 unauthenticated users. Anytime an unauthenticated user tries to visit our endpoints, they are automatically redirected to the default login page at <code>/login</code>.
 <p>Restricting access for unauthenticated users and redirecting them to an HTML login form at <code>/login</code> are a few of Spring Security’s default features.</p> 
 <p>But there’s more: try submitting the login form without entering a username or password and Spring will show a validation message asking you to fill out the fields.
