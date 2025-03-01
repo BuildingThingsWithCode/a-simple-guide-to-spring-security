@@ -47,8 +47,10 @@ a list of AuthenticationProvider instances. The AuthenticationManager iterates t
 <img src="img/visual/Full Security flow diagram4.png" alt="AuthenticationProvider">
 
 <div class="article-container">
-<p>The AuthenticationProvider that is typically used for username/password authentication is the DaoAuthenticationProvider.
-Some other AuthenticationProviders are:<br>
+<p>The AuthenticationProvider that is typically used for username/password authentication is the DaoAuthenticationProvider. The DaoAuthenticationProvider is a Spring 
+Security class that integrates authentication logic with a Data Access Object (DAO). This provider allows Spring Security to authenticate users by comparing the provided 
+credentials (username/password) against the data stored in a persistent data source, usually a database.</p>
+<p>Some other AuthenticationProviders are:<br>
 - AnonymousAuthenticationProvider. Provides anonymous authentication for users who haven’t logged in. Is used when anonymous() is enabled in security config.<br>
 - JwtAuthenticationProvider (For JWT Authentication). Extracts and verifies JSON Web Tokens (JWTs). Common in stateless REST APIs.<br>
 - OAuth2LoginAuthenticationProvider (For OAuth 2.0 Login). Handles authentication via OAuth 2.0 Authorization Code flow. Works with external providers like Google, 
