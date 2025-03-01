@@ -84,6 +84,16 @@ characteristics, such as hashing strength, performance, and vulnerability to spe
 <img src="img/visual/Full Security flow diagram8.png" alt="AuthenticationManager">
 <div class="article-container">
 <p>The AuthenticationManager receives the authenticated Authentication object and returns it to the calling filter.</p>
+</div>
+
+<img src="img/visual/Full Security flow diagram9.png" alt="AuthenticationManager">
+<div class="article-container">
+<p>The filter receives the authenticated Authentication object and does the following:<br>
+- Creates an authentication session if configured. Note: In some modern applications, particularly stateless REST APIs (such as when using JWT tokens), session creation is 
+not typically used. Instead, authentication information is sent via HTTP headers and Spring Security will not create a session.<br>
+- Stores the authentication in the SecurityContext.<br>
+- Triggers the AuthenticationSuccessHandler which typically redirects to a success page or returns a success response.</p>
+
 
 
 
