@@ -21,20 +21,37 @@
 </div>
 <p>We will walk through the authentication flow in a Spring Boot application, guided by the following visual overview.</p>
 </div>
+
 <img src="img/visual/Full Security flow diagram1.png" alt="The http request">
+
 <div class="article-container">
 <p>The process begins when a user makes an HTTP request to a protected endpoint in our Spring Boot application.</p>
 </div>
+
 <img src="img/visual/Full Security flow diagram2.png" alt="the filter">
+
 <div class="article-container">
 <p>The request first encounters the SecurityFilterChain, which is a series of filters that process the request sequentially. The SecurityFilterChain is configured in our 
 Spring Security configuration class.</p>
 <p>For form-based login, the UsernamePasswordAuthenticationFilter intercepts the request and extracts the username and password. It then creates an Authentication object 
 (specifically a UsernamePasswordAuthenticationToken) with status set to unauthenticated.</p>
 </div>
+
 <img src="img/visual/Full Security flow diagram3.png" alt="AuthenticationManager">
+
 <div class="article-container">
 <p>The filter delegates the authentication process to the AuthenticationManager. The most common implementation of AuthenticationManager is ProviderManager, which maintains
-a list of AuthenticationProvider instances. The AuthenticationManager iterates through available AuthenticationProviders until one can authenticate the request.</p>
+a list of AuthenticationProvider instances. The AuthenticationManager iterates through the available AuthenticationProviders until one can authenticate the request.</p>
+</div>
+
+<img src="img/visual/Full Security flow diagram4.png" alt="AuthenticationProvider">
+
+<div class="article-container">
+<p>The AuthenticationProvider that is typically used for username/password authentication is the DaoAuthenticationProvider.
+Some other AuthenticationProviders are:<br>
+- AnonymousAuthenticationProvider. Provides anonymous authentication for users who haven’t logged in. Is used when anonymous() is enabled in security config.<br>
+- JwtAuthenticationProvider (For JWT Authentication). Extracts and verifies JSON Web Tokens (JWTs). Common in stateless REST APIs.<br>
+- OAuth2LoginAuthenticationProvider (For OAuth 2.0 Login). Handles authentication via OAuth 2.0 Authorization Code flow. Works with external providers like Google, 
+Facebook, GitHub.</p>
 
 
