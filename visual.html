@@ -63,6 +63,15 @@ Facebook, GitHub.</p>
 LDAP, etc.).</p>
 <p>The UserDetailsService returns a UserDetails object containing the user's username, password, authorities (roles/permissions), and account status (enabled, expired, 
 locked, etc.).</p>
+</div>
+
+<img src="img/visual/Full Security flow diagram6.png" alt="UserDetailsService">
+<div class="article-container">
+<p>The AuthenticationProvider uses a PasswordEncoder to verify if the provided password matches the encoded password stored for the user. A PasswordEncoder is responsible 
+for encoding passwords and comparing hashed versions of passwords. The main goal of using a PasswordEncoder is to avoid storing plain-text passwords. Spring Security 
+provides several implementations like BCryptPasswordEncoder, Pbkdf2PasswordEncoder, etc. Each implementation uses a different encoding algorithm and has different security 
+characteristics, such as hashing strength, performance, and vulnerability to specific types of attacks.</p>
+
 
 
 
