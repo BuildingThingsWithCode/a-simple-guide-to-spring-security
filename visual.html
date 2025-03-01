@@ -19,7 +19,7 @@
         </div>
     </div>
 </div>
-<p>We will walk through the authentication flow in a Spring Boot application, guided by the following visual overview.</p>
+<p>We will walk through the authentication and authorization flow in a Spring Boot application, guided by the following visual overview.</p>
 </div>
 
 <img src="img/visual/Full Security flow diagram1.png" alt="The http request">
@@ -66,6 +66,7 @@ locked, etc.).</p>
 </div>
 
 <img src="img/visual/Full Security flow diagram6.png" alt="PasswordEncoder">
+
 <div class="article-container">
 <p>The AuthenticationProvider uses a PasswordEncoder to verify if the provided password matches the encoded password stored for the user. A PasswordEncoder is responsible 
 for encoding passwords and comparing hashed versions of passwords. The main goal of using a PasswordEncoder is to avoid storing plain-text passwords. Spring Security 
@@ -74,6 +75,7 @@ characteristics, such as hashing strength, performance, and vulnerability to spe
 </div>
 
 <img src="img/visual/Full Security flow diagram7.png" alt="AuthenticationProvider">
+
 <div class="article-container">
 <p>With the UserDetails object, the AuthenticationProvider:<br>
 - Compares passwords using the PasswordEncoder.<br>
@@ -87,13 +89,21 @@ characteristics, such as hashing strength, performance, and vulnerability to spe
 </div>
 
 <img src="img/visual/Full Security flow diagram9.png" alt="AuthenticationManager">
+
 <div class="article-container">
 <p>The filter receives the authenticated Authentication object and does the following:<br>
 - Creates an authentication session if configured. Note: In some modern applications, particularly stateless REST APIs (such as when using JWT tokens), session creation is 
 not typically used. Instead, authentication information is sent via HTTP headers and Spring Security will not create a session.<br>
 - Stores the authentication in the SecurityContext.<br>
 - Triggers the AuthenticationSuccessHandler which typically redirects to a success page or returns a success response.</p>
+</div>
 
+<img src="img/visual/Full Security flow diagram10.png" alt="SecurityFilterChain">
+
+<div class="article-container">
+<h3>Post-Authentication.</h3>
+<p>After successful authentication: The request continues through the filter chain. Spring Security's authorization filters check if the authenticated user has the 
+required permissions for the requested resource. If authorized, the request reaches the controller/endpoint and the resource will be presented to the user.</p>
 
 
 
