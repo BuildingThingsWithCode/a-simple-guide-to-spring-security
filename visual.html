@@ -55,5 +55,14 @@ credentials (username/password) against the data stored in a persistent data sou
 - JwtAuthenticationProvider (For JWT Authentication). Extracts and verifies JSON Web Tokens (JWTs). Common in stateless REST APIs.<br>
 - OAuth2LoginAuthenticationProvider (For OAuth 2.0 Login). Handles authentication via OAuth 2.0 Authorization Code flow. Works with external providers like Google, 
 Facebook, GitHub.</p>
+</div>
+
+<img src="img/visual/Full Security flow diagram5.png" alt="UserDetailsService">
+<div class="article-container">
+<p>The AuthenticationProvider calls the UserDetailsService to load user-specific data. This service retrieves user information from a data store (memory, database, 
+LDAP, etc.).</p>
+<p>The UserDetailsService returns a UserDetails object containing the user's username, password, authorities (roles/permissions), and account status (enabled, expired, 
+locked, etc.).</p>
+
 
 
