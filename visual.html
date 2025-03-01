@@ -31,4 +31,10 @@
 Spring Security configuration class.</p>
 <p>For form-based login, the UsernamePasswordAuthenticationFilter intercepts the request and extracts the username and password. It then creates an Authentication object 
 (specifically a UsernamePasswordAuthenticationToken) with status set to unauthenticated.</p>
+</div>
+<img src="img/visual/Full Security flow diagram3.png" alt="AuthenticationManager">
+<div class="article-container">
+<p>The filter delegates the authentication process to the AuthenticationManager. The most common implementation of AuthenticationManager is ProviderManager, which maintains
+a list of AuthenticationProvider instances. The AuthenticationManager iterates through available AuthenticationProviders until one can authenticate the request.</p>
+
 
