@@ -115,7 +115,9 @@ is that all endpoints become accessible.<br>
 Requiring authentication for all endpoints was a deliberate choice by the Spring developers. It’s better to secure everything by default and then open up only what needs to 
 be accessible, rather than the other way around. Since Spring is highly customizable, we could choose to protect only the endpoints we believe need securing while leaving 
 others open, but that would be a mistake. It’s wise to follow the framework’s philosophy and require authentication for everything. It’s simply the safer choice.<br> 
-So, those are the defaults: all endpoints require authentication, and once authenticated, all endpoints become accessible.<br>
+So, those are the defaults:<br>
+- All endpoints require authentication.<br> 
+- Once authenticated, all endpoints become accessible.<br>
 If we want to deviate from these default and customize our application, then we need to create a <code>SecurityFilterChain</code>.</p>
 
 <h3>Authorization.</h3>
