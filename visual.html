@@ -71,6 +71,14 @@ locked, etc.).</p>
 for encoding passwords and comparing hashed versions of passwords. The main goal of using a PasswordEncoder is to avoid storing plain-text passwords. Spring Security 
 provides several implementations like BCryptPasswordEncoder, Pbkdf2PasswordEncoder, etc. Each implementation uses a different encoding algorithm and has different security 
 characteristics, such as hashing strength, performance, and vulnerability to specific types of attacks.</p>
+</div>
+
+<img src="img/visual/Full Security flow diagram7.png" alt="UserDetailsService">
+<div class="article-container">
+<p>With the UserDetails object, the AuthenticationProvider:<br>
+- Compares passwords using the PasswordEncoder.<br>
+- Verifies account status (not expired, locked, etc.).<br>
+- If successful, creates a fully populated Authentication object with status set to authenticated.</p>
 
 
 
