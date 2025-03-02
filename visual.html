@@ -3,23 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visual overview of the authentication flow</title>
+    <title>A Simple Guide to Spring Security</title>
     <link rel="icon" href="favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="visual.css">
 </head>
 <body>
 <div class="article-container">
-<h1>Spring Security: A Visual Overview.</h1>
+<h1>A Simple Guide to Spring Security.</h1>
 <div class="custom-profile">
     <div style="align-items: center; display: flex; justify-content: flex-start;">
         <img src="BuildingThingWithCodelogoForLeetcode.jpg" alt="Your Image" width="44" height="44" style="margin-right: 10px;">
         <div style="text-align: left;">
             <p style="margin: 0; font-weight: bold;">Lars Martens</p>
-            <p style="margin: 0; font-size: 0.9em; color: gray;">1 Maart, 2025</p>
+            <p style="margin: 0; font-size: 0.9em; color: gray;">3 Maart, 2025</p>
         </div>
     </div>
 </div>
-<p>We will walk through the authentication flow in a Spring Boot application, guided by the following visual overview.</p>
+<p>When I first started learning Spring Security, I found plenty of in-depth resources and tutorials, but I struggled to follow along. The problem was that I lacked a clear overview, a mental picture of how everything fit together. Without that foundation, all the detailed information felt overwhelming and disconnected. I was "not seeing the forest for the trees." Which isn't that surprising, Spring Security is huge when you really want to understand all its intricacies.</p>
+<p>And I'm pretty sure I'm not the only person who’s experienced this. On r/SpringBoot, the largest Reddit community dedicated to the Spring framework, one of the most upvoted posts of all time is titled "I hate Spring Security." You can read that post <a href="https://www.reddit.com/r/SpringBoot/comments/17imb9j/i_hate_spring_security/" target="_blank">here</a>.<br>
+In the post, the author shared their frustration, saying:
+<i>"I keep trying to love Spring Boot, but the security is so damn complex you forget where you are. Am I supposed to ‘memorize’ all these functions and then call myself an ‘expert’ when I do?"</i>
+<p>That is why, in this article, I'm taking a different approach. Instead of aiming to be a comprehensive guide covering every aspect of Spring Security, my goal is to teach only the minimum you need to know to be able to implement Spring Security, so that the information stays digestible and approachable.</p>
+<p>In order to achieve this goal, I devided this article into three parts:<br>
+- First I'm going to give you a visual overview of the Security flow of a Spring application. Having such a visual "roadmap" makes it much easier to understand the intricacies because it prevents you from feeling lost and gives you a clearer, big-picture perspective.<br>
+- In the second part, we are going to focus on the basic building block of Spring Security. So, we are not going to touch on every aspect of the Security flow, but only on those parts that are required to be able to implement basic (form based) security.<br>
+- In the third part, we are going to take a more hands-on approach and show you how to built a very simple web application and how to secure it using the basics of Spring Security. </p>
+
+<p>If by the end of this three part series, you understand the basic building blocks of Spring Security and how they fit together, then I will consider this a success. Once you have that solid foundation, diving into the details becomes a lot easier.</p>
+<p>The article is a little long to read it on a mobile device and the site is not optimized for mobile either, so bookmark it and come back later.</p>
+<p>Let's get started:</p>
+<h1>Part 1: A Visual Guide to the Security Flow.</h1>
 </div>
 
 <img src="img/visual/Full Security flow diagram1.png" alt="The http request">
