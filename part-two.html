@@ -268,8 +268,10 @@ public class AuthorizeUrlsSecurityConfig {
    }
 </code>
 </pre>
-<p>The first matcher matches every request and therefore will prevent the second matcher from doing its work. A normal user who does not have administrator credentials will still get access to our <code>/admin</code> endpoint based on the first matcher that gives access to all endpoints starting with "/" <code>.requestMatcher("/**").hasRole("USER")</code>. And therefore, the second matcher <code>.requestMatchers("/admin/**").hasRole("ADMIN")</code> that is supposed to prevent this access, will not be effective.</p>
-<p>Swapping the matchers, so the <code>.requestMatchers("/admin/**").hasRole("ADMIN")</code> comes first, solves the problem.</p>
+<p>The first matcher matches every request and therefore will prevent the second matcher from doing its work. A normal user who does not have administrator credentials 
+will still get access to our <code>/admin</code> endpoint based on the first matcher <code>.requestMatcher("/**").hasRole("USER")</code> that gives access to all endpoints starting with "/". And 
+therefore, the second matcher <code>.requestMatchers("/admin/**").hasRole("ADMIN")</code> that is supposed to prevent this access, will not be effective.<br>
+Swapping the matchers, so the <code>.requestMatchers("/admin/**").hasRole("ADMIN")</code> comes first, solves the problem.</p>
 
 <p>When we define a <code>SecurityFilterChain</code>, we are overwriting the defaults. This has some consequences. For one, Spring expects us to handle the security of our endpoints 
 ourselves. Another consequence is that Spring no longer presents the user with a login form when they are not authenticated and attempt to access a protected endpoint. 
