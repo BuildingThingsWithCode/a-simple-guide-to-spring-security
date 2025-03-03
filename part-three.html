@@ -259,9 +259,9 @@ that although you are using correct credentials, you are not being authenticated
 <code>UserDetailsService</code> we have saved the passwords unencrypted. So, when we try to login, Spring takes the password that we use in the login form, encrypts 
 it and then compares that encrypted password to the unencrypted one it receives from our <code>UserDetailsService</code>. Those two will, of course, never match, hence 
 the 'Bad credentials' error.<br>
-<p>Change the <code>UserDetailsService</code> so it takes a <code>PasswordEncoder</code> as a parameter. Spring will make sure that the correct
-<code>PasswordEncoder</code> will be injected into the <code>UserDetailsService</code>. Also add code so the encoder hashes the passwords. Like 
-this <code>.password(passwordEncoder.encode("admin"))</code>. Don't forget to stop and restart your application after you made the changes:</p>
+<p>Change the <code>UserDetailsService</code> so it takes a <code>PasswordEncoder</code> as a parameter. Spring will make sure that the <code>PasswordEncoder</code> bean
+we have defined earlier, is the <code>PasswordEncoder</code> that will be injected into the <code>UserDetailsService</code>. Also add code so the encoder hashes the 
+passwords. Like this <code>.password(passwordEncoder.encode("admin"))</code>. Don't forget to stop and restart your application after you made the changes:</p>
 </div>
 <img src="img/password encoder in UserDetailsService.jpg" alt="Screenshot of UserDetailsService + PasswordEncoder">
 <div class="article-container">
