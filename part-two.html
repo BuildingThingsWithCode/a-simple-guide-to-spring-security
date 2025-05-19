@@ -32,7 +32,10 @@ my project, this means adding the following code to the pom.xml file:</p>
 </pre>
 <p>Adding the dependency does several things:</p>
 
-<p><strong>1) It enables authentication.</strong> Once the security dependency is added, all endpoints in the application will require authentication. This means that endpoints, which were previously accessible without logging in, will now require valid credentials to be accessed. So, if you add the security dependency to a Spring Boot application and notice that things stop working as expected, don’t be alarmed—this is normal behavior. By adding security, you're restricting access to your endpoints, which were previously open to everyone.</p>
+<p><strong>1) It enables authentication.</strong> Once the security dependency is added, all endpoints in the application will require authentication. This means that 
+endpoints, which were previously accessible without logging in, will now require valid credentials to be accessed. So, if you add the security dependency to a Spring Boot 
+application and notice that things stop working as expected, don’t be alarmed—this is normal behavior. By adding security, you're restricting access to your endpoints 
+which were previously open to everyone.</p>
 
 <p><strong>2) Spring will create a default user and a random password for this user.</strong> The username of this default user is 'user' and the password will be logged in the console when we start up our application. 
 Each time we start our application, Spring will generate a different password and display it in the console. We can therefore still use our application after authentication has been enabled, but we need to login with 
