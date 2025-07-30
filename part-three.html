@@ -132,10 +132,9 @@ the <code>@Configuration</code> and <code>@EnableWebSecurity</code> annotations.
 our application.</p>
 <h3>Add a SecurityFilterChain.</h3>
 <p>To handle authorization, we need a <code>SecurityFilterChain</code>. Once we add a <code>SecurityFilterChain</code> to our application, Spring assumes that we are 
-handling authorization ourselves. This means that Spring will no longer present users with a login form or automatically secure our endpoints for us. Instead, 
-handling both login and security will become our responsibility.</p>
+handling authorization ourselves. This means that Spring will no longer secure our endpoints for us.</p>
 <p>Similarly, when Spring detects that we are managing authorization ourselves, such as by declaring a <code>UserDetailsService</code> bean, it will no longer provide a 
-default user and password for the application.</p>
+default user and password for the application or present users with a default login form.</p>
 <p>Let's add a <code>SecurityFilterChain</code> in our <code>ProjectConfig</code> class:</p>
 </div>
 <img src="img/filterChain1.jpg" alt="Screenshot of filterChain">
